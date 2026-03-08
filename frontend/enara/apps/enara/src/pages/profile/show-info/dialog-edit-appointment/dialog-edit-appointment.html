@@ -1,0 +1,115 @@
+<div class="edit-appointment-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-calendar-edit"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">{{ translate.t('dialog-edit-appointment.dialog_title') }}</h2>
+        <p class="dialog-subtitle">{{ translate.t('dialog-edit-appointment.dialog_subtitle') }}</p>
+      </div>
+    </div>
+    <button
+      class="close-btn"
+      mat-icon-button
+      mat-dialog-close
+      [attr.aria-label]="translate.t('dialog-edit-appointment.cancel_button')"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    @if (!appointmentInfo().length) {
+    <div class="loading-section">
+      <div class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      <p class="loading-text">{{ translate.t('dialog-edit-appointment.loading_text') }}</p>
+    </div>
+    } @else {
+    <div class="appointments-list">
+      <div class="list-header">
+        <div class="header-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="header-title">
+          <h3>{{ translate.t('dialog-edit-appointment.available_appointments_title') }}</h3>
+          <p>{{ translate.t('dialog-edit-appointment.available_appointments_subtitle') }}</p>
+        </div>
+      </div>
+
+      <div class="days-container">
+        @for (appointment of appointmentInfo(); track $index) {
+        <div class="day-card">
+          <div class="day-header">
+            <div class="day-icon">
+              <i class="fas fa-sun"></i>
+            </div>
+            <div class="day-info">
+              <h4 class="day-name">{{appointment.day}}</h4>
+              <span class="date-display">{{appointment.date}}</span>
+            </div>
+          </div>
+
+          <div class="times-list">
+            @for (time of appointment.times; track $index) {
+            <div
+              class="time-item"
+              [class.available]="time.status === 'available'"
+              [class.unavailable]="time.status === 'unavailable'"
+            >
+              <div class="time-content">
+                <div class="time-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="time-details">
+                  <span class="time-value">{{time.time}}</span>
+                  <span
+                    class="time-status"
+                    [class.status-available]="time.status === 'available'"
+                    [class.status-unavailable]="time.status === 'unavailable'"
+                  >
+                    {{
+                      time.status === 'booked'
+                        ? translate.t('dialog-edit-appointment.status_booked')
+                        : translate.t('dialog-edit-appointment.status_available')
+                    }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="time-actions">
+                <button
+                  class="edit-btn fancy-edit-btn"
+                  mat-mini-fab
+                  (click)="onEdit(appointment._id, appointment.date, appointment.day, time.time)"
+                  [attr.aria-label]="translate.t('dialog-edit-appointment.edit_button_label')"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="cancel-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        <span>{{ translate.t('dialog-edit-appointment.cancel_button') }}</span>
+      </button>
+    </div>
+
+    <div class="final-note">
+      <i class="fas fa-info-circle"></i>
+      <span>{{ translate.t('dialog-edit-appointment.final_note') }}</span>
+    </div>
+  </mat-dialog-actions>
+</div>

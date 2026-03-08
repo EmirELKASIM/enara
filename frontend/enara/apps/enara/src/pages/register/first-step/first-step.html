@@ -1,0 +1,366 @@
+<div class="first-step-container">
+  <!-- رأس الخطوة -->
+  <div class="step-header">
+    <div class="step-icon">
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <div class="step-info">
+      <h3 class="step-title">{{ translate.t('first-step.step_title') }}</h3>
+      <p class="step-description">
+        {{ translate.t('first-step.step_description') }}
+      </p>
+    </div>
+  </div>
+
+  <div class="step-content">
+    <div class="input-group">
+      <div class="input-field">
+        <label for="firstName" class="input-label">
+          <i class="fas fa-user"></i>
+          <span>{{ translate.t('first-step.first_name_label') }}</span>
+        </label>
+        <div class="input-container">
+          <input
+            type="text"
+            id="firstName"
+            [(ngModel)]="firstName"
+            name="firstName"
+            placeholder="{{translate.t('first-step.first_name_placeholder')}}"
+            class="form-input"
+            (focus)="onInputFocus('firstName')"
+            [class.focused]="focusedField === 'firstName'"
+            [class.invalid]="firstNameError"
+            required
+          />
+          <div class="input-icons">
+            <i class="fas fa-user input-icon"></i>
+            @if(firstName && !firstNameError){
+            <i class="fas fa-check-circle valid-icon"></i>
+            } @if(firstNameError){
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            }
+          </div>
+        </div>
+        @if(firstNameError){
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ firstNameError }}</span>
+        </div>
+        }
+      </div>
+
+      <div class="input-field">
+        <label for="lastName" class="input-label">
+          <i class="fas fa-user"></i>
+          <span>{{ translate.t('first-step.last_name_label') }}</span>
+        </label>
+        <div class="input-container">
+          <input
+            type="text"
+            id="lastName"
+            [(ngModel)]="lastName"
+            name="lastName"
+            placeholder="{{translate.t('first-step.last_name_placeholder')}}"
+            class="form-input"
+            (focus)="onInputFocus('lastName')"
+            [class.focused]="focusedField === 'lastName'"
+            [class.invalid]="lastNameError"
+            required
+          />
+          <div class="input-icons">
+            <i class="fas fa-user input-icon"></i>
+            @if(lastName && !lastNameError){
+            <i class="fas fa-check-circle valid-icon"></i>
+            } @if(lastNameError){
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            }
+          </div>
+        </div>
+        @if(lastNameError){
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ lastNameError }}</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-field">
+        <label for="email" class="input-label">
+          <i class="fas fa-envelope"></i>
+          <span>{{ translate.t('first-step.email_label') }}</span>
+        </label>
+        <div class="input-container">
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="{{translate.t('first-step.email_placeholder')}}"
+            class="form-input"
+            (focus)="onInputFocus('email')"
+            [class.focused]="focusedField === 'email'"
+            [class.invalid]="emailError"
+            required
+          />
+          <div class="input-icons">
+            <i class="fas fa-envelope input-icon"></i>
+            @if(email && !emailError){
+            <i class="fas fa-check-circle valid-icon"></i>
+            } @if(emailError){
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            }
+          </div>
+        </div>
+        @if(emailError){
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ emailError }}</span>
+        </div>
+        }
+      </div>
+
+      <div class="input-field">
+        <label for="birthday" class="input-label">
+          <i class="fas fa-birthday-cake"></i>
+          <span>{{ translate.t('first-step.birthday_label') }}</span>
+        </label>
+        <div class="input-container">
+          <input
+            type="date"
+            id="birthday"
+            [(ngModel)]="birthday"
+            name="birthday"
+            class="form-input date-input"
+            (focus)="onInputFocus('birthday')"
+            [class.focused]="focusedField === 'birthday'"
+            [class.invalid]="birthdayError"
+            required
+          />
+          <div class="input-icons">
+            <i class="fas fa-calendar-alt input-icon"></i>
+            @if(birthday && !birthdayError){
+            <i class="fas fa-check-circle valid-icon"></i>
+            } @if(birthdayError){
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            }
+          </div>
+        </div>
+        @if(birthdayError){
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ birthdayError }}</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-field password-field">
+        <label for="password" class="input-label">
+          <i class="fas fa-lock"></i>
+          <span>{{ translate.t('first-step.password_label') }}</span>
+        </label>
+        <div class="input-container">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="{{translate.t('first-step.password_placeholder')}}"
+            class="form-input"
+            (focus)="onInputFocus('password')"
+            [class.focused]="focusedField === 'password'"
+            [class.invalid]="passwordError"
+            required
+          />
+          <div class="input-icons">
+            <i class="fas fa-lock input-icon"></i>
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePasswordVisibility()"
+              tabindex="-1"
+            >
+              @if(showPassword){
+              <i class="fas fa-eye-slash"></i>
+              } @else {
+              <i class="fas fa-eye"></i>
+              }
+            </button>
+            @if(password && !passwordError){
+            <i class="fas fa-check-circle valid-icon"></i>
+            } @if(passwordError){
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            }
+          </div>
+        </div>
+
+        @if(password){
+        <div class="password-strength">
+          <div class="strength-label">
+            <span
+              >{{ translate.t( 'first-step.password_strength_label' ) }}</span
+            >
+          </div>
+          <div class="password-requirements">
+            <span class="requirement" [class.met]="hasMinLength">
+              <i
+                class="fas"
+                [class.fa-check]="hasMinLength"
+                [class.fa-times]="!hasMinLength"
+              ></i>
+              {{ translate.t( 'first-step.password_requirement_length' ) }}
+            </span>
+            <span class="requirement" [class.met]="hasUpperCase">
+              <i
+                class="fas"
+                [class.fa-check]="hasUpperCase"
+                [class.fa-times]="!hasUpperCase"
+              ></i>
+              {{translate.t( 'first-step.password_requirement_uppercase' ) }}
+            </span>
+            <span class="requirement" [class.met]="hasNumber">
+              <i
+                class="fas"
+                [class.fa-check]="hasNumber"
+                [class.fa-times]="!hasNumber"
+              ></i>
+              {{ translate.t( 'first-step.password_requirement_number' ) }}
+            </span>
+            <span class="requirement" [class.met]="hasSpecialChar">
+              <i
+                class="fas"
+                [class.fa-check]="hasSpecialChar"
+                [class.fa-times]="!hasSpecialChar"
+              ></i>
+              {{ translate.t( 'first-step.password_requirement_special' ) }}
+            </span>
+          </div>
+        </div>
+        } @if(passwordError){
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ passwordError }}</span>
+        </div>
+        }
+      </div>
+
+      <div class="input-field">
+        <label for="confirmPassword" class="input-label">
+          <i class="fas fa-lock"></i>
+          <span>{{ translate.t('first-step.confirm_password_label') }}</span>
+        </label>
+        <div class="input-container">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            placeholder="{{translate.t('first-step.confirm_password_placeholder')}}"
+            class="form-input"
+            (focus)="onInputFocus('confirmPassword')"
+            [class.focused]="focusedField === 'confirmPassword'"
+            [class.invalid]="confirmPasswordError"
+            required
+          />
+          <div class="input-icons">
+            <i class="fas fa-lock input-icon"></i>
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="toggleConfirmPasswordVisibility()"
+              tabindex="-1"
+            >
+              @if(showConfirmPassword){
+              <i class="fas fa-eye-slash"></i>
+              } @else {
+              <i class="fas fa-eye"></i>
+              }
+            </button>
+            @if(confirmPassword && !confirmPasswordError && passwordsMatch){
+            <i class="fas fa-check-circle valid-icon"></i>
+            } @if(confirmPasswordError){
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            }
+          </div>
+        </div>
+        @if(confirmPasswordError){
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ confirmPasswordError }}</span>
+        </div>
+        } @if(confirmPassword && passwordsMatch){
+        <div class="success-message">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('first-step.passwords_match')}}</span>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="input-field">
+      <label for="phoneNumber" class="input-label">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>{{ translate.t('first-step.phone_number_label') }}</span>
+      </label>
+
+      <div class="phone-box">
+        <input
+          type="text"
+          id="phoneNumber"
+          maxlength="4"
+          name="codeNumber"
+          [(ngModel)]="codeNumber"
+          placeholder="+9xx"
+          class="call-input"
+        />
+
+        <input
+          type="tel"
+          id="phoneNumber"
+          maxlength="10"
+          name="phoneNumber"
+          [(ngModel)]="phoneNumber"
+          placeholder="5xx xxx xx xx"
+          class="phone-input"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="step-actions">
+    <button type="button" class="login-btn" (click)="goLogin()">
+      <i class="fas fa-sign-in-alt"></i>
+      <span>{{ this.translate.t('first-step.login_button') }}</span>
+      <div class="btn-hover-effect"></div>
+    </button>
+
+    <button
+      type="button"
+      class="next-btn"
+      (click)="onSendData()"
+      [disabled]="!isFormValid()"
+    >
+      <span>{{ this.translate.t('first-step.next_button') }}</span>
+      <i class="fas fa-arrow-left"></i>
+      <div class="btn-hover-effect"></div>
+      @if(isLoading){
+      <div class="btn-loading">
+        <div class="loading-spinner"></div>
+      </div>
+      }
+    </button>
+  </div>
+
+  <div class="step-notes">
+    <div class="note">
+      <i class="fas fa-info-circle"></i>
+      <span>{{ translate.t('first-step.required_fields_note') }}</span>
+    </div>
+    <div class="note">
+      <i class="fas fa-shield-alt"></i>
+      <span>{{ translate.t( 'first-step.privacy_protection_note' ) }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,716 @@
+
+.chief-card.medication-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 28px;
+  box-shadow: 0 12px 40px rgba(199, 21, 133, 0.08);
+  border: 1px solid rgba(255, 65, 108, 0.12);
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.medication-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(255, 65, 108, 0) 0%,
+    #ff416c 20%,
+    #ff4b2b 50%,
+    #ff8e7a 80%,
+    rgba(255, 75, 43, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 8s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.medication-card::after {
+  content: '💊';
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  font-size: 12px;
+  opacity: 0.15;
+  transform: rotate(-10deg);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+
+.medication-card .card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 65, 108, 0.08);
+  position: relative;
+}
+
+.medication-icon {
+  color: #ff416c;
+  font-size: 22px !important;
+  width: 22px !important;
+  height: 22px !important;
+  background: linear-gradient(145deg, rgba(255, 65, 108, 0.08), rgba(255, 75, 43, 0.08));
+  padding: 8px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.medication-card:hover .medication-icon {
+  transform: rotate(360deg);
+  background: linear-gradient(145deg, #ff416c, #ff4b2b);
+  color: white;
+}
+
+.card-title span {
+  color: #1a1e24;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  position: relative;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-title span::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.card-title:hover span::after {
+  width: 40px;
+}
+
+
+.medication-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+  .medication-inputs {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.medication-inputs input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1.5px solid #edf2f7;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fafbfc;
+  color: #1a1e24;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.medication-inputs input:focus {
+  outline: none;
+  border-color: #ff416c;
+  background: white;
+  box-shadow: 0 8px 16px rgba(255, 65, 108, 0.08);
+  transform: translateY(-1px);
+}
+
+.medication-inputs input::placeholder {
+  color: #a0aec0;
+  font-size: 13px;
+  font-weight: 400;
+  transition: opacity 0.2s ease;
+}
+
+.medication-inputs input:focus::placeholder {
+  opacity: 0.5;
+}
+
+.medication-inputs input[name="doz"] {
+  background: linear-gradient(145deg, #fafbfc, #ffffff);
+  border-color: #e2e8f0;
+  font-weight: 600;
+  color: #ff416c;
+}
+
+
+.medication-card .complaint-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.medication-card .complaint-field p {
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-right: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.medication-card .complaint-field p::before {
+  content: '📝';
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+::ng-deep .medication-card .complaint-field .mat-mdc-text-field-wrapper {
+  background: #fafbfc !important;
+  border-radius: 18px !important;
+  border: 1.5px solid #edf2f7 !important;
+  transition: all 0.2s ease !important;
+  min-height: 70px !important;
+}
+
+::ng-deep .medication-card .complaint-field textarea {
+  color: #1a1e24 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  padding: 12px 16px !important;
+  min-height: 70px !important;
+  max-height: 90px !important;
+  resize: none !important;
+  background: transparent !important;
+}
+
+::ng-deep .medication-card .complaint-field textarea::placeholder {
+  color: #a0aec0 !important;
+  font-size: 12px !important;
+  font-style: normal;
+}
+
+
+.medication-card .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+}
+
+@media (max-width: 640px) {
+  .medication-card .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+}
+
+
+.medication-card .radio-group {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid #f1f5f9;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.medication-card .radio-group:hover {
+  border-color: rgba(255, 65, 108, 0.2);
+  background: #fffafb;
+}
+
+.medication-card .radio-title {
+  color: #2d3748;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.medication-card .radio-group .radio-title::before {
+  content: '💊';
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-button {
+  display: flex;
+  width: 100%;
+}
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-button .mdc-form-field {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-button .mdc-form-field:hover {
+  background: #fff1f3;
+  border-color: #ff416c;
+  transform: translateX(-2px);
+}
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-form-field {
+  background: linear-gradient(145deg, #fff1f3, #ffe8ec);
+  border-color: #ff416c;
+  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.08);
+}
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-button .mdc-label {
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 500;
+  padding-right: 8px;
+}
+
+::ng-deep .medication-card .radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-label {
+  color: #ff416c;
+  font-weight: 600;
+}
+
+
+.medication-card .times-section {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid #f1f5f9;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.medication-card .times-section .radio-title::before {
+  content: '🕐';
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+
+::ng-deep .medication-card .checkbox-items {
+  width: 100%;
+  margin: 0 !important;
+}
+
+::ng-deep .medication-card .checkbox-items .mdc-form-field {
+  width: 100%;
+  padding: 8px 14px;
+  background: #f8fafc;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .medication-card .checkbox-items .mdc-form-field:hover {
+  background: #fff1f3;
+  border-color: #ff416c;
+  transform: translateX(-2px);
+}
+
+::ng-deep .medication-card .checkbox-items.mat-mdc-checkbox-checked .mdc-form-field {
+  background: linear-gradient(145deg, #fff1f3, #ffe8ec);
+  border-color: #ff416c;
+}
+
+::ng-deep .medication-card .checkbox-items .mdc-label {
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+::ng-deep .medication-card .checkbox-items.mat-mdc-checkbox-checked .mdc-label {
+  color: #ff416c;
+  font-weight: 600;
+}
+
+
+.save-btn-box {
+  text-align: left;
+  margin-top: 8px;
+}
+
+.save-btn {
+  padding: 12px 28px;
+  background: linear-gradient(145deg, #ff416c, #ff4b2b);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 6px 16px rgba(255, 65, 108, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.save-btn::before {
+  content: '✨';
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(255, 65, 108, 0.3);
+  background: linear-gradient(145deg, #ff4b2b, #ff416c);
+}
+
+.save-btn:hover::before {
+  transform: rotate(180deg);
+}
+
+.save-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+
+.medicine-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .medicine-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+
+.medicine-card {
+  background: #ffffff !important;
+  border-radius: 24px !important;
+  border: 1px solid #f1f5f9 !important;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
+  animation: cardSlide 0.4s ease forwards;
+}
+
+@keyframes cardSlide {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.medicine-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(199, 21, 133, 0.08) !important;
+  border-color: rgba(255, 65, 108, 0.2) !important;
+}
+
+
+.medicine-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 12px;
+  background: linear-gradient(90deg, rgba(255, 65, 108, 0.02), transparent);
+}
+
+.medicine-card .name-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.medicine-card .pill-icon {
+  color: #ff416c;
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  background: rgba(255, 65, 108, 0.08);
+  padding: 8px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.medicine-card:hover .pill-icon {
+  background: #ff416c;
+  color: white;
+  transform: rotate(-10deg);
+}
+
+.medicine-card .drug-name {
+  color: #1a1e24;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.medicine-card .delete-icon {
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 6px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.medicine-card .delete-icon:hover {
+  background: rgba(244, 67, 54, 0.08);
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+
+.medicine-card .card-content {
+  padding: 16px;
+}
+
+.medicine-card .info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.medicine-card .info-row:hover {
+  background: #fff1f3;
+}
+
+.medicine-card .label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.medicine-card .value {
+  color: #1a1e24;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+.medicine-card .times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.medicine-card .time-chip {
+  background: linear-gradient(145deg, #fff1f3, #ffe8ec);
+  color: #ff416c;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(255, 65, 108, 0.06);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.medicine-card .time-chip:hover {
+  background: #ff416c;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(255, 65, 108, 0.12);
+}
+
+.medicine-card .time-chip::after {
+  content: '🕐';
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.medicine-card .time-chip:hover::after {
+  opacity: 1;
+}
+
+
+.medicine-list {
+  position: relative;
+  counter-reset: medicine-counter;
+}
+
+.medicine-card {
+  counter-increment: medicine-counter;
+}
+
+.medicine-card::after {
+  content: counter(medicine-counter);
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 65, 108, 0.08);
+  color: #ff416c;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.medicine-card:hover::after {
+  opacity: 1;
+  background: #ff416c;
+  color: white;
+}
+
+
+mat-divider:last-child {
+  margin: 24px 0 0 !important;
+  border-color: rgba(255, 65, 108, 0.08) !important;
+  border-width: 1px !important;
+}
+
+
+.medication-card:focus-within {
+  box-shadow: 0 16px 40px rgba(255, 65, 108, 0.12);
+  border-color: rgba(255, 65, 108, 0.2);
+}
+
+
+@media (max-width: 1024px) {
+  .chief-card.medication-card {
+    padding: 18px;
+  }
+  
+  .medicine-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .chief-card.medication-card {
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  
+  .medication-card .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .save-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chief-card.medication-card {
+    padding: 14px;
+  }
+  
+  .card-title span {
+    font-size: 16px;
+  }
+  
+  .medication-inputs input {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .medicine-card .card-content {
+    padding: 14px;
+  }
+}
+
+
+.medication-card,
+.medicine-card {
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+::ng-deep .mat-mdc-checkbox {
+  --mdc-checkbox-selected-focus-icon-color: #ff416c;
+  --mdc-checkbox-selected-hover-icon-color: #ff4b2b;
+  --mdc-checkbox-selected-icon-color: #ff416c;
+  --mdc-checkbox-selected-pressed-icon-color: #ff4b2b;
+}
+
+
+.medicine-list {
+  position: relative;
+}
+
+.medicine-list::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    rgba(255, 65, 108, 0.1) 0%,
+    rgba(255, 65, 108, 0.3) 50%,
+    rgba(255, 65, 108, 0.1) 100%
+  );
+  border-radius: 2px;
+  opacity: 0.5;
+}

@@ -1,0 +1,60 @@
+<div class="requests-container">
+  <div class="header">
+    <div class="header-title">
+      <i class="fa-solid fa-user-plus"></i>
+      <h1>لوحة الطلبات</h1>
+    </div>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="number">{{ requestsCount() }}</div>
+        <div class="label">إجمالي الطلبات</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="requests-box">
+    <!-- هنا نستخدم دالة groupDocumentsByDoctor -->
+    @for(doctorGroup of groupDocumentsByDoctor(); track doctorGroup.doctorName){
+    <div class="doctor-card">
+      <div class="doc-header">
+        <div class="doc-header-title">
+          <i class="fa-solid fa-stethoscope"></i>
+          <h2>{{ doctorGroup.doctorName }}</h2>
+        </div>
+        <div class="doc-stats">
+          <div class="doc-stat-card">
+            <div class="doc-number">{{ doctorGroup.count }}</div>
+            <div class="doc-label">إجمالي الطلبات</div>
+          </div>
+        </div>
+      </div>
+      <!-- قائمة الطلبات لكل طبيب -->
+      @for(request of doctorGroup.documents; track request._id){
+      <div class="request-card">
+        <div class="section patient-section">
+          <h3>Patient Information</h3>
+          <p>
+            <strong>Name:</strong> {{ request.firstName }} {{ request.lastName
+            }}
+          </p>
+          <p><strong>Age:</strong> {{ request.age }}</p>
+          <p><strong>Phone:</strong> {{ request.patientPhoneNumber }}</p>
+          <p><strong>Accepted:</strong> {{ request.acceptedFromPatient }}</p>
+        </div>
+
+        <div class="section doctor-section">
+          <h3>Doctor Information</h3>
+          <p>
+            <strong>Name:</strong> {{ request.doctorFirstName }} {{
+            request.doctorLastName }}
+          </p>
+          <p><strong>Account Type:</strong> {{ request.doctorAccountType }}</p>
+          <p><strong>Phone:</strong> {{ request.doctorPhoneNumber }}</p>
+          <p><strong>Accepted:</strong> {{ request.acceptedFromDoctor }}</p>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

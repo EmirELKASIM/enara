@@ -1,0 +1,512 @@
+::ng-deep .dialog-content {
+  padding: 0 !important;
+  background: var(--dialog-bg);
+  min-height: 400px;
+  max-height: 70vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray-dark);
+  font-size: 18px;
+  font-weight: 500;
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  margin: 20px;
+  box-shadow: var(--shadow-light);
+  border: 2px dashed var(--gray-medium);
+  position: relative;
+  animation: fadeIn 0.5s ease;
+}
+
+.empty-state::before {
+  content: '📋';
+  font-size: 48px;
+  display: block;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.empty-state::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  border: 3px dashed var(--primary-light);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.95); }
+  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.patient-card {
+  margin: 20px;
+  border-radius: var(--border-radius-lg) !important;
+  border: 1px solid var(--primary-light) !important;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  background: var(--white);
+  position: relative;
+  animation: slideInUp 0.5s ease forwards;
+  animation-delay: calc(var(--i, 0) * 0.1s);
+  opacity: 0;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.patient-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(199, 21, 133, 0.2) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.patient-card::before {
+  content: 'جديد';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  color: var(--white);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(199, 21, 133, 0.3);
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.card-header {
+  padding: 24px 24px 16px;
+  background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(199, 21, 133, 0.05) 100%);
+  z-index: 1;
+}
+
+.avatar {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-medium);
+  z-index: 2;
+  position: relative;
+  transition: transform var(--transition-normal);
+}
+
+.patient-card:hover .avatar {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.info-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  transition: var(--transition);
+}
+
+.info-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--primary-color);
+}
+
+.info-icon {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+.number-icon{
+  background: green;
+}
+.info-content {
+  flex: 1;
+}
+
+.info-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.avatar mat-icon {
+  color: var(--white);
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+.patient-name {
+  color: var(--secondary-color) !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  position: relative;
+  z-index: 2;
+}
+
+.patient-age {
+  color: var(--text-light) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  background: var(--white);
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  box-shadow: var(--shadow-light);
+  position: relative;
+  z-index: 2;
+}
+
+mat-divider {
+  border-color: var(--gray-medium) !important;
+  margin: 0 24px !important;
+  opacity: 0.6;
+}
+
+.card-actions {
+  padding: 20px 24px !important;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  background: linear-gradient(90deg, var(--light-bg) 0%, #ffffff 100%);
+}
+
+.card-actions button {
+  border-radius: var(--border-radius-lg) !important;
+  padding: 14px 28px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  transition: all var(--transition-normal) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 160px;
+  border-width: 2px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-actions button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.card-actions button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.card-actions button[color="warn"] {
+  border-color: var(--warning-color) !important;
+  color: var(--warning-color) !important;
+  background: var(--white) !important;
+}
+
+.card-actions button[color="warn"]:hover {
+  background: linear-gradient(135deg, var(--warning-color), #e68900) !important;
+  color: var(--white) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 152, 0, 0.3) !important;
+  border-color: transparent !important;
+}
+
+.card-actions button[color="warn"] mat-icon {
+  transition: transform var(--transition-fast);
+}
+
+.card-actions button[color="warn"]:hover mat-icon {
+  transform: rotate(15deg);
+}
+
+.card-actions button[color="primary"] {
+  border-color: var(--success-color) !important;
+  color: var(--success-color) !important;
+  background: var(--white) !important;
+}
+
+.card-actions button[color="primary"]:hover {
+  background: linear-gradient(135deg, var(--success-color), #3d8b40) !important;
+  color: var(--white) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3) !important;
+  border-color: transparent !important;
+}
+
+.card-actions button[color="primary"] mat-icon {
+  transition: transform var(--transition-fast);
+}
+
+.card-actions button[color="primary"]:hover mat-icon {
+  transform: scale(1.2) rotate(-10deg);
+}
+
+.card-actions button mat-icon {
+  font-size: 22px !important;
+  width: 22px !important;
+  height: 22px !important;
+  font-weight: bold;
+}
+
+::ng-deep mat-dialog-actions {
+  padding: 20px 24px !important;
+  background: var(--white);
+  border-top: 1px solid var(--gray-light);
+  margin: 0 !important;
+  box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.cancel-button {
+  border-radius: var(--border-radius-md) !important;
+  padding: 12px 32px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  transition: all var(--transition-normal) !important;
+  background: var(--gray-light) !important;
+  color: var(--text-dark) !important;
+  border: 1px solid var(--gray-medium) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.cancel-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.cancel-button:hover {
+  background: var(--gray-medium) !important;
+  transform: translateX(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cancel-button:hover::before {
+  left: 100%;
+}
+
+.cancel-button:active {
+  transform: translateX(-2px);
+}
+
+.card-actions button:active,
+.cancel-button:active {
+  transform: translateY(0) !important;
+}
+
+.card-actions button:focus,
+.cancel-button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--primary-light) !important;
+}
+
+.dialog-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dialog-content::-webkit-scrollbar-track {
+  background: var(--light-bg);
+  border-radius: 5px;
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+  border-radius: 5px;
+  border: 2px solid var(--light-bg);
+}
+
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--primary-dark), var(--primary-color));
+}
+
+.patient-card.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.patient-card.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  from { left: -100%; }
+  to { left: 100%; }
+}
+
+@media (max-width: 768px) {
+  .patient-card {
+    margin: 15px;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .avatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  .patient-name {
+    font-size: 20px !important;
+    text-align: center;
+  }
+  
+  .card-actions {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px !important;
+  }
+  
+  .card-actions button {
+    width: 100%;
+    min-width: auto;
+    padding: 12px 20px !important;
+  }
+  
+  ::ng-deep mat-dialog-actions {
+    padding: 16px 20px !important;
+  }
+  
+  .cancel-button {
+    width: 100%;
+    padding: 14px 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .patient-card {
+    margin: 10px;
+  }
+  
+  .patient-card::before {
+    font-size: 10px;
+    padding: 3px 8px;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .empty-state {
+    font-size: 16px;
+    padding: 40px 15px;
+    margin: 15px;
+  }
+  
+  .empty-state::before {
+    font-size: 36px;
+  }
+}
+
+.patient-card:focus-within {
+  box-shadow: 0 0 0 3px var(--primary-light), 0 10px 30px rgba(199, 21, 133, 0.15) !important;
+}
+
+.patient-name,
+.patient-age {
+  position: relative;
+}
+
+.patient-name:hover::after,
+.patient-age:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--secondary-color);
+  color: var(--white);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: var(--shadow-medium);
+  margin-bottom: 5px;
+}
+
+.patient-name:hover::after {
+  content: 'اسم المريض';
+}
+
+.patient-age:hover::after {
+  content: 'العمر';
+}

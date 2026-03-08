@@ -1,0 +1,231 @@
+<div class="request-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-file-medical-alt"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">
+          {{translate.t("dialog-send-requests.request_medical_preview")}}
+        </h2>
+        <p class="dialog-subtitle">
+          {{translate.t("dialog-send-requests.send_request_to_specialist")}}
+        </p>
+      </div>
+    </div>
+    
+    <button
+      class="close-btn"
+      mat-icon-button
+      mat-dialog-close
+      aria-label="{{translate.t('dialog-send-requests.close')}}"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="info-item">
+      <div class="info-icon number-icon">
+        <i class="fa-brands fa-whatsapp"></i>
+      </div>
+      <div class="info-content">
+        <span class="info-label"
+          >{{translate.t("dialog-send-requests.number")}}</span
+        >
+        <a
+          class="info-value phone-link"
+          href="https://wa.me/{{ doctorPhoneNumber() }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ doctorPhoneNumber() }}
+        </a>
+      </div>
+    </div>
+
+    <div class="request-info">
+      <div class="info-card">
+        <div class="info-header">
+          <i class="fas fa-info-circle"></i>
+          <h3>{{translate.t("dialog-send-requests.request_info")}}</h3>
+        </div>
+        <div class="info-body">
+          <div class="request-details">
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label"
+                  >{{translate.t("dialog-send-requests.specialist")}}</span
+                >
+                <span class="detail-value"
+                  >د. {{ doctorFirstName }} {{doctorLastName}}</span
+                >
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label"
+                  >{{translate.t("dialog-send-requests.initial_medical_preview")}}</span
+                >
+                <span class="detail-value"
+                  >{{translate.t("dialog-send-requests.initial_medical_preview")}}</span
+                >
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label"
+                  >{{translate.t("dialog-send-requests.waiting_time")}}</span
+                >
+                <span class="detail-value"
+                  >{{translate.t("dialog-send-requests.hours_24_48")}}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="steps-card">
+        <div class="steps-header">
+          <i class="fas fa-list-ol"></i>
+          <h3>{{translate.t("dialog-send-requests.request_steps")}}</h3>
+        </div>
+        <div class="steps-body">
+          <div class="steps-container">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>{{translate.t("dialog-send-requests.step_1")}}</h4>
+                <p>{{translate.t("dialog-send-requests.step_1_desc")}}</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>{{translate.t("dialog-send-requests.step_2")}}</h4>
+                <p>{{translate.t("dialog-send-requests.step_2_desc")}}</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>{{translate.t("dialog-send-requests.step_3")}}</h4>
+                <p>{{translate.t("dialog-send-requests.step_3_desc")}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-section">
+      <div class="notes-header">
+        <i class="fas fa-sticky-note"></i>
+        <h3>{{translate.t("dialog-send-requests.important_notes")}}</h3>
+      </div>
+      <div class="notes-content">
+        <ul class="notes-list">
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              >{{translate.t("dialog-send-requests.note_free_request")}}</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              >{{translate.t("dialog-send-requests.note_response_time")}}</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              >{{translate.t("dialog-send-requests.note_track_status")}}</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              >{{translate.t("dialog-send-requests.note_notifications")}}</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    @if(!authIsTrue()){
+    <div class="submit-section">
+      <button
+        class="submit-button"
+        (click)="onSendRequest()"
+      >
+        <div class="button-content">
+          <div class="button-icon">
+            <i class="fas fa-paper-plane"></i>
+          </div>
+          <div class="button-text">
+            <span class="button-title"
+              >{{translate.t("dialog-send-requests.send_preview_request")}}</span
+            >
+            <span class="button-subtitle"
+              >{{translate.t("dialog-send-requests.confirm_send_request")}}</span
+            >
+          </div>
+          <div class="button-arrow">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+        </div>
+
+        
+      </button>
+
+      <p class="submit-hint">
+        <i class="fas fa-info-circle"></i>
+        {{translate.t("dialog-send-requests.after_send_hint")}}
+      </p>
+    </div>
+    }@else {
+    <div class="friendship-notice">
+      <i class="fas fa-user-friends"></i>
+      <p>{{translate.t("dialog-send-requests.friendship_notice")}}</p>
+    </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    
+    
+    <div class="action-buttons">
+      
+      <button class="back-button" mat-button mat-dialog-close>
+        <i class="fas fa-arrow-right"></i>
+        {{translate.t("dialog-send-requests.back")}}
+      </button>
+      <button class="go-profile-button" mat-button (click)="goDoctorProfile()">
+        <i class="fas fa-id-card"></i>
+        {{translate.t("dialog-send-requests.go_profile")}}
+      </button>
+    </div>
+
+    <div class="security-notice">
+      <i class="fas fa-lock"></i>
+      <span
+        >{{translate.t("dialog-send-requests.all_requests_confidential")}}</span
+      >
+    </div>
+  </mat-dialog-actions>
+</div>

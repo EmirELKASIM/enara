@@ -1,0 +1,370 @@
+<div class="profile-page"  [attr.dir]="translate.currentLang() === 'ar' ? 'ltr'  : 'rtl' ">
+  <div class="profile-layout">
+    <div class="card-info">
+      <div class="avatar-container">
+        <div
+          class="avatar"
+          [class.doctor]="!isPersonal()"
+          [class.patient]="isPersonal()"
+        >
+          @if(!isPersonal()){ <i class="fa-solid fa-user-doctor"></i> }
+          @if(isPersonal()){ <i class="fa-solid fa-user"></i> }
+          <div class="avatar-badge"><i class="fa-solid fa-check"></i></div>
+        </div>
+        <span>{{firstName()}} {{lastName()}}</span>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon"><i class="fa-solid fa-cake-candles"></i></div>
+          <div class="info-content">
+            <span class="info-label">{{translate.t('show-info.age_label')}}</span>
+            <span class="info-value">{{age()}}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fa-solid fa-venus-mars"></i></div>
+          <div class="info-content">
+            <span class="info-label">{{translate.t('show-info.gender_label')}}</span>
+            <span class="info-value">{{gender()}}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fa-solid fa-user-tag"></i></div>
+          <div class="info-content">
+            <span class="info-label">{{translate.t('show-info.account_type_label')}}</span>
+            <span class="info-value">{{accountType()}}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fa-solid fa-heart"></i></div>
+          <div class="info-content">
+           <span class="info-label">{{translate.t('show-info.marital_status_label')}}</span>
+            <span class="info-value">{{maritalStatus()}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon number-icon">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="info-content">
+          <span class="info-label">{{translate.t('show-info.phone_label')}}</span>
+          <a
+            class="info-value phone-link"
+            href="https://wa.me/{{ codeNumber() }}{{ phoneNumber() }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ codeNumber() }}{{ phoneNumber() }}
+          </a>
+        </div>
+      </div>
+      @if(!isPersonal()){
+      <div class="professional-info">
+        <div class="section-header">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <h3>{{translate.t('show-info.professional_info_title')}}</h3>
+        </div>
+        <div class="info-grid-experience">
+          <div class="info-card">
+            <div class="card-icon">
+              <i class="fa-solid fa-briefcase-clock"></i>
+            </div>
+            <div class="card-content">
+              <h4>{{translate.t('show-info.experience_years_label')}}</h4>
+              <p class="desc">{{experienceDesc()}}</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="card-icon"><i class="fa-solid fa-certificate"></i></div>
+            <div class="card-content">
+              <h4>{{translate.t('show-info.certificates_label')}}</h4>
+              <p>{{certificates()}}</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="card-icon"><i class="fa-solid fa-language"></i></div>
+            <div class="card-content">
+              <h4>{{translate.t('show-info.languages_label')}}</h4>
+              <p>{{language()}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="summry-and-appointmets">
+      <div class="summary-box">
+        <div class="summary-header">
+          @if(!isPersonal()){
+          <div class="summary-icon"><i class="fa-solid fa-brain"></i></div>
+         <h3>{{translate.t('show-info.experience_summary_title')}}</h3>
+          } @if(isPersonal()){
+          <div class="summary-icon">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <h3>{{translate.t('show-info.patient_health_summary_title')}}</h3>
+          }
+        </div>
+        <div class="summary-content">
+          @if(!isPersonal()){
+          <p 
+            [innerHTML]="experienceSummary()?.replace(/\.\s*/g, '.<br>') || ''"
+          >
+            {{experienceSummary()}}
+          </p>
+          } @if(isPersonal()){
+          <p 
+            [innerHTML]="psychologicalSummary()?.replace(/\.\s*/g, '.<br>') || ''"
+          >
+            {{psychologicalSummary()}}
+          </p>
+          }
+        </div>
+      </div>
+      @if(!isMobile){
+      <div class="appointments-section">
+        <div class="section-header">
+          <div class="header-left">
+            <i class="fa-solid fa-calendar-check"></i>
+            <h3>{{translate.t('show-info.appointments_title')}}</h3>
+          </div>
+          <div class="header-right">
+            <div class="appointment-count">
+              <span class="count-number"
+                >{{appointmentsInfo()?.length || 0}}</span
+              >
+              <span>{{translate.t('show-info.upcoming_appointment_label')}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="appointments-container">
+          @if(isPersonal()){ @for(appointment of appointmentsInfo();track
+          appointment._id){
+          <div class="appointment-card">
+            <div class="appointment-header">
+              <div class="doctor-info">
+                <div class="doctor-avatar">
+                  <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <div class="doctor-details">
+                  <h4>
+                    {{appointment.doctorFirstName}}
+                    {{appointment.doctorLastName}}
+                  </h4>
+                  <span class="doctor-specialty"
+                    >{{appointment.doctorAccountType}}</span
+                  >
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon number-icon">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">{{translate.t('show-info.phone_label')}}</span>
+                  <a
+                    class="info-value phone-link"
+                    href="https://wa.me/{{appointment.doctorPhoneNumber }}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {{ appointment.doctorPhoneNumber }}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="appointment-body">
+              <div class="time-details">
+                <div class="date-box">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <div>
+                    <div class="date">{{appointment.appointmentDate}}</div>
+                    <div class="day">{{appointment.appointmentDay}}</div>
+                  </div>
+                </div>
+                <div class="time-box">
+                  <i class="fa-solid fa-clock"></i>
+                  <div>
+                    <div class="time">{{appointment.appointmentTime}}</div>
+                    <div class="duration">{{translate.t('show-info.session_minutes_label')}} : 60</div>
+                  </div>
+                </div>
+                <div class="type-box">
+                  <i class="fa-solid fa-video"></i>
+                  <div>
+                    <div class="type-label">{{translate.t('show-info.session_type_label')}}</div>
+                    <div class="type">{{getSessionTypeLabel(appointment.meetingType)}}</div>
+                  </div>
+                </div>
+                <div class="type-box">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                  <div>
+                    <div class="type-label">{{translate.t('show-info.session_price_label')}}</div>
+                    <div class="type">
+                      {{appointment.appointmentPrice}}
+                      {{appointment.appointmentCoinType}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="appointment-footer">
+              <button
+                class="btn-start"
+                (click)="onStartMeetingForUser(appointment._id, appointment.doctorFirstName,appointment.doctorLastName)"
+                [disabled]="!appointment.isActive"
+              >
+                <i class="fa-solid fa-play"></i> <span>{{translate.t('show-info.start_session_button')}}</span>
+              </button>
+              <button
+                class="btn-cancel"
+                [disabled]="appointment.paymentStatus"
+                (click)="onAppoitmentCanceled(appointment._id, appointment.appointmentDate, appointment.appointmentTime, appointment.doctorId )"
+              >
+                <i class="fa-solid fa-xmark"></i> <span>{{translate.t('show-info.cancel_appointment_button')}}</span>
+              </button>
+              <button
+                class="btn-edit"
+                (click)="onSendAppointmentEdit(appointment._id)"
+              >
+                <i class="fa-solid fa-info-circle"></i>
+               <span>{{translate.t('show-info.send_edit_request_button')}}</span>
+              </button>
+              <button
+                class="btn-pay"
+                [disabled]="appointment.paymentStatus || appointment.dekontCode !== ''"
+                (click)="onPayment(appointment._id, appointment.appointmentDate, appointment.appointmentTime, appointment.appointmentPrice, appointment.appointmentCoinType)"
+              >
+                <i class="fa-solid fa-dollar-sign"></i>
+                @if(appointment.paymentStatus){
+                <span>{{translate.t('show-info.payment_confirmed_button')}}</span> }@else if(appointment.dekontCode !== ""){<span>{{translate.t('show-info.payment_sent_button')}}</span>}@else{ <span>{{translate.t('show-info.payment_received_button')}}</span>}
+              </button>
+            </div>
+          </div>
+          } } @if(!isPersonal()){ @for(appointment of appointmentsInfo();track
+          appointment._id){
+          <div class="appointment-card">
+            <div class="appointment-header">
+              <div class="patient-info">
+                <div class="patient-avatar">
+                  <i class="fa-solid fa-user-injured"></i>
+                </div>
+                <div class="patient-details">
+                  <h4>{{appointment.firstName}} {{appointment.lastName}}</h4>
+                </div>
+              </div>
+              @if (appointment.onChange) {
+              <div class="change-info-box">
+                <div
+                  class="info-change-icon"
+                  role="button"
+                  tabindex="0"
+                  (click)="onInfoChange(appointment._id)"
+                >
+                  <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="change-info-content">
+                  <h5>{{translate.t('show-info.change_request_label')}}</h5>
+                </div>
+              </div>
+              }
+              <div class="info-item">
+                <div class="info-icon number-icon">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">{{translate.t('show-info.phone_label')}}</span>
+                  <a
+                    class="info-value phone-link"
+                    href="https://wa.me/{{appointment.patientPhoneNumber }}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {{ appointment.patientPhoneNumber }}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="appointment-body">
+              <div class="time-details">
+                <div class="date-box">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <div>
+                    <div class="date">{{appointment.appointmentDate}}</div>
+                    <div class="day">{{appointment.appointmentDay}}</div>
+                  </div>
+                </div>
+                <div class="time-box">
+                  <i class="fa-solid fa-clock"></i>
+                  <div>
+                    <div class="time">{{appointment.appointmentTime}}</div>
+                    <div class="duration">{{translate.t('show-info.session_minutes_label')}} : 60</div>
+                  </div>
+                </div>
+                <div class="type-box">
+                  <i class="fa-solid fa-video"></i>
+                  <div>
+                    <div class="type-label">{{translate.t('show-info.session_type_label')}}</div>
+                    <div class="type">{{appointment.meetingType}}</div>
+                  </div>
+                </div>
+                <div class="type-box">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                  <div>
+                    <div class="type-label">{{translate.t('show-info.session_price_label')}}</div>
+                    <div class="type">
+                      {{appointment.appointmentPrice}}
+                      {{appointment.appointmentCoinType}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="appointment-footer">
+              <button
+                class="btn-start"
+                (click)="onStartMeetingForDoctor(appointment._id,appointment.firstName,appointment.lastName,appointment.appointmentDate,appointment.appointmentTime)"
+              >
+                <i class="fa-solid fa-play"></i> <span>{{translate.t('show-info.start_session_button')}}</span>
+              </button>
+              <button
+                class="btn-cancel"
+                [disabled]="appointment.paymentStatus"
+                (click)="onAppoitmentCanceled(appointment._id, appointment.appointmentDate, appointment.appointmentTime, appointment.doctorId)"
+              >
+                <i class="fa-solid fa-xmark"></i><span>{{translate.t('show-info.cancel_appointment_button')}}</span>
+              </button>
+              <button
+                class="btn-edit"
+                (click)="onEditAppointmentForDoctor(appointment._id)"
+              >
+                <i class="fa-solid fa-info-circle"></i>
+               <span>{{translate.t('show-info.edit_appointment_button')}}</span>
+              </button>
+              <button
+                class="btn-pay"
+                (click)="onShowDekontDetails(appointment._id,appointment.userId)"
+              >
+                <i class="fa-solid fa-dollar-sign"></i> <span>{{translate.t('show-info.payment_received_button')}}</span>
+              </button>
+            </div>
+          </div>
+          } } @if(appointmentsInfo()?.length === 0){ @if(isPersonal()){
+          <div class="no-appointments">
+            <div class="empty-state">
+              <i class="fa-solid fa-calendar-xmark"></i>
+              <h4>{{translate.t('show-info.no_appointments_title')}}</h4>
+              <p>{{translate.t('show-info.no_appointments_text')}}</p>
+              <button class="btn-schedule" (click)="goBooking()">
+                <i class="fa-solid fa-plus"></i> {{translate.t('show-info.schedule_new_appointment_button')}}
+              </button>
+            </div>
+          </div>
+          } }
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

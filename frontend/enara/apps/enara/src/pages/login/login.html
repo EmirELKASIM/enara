@@ -1,0 +1,215 @@
+<mat-toolbar class="main-navbar">
+  <div class="nav-brand">
+    <div class="logo-container">
+     <i class="fa-regular fa-lightbulb logo-icon"></i>
+      <span class="logo-text">{{translate.t('main_titles.enara')}}</span>
+    </div>
+  </div>
+
+  <div class="nav-spacer"></div> 
+  <div class="user-section">
+     <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
+    <i class="fas fa-globe"></i>
+    <span>{{translate.t('main_titles.language')}}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeLang('en')">English</button>
+    <button mat-menu-item (click)="changeLang('ar')">العربية</button>
+    <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
+  </mat-menu>
+  </div>
+ 
+</mat-toolbar>
+
+<div class="login-container">
+  <div class="login-hero">
+    <div class="hero-overlay"></div>
+    <img
+      src="assets/login-register.jpg"
+      alt="Mental Health & Wellness"
+      class="hero-image"
+    />
+
+    <div class="hero-content">
+      <!-- <div class="platform-logo">
+        <div class="logo-icon">
+          <i class="fa-regular fa-lightbulb"></i>
+        </div>
+        <div class="logo-text">
+          <h1>{{translate.t("main_titles.enara")}}</h1>
+          <span>{{translate.t("login_page.arabic")}}</span>
+        </div>
+      </div> -->
+
+      <div class="welcome-message">
+        <h2>{{translate.t("login_page.welcome_back")}}</h2>
+        <p>{{translate.t("login_page.continue_journey")}}</p>
+      </div>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <i class="fas fa-shield-alt"></i>
+          <div class="feature-content">
+            <h4>{{translate.t("login_page.privacy")}}</h4>
+            <p>{{translate.t("login_page.secure_sessions")}}</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <i class="fas fa-user-md"></i>
+          <div class="feature-content">
+            <h4>{{translate.t("login_page.certified_specialists")}}</h4>
+            <p>{{translate.t("login_page.best_doctors")}}</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <i class="fas fa-heart"></i>
+          <div class="feature-content">
+            <h4>{{translate.t("login_page.comprehensive_care")}}</h4>
+            <p>{{translate.t("login_page.continuous_support")}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-form-section">
+    <div class="form-wrapper">
+      <!-- <div class="quick-nav">
+        <button class="lang-switch" aria-label="Switch language">
+          <i class="fas fa-globe"></i>
+          <span>{{translate.t("login_page.arabic")}}</span>
+        </button>
+      </div> -->
+
+      <form (ngSubmit)="onSubmit()" class="login-form" #loginForm="ngForm">
+        <div class="form-header">
+          <div class="form-icon">
+            <i class="fas fa-sign-in-alt"></i>
+          </div>
+          <div class="form-title">
+            <h2>{{translate.t("login_page.login_title")}}</h2>
+            <p>{{translate.t("login_page.login_subtitle")}}</p>
+          </div>
+        </div>
+
+        <div class="form-fields">
+          <div class="input-group" [class.error]="emailError">
+            <label for="email" class="input-label">
+              <i class="fas fa-envelope"></i>
+              <span>{{translate.t("login_page.email")}}</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                [(ngModel)]="email"
+                placeholder="{{translate.t('login_page.email_placeholder')}}"
+                required
+                [class.invalid]="emailError"
+              />
+              <div class="input-actions">
+                @if(email && !emailError){
+                <i class="fas fa-check-circle valid-icon"></i>
+                } @if(emailError){
+                <i class="fas fa-exclamation-circle error-icon"></i>
+                }
+              </div>
+            </div>
+            @if(emailError){
+            <div class="input-error">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>{{ emailError }}</span>
+            </div>
+            }
+          </div>
+
+          <div class="input-group" [class.error]="passwordError">
+            <label for="password" class="input-label">
+              <i class="fas fa-lock"></i>
+              <span>{{translate.t("login_page.password")}}</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                name="password"
+                [(ngModel)]="password"
+                placeholder="{{translate.t('login_page.password_placeholder')}}"
+                required
+                [class.invalid]="passwordError"
+              />
+              <div class="input-actions">
+                <button
+                  type="button"
+                  class="toggle-password"
+                  (click)="togglePasswordVisibility()"
+                  tabindex="-1"
+                  aria-label="Toggle password visibility"
+                >
+                  @if(showPassword){
+                  <i class="fas fa-eye-slash"></i>
+                  } @else {
+                  <i class="fas fa-eye"></i>
+                  }
+                </button>
+                @if(password && !passwordError){
+                <i class="fas fa-check-circle valid-icon"></i>
+                } @if(passwordError){
+                <i class="fas fa-exclamation-circle error-icon"></i>
+                }
+              </div>
+            </div>
+            @if(passwordError){
+            <div class="input-error">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>{{ passwordError }}</span>
+            </div>
+            }
+
+            <div class="password-help">
+              <div
+                class="forgot-link"
+                role="button"
+                tabindex="0"
+                (click)="onForgotPasswordDialog()"
+              >
+                <i class="fas fa-key"></i>
+                <span>{{translate.t("login_page.forgot_password")}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="isLoading || !email || !password"
+            [class.loading]="isLoading"
+          >
+            @if(isLoading){
+            <div class="btn-spinner"></div>
+            } @else {
+            <i class="fas fa-sign-in-alt"></i>
+            }
+            <span>{{translate.t("login_page.login_button")}}</span>
+            <div class="btn-hover-effect"></div>
+          </button>
+
+          <button type="button" class="register-btn" (click)="goRegister()">
+            <i class="fas fa-user-plus"></i>
+            <span>{{translate.t("login_page.create_account")}}</span>
+          </button>
+        </div>
+
+        <div class="copyright">
+          <p>{{translate.t("login_page.copyright")}}</p>
+          <p class="version">{{translate.t("login_page.version")}}</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,792 @@
+<!-- <div class="selection-container">
+  <div class="selection-header">
+    <div class="header-icon">
+      <i class="fas fa-user-cog"></i>
+    </div>
+    <div class="header-content">
+      <h3 class="header-title">
+        {{translate.t('next-step.section_header_title')}}
+      </h3>
+      <p class="header-description">
+        {{translate.t('next-step.section_header_description' )}}
+      </p>
+    </div>
+  </div>
+
+  <div class="radio-grid">
+    <div class="radio-card" [class.active]="gender">
+      <div class="card-header">
+        <div class="card-icon gender-icon">
+          <i class="fas fa-venus-mars"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t('next-step.gender_card_title')}}</h4>
+          <p class="card-subtitle">
+            {{translate.t('next-step.gender_card_subtitle')}}
+          </p>
+        </div>
+        @if(gender){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{sectionHeaderTitle}}"
+        name="gender"
+        [(ngModel)]="gender"
+        (ngModelChange)="onGenderChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button value="male" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-mars"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t( 'next-step.gender_option_male_label' )}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t( 'next-step.gender_option_male_description'
+                )}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="female" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-venus"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t( 'next-step.gender_option_female_label' )}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t( 'next-step.gender_option_female_description'
+                )}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="other" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t( 'next-step.gender_option_other_label' )}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t( 'next-step.gender_option_other_description'
+                )}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-card" [class.active]="accountType">
+      <div class="card-header">
+        <div class="card-icon account-icon">
+          <i class="fas fa-user-tag"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t('next-step.account_type_card_title')}}</h4>
+          <p class="card-subtitle">
+            {{translate.t( 'next-step.account_type_card_subtitle' )}}
+          </p>
+        </div>
+        @if(accountType){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{accountTypeCardTitle}}"
+        name="accountType"
+        [(ngModel)]="accountType"
+        (ngModelChange)="onAccountTypeChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button value="psychotherapist" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t( 'next-step.account_type_psychotherapist_label'
+                )}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t(
+                'next-step.account_type_psychotherapist_description' )}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="psychiatrist" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t( 'next-step.account_type_psychiatrist_label'
+                )}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t(
+                'next-step.account_type_psychiatrist_description' )}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="personal" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user-injured"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t( 'next-step.account_type_personal_label'
+                )}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t( 'next-step.account_type_personal_description'
+                )}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-card" [class.active]="maritalStatus">
+      <div class="card-header">
+        <div class="card-icon marital-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t(
+    'next-step.marital_status_card_title'
+  )}}</h4>
+          <p class="card-subtitle">{{translate.t(
+    'next-step.marital_status_card_subtitle'
+  )}}</p>
+        </div>
+        @if(maritalStatus){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{maritalStatusCardTitle}}"
+        name="maritalStatus"
+        [(ngModel)]="maritalStatus"
+        (ngModelChange)="onMaritalStatusChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button value="single" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label">{{translate.t(
+    'next-step.marital_status_single_label'
+  )}}</span>
+              <span class="radio-description"
+                >{{maritalStatusSingleDescription}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="married" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-ring"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label">{{maritalStatusMarriedLabel}}</span>
+              <span class="radio-description"
+                >{{maritalStatusMarriedDescription}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="divorced" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-heart-broken"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label">{{maritalStatusDivorcedLabel}}</span>
+              <span class="radio-description"
+                >{{maritalStatusDivorcedDescription}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="widowed" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user-times"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label">{{maritalStatusWidowedLabel}}</span>
+              <span class="radio-description"
+                >{{maritalStatusWidowedDescription}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-card" [class.active]="consultation">
+      <div class="card-header">
+        <div class="card-icon consultation-icon">
+          <i class="fas fa-hand-holding-medical"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{consultationCardTitle}}</h4>
+          <p class="card-subtitle">{{consultationCardSubtitle}}</p>
+        </div>
+        @if(consultation){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{selectionDone}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{consultationCardTitle}}"
+        name="consultation"
+        [(ngModel)]="consultation"
+        (ngModelChange)="onConsultationChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button
+          value="medicalConsultation"
+          class="custom-radio-button"
+        >
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label">{{consultationMedicalLabel}}</span>
+              <span class="radio-description"
+                >{{consultationMedicalDescription}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button
+          value="psychologicalConsultation"
+          class="custom-radio-button"
+        >
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{consultationPsychologicalLabel}}</span
+              >
+              <span class="radio-description"
+                >{{consultationPsychologicalDescription}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <div class="privacy-section">
+    <div class="privacy-header">
+      <div class="privacy-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <div class="privacy-title">
+        <h4>{{privacyHeaderTitle}}</h4>
+        <p>{{privacyHeaderDescription}}</p>
+      </div>
+    </div>
+    <div class="privacy-content">
+      <mat-checkbox
+        class="privacy-checkbox"
+        [(ngModel)]="privacyPolicy"
+        (ngModelChange)="onPrivacyPolicyChange($event)"
+        #privacyCheck
+      >
+        <div class="checkbox-content">
+          <div class="checkbox-text">
+            <span class="checkbox-label">{{privacyCheckboxLabel}}</span>
+            <span class="checkbox-description"
+              >{{privacyCheckboxDescription}}</span
+            >
+          </div>
+          <div class="checkbox-links">
+            <div
+              class="privacy-link"
+              role="button"
+              tabindex="0"
+              (click)="onPrivacyPolicy()"
+            >
+              <i class="fas fa-user-shield"></i>
+              <span>{{privacyLinkLabel}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-checkbox>
+      <div class="privacy-highlights">
+        <div class="highlight-item">
+          <i class="fas fa-lock"></i>
+          <span>{{privacyHighlightProtectedData}}</span>
+        </div>
+        <div class="highlight-item">
+          <i class="fas fa-user-secret"></i>
+          <span>{{privacyHighlightSessionConfidential}}</span>
+        </div>
+        <div class="highlight-item">
+          <i class="fas fa-check-circle"></i>
+          <span>{{privacyHighlightServiceQuality}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="privacy-status" [class.accepted]="privacyPolicy">
+      @if(privacyPolicy){
+      <div class="status-accepted">
+        <i class="fas fa-check-circle"></i>
+        <span>{{privacyStatusAccepted}}</span>
+      </div>
+      } @else {
+      <div class="status-pending">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{privacyStatusPending}}</span>
+      </div>
+      }
+    </div>
+  </div>
+</div> -->
+
+<div class="selection-container">
+  <div class="selection-header">
+    <div class="header-icon">
+      <i class="fas fa-user-cog"></i>
+    </div>
+    <div class="header-content">
+      <h3 class="header-title">
+        {{translate.t('next-step.section_header_title')}}
+      </h3>
+      <p class="header-description">
+        {{translate.t('next-step.section_header_description')}}
+      </p>
+    </div>
+  </div>
+
+  <div class="radio-grid">
+    <div class="radio-card" [class.active]="gender">
+      <div class="card-header">
+        <div class="card-icon gender-icon">
+          <i class="fas fa-venus-mars"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t('next-step.gender_card_title')}}</h4>
+          <p class="card-subtitle">
+            {{translate.t('next-step.gender_card_subtitle')}}
+          </p>
+        </div>
+        @if(gender){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{translate.t('next-step.section_header_title')}}"
+        name="gender"
+        [(ngModel)]="gender"
+        (ngModelChange)="onGenderChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button value="male" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-mars"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.gender_option_male_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.gender_option_male_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="female" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-venus"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.gender_option_female_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.gender_option_female_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="other" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.gender_option_other_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.gender_option_other_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-card" [class.active]="accountType">
+      <div class="card-header">
+        <div class="card-icon account-icon">
+          <i class="fas fa-user-tag"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t('next-step.account_type_card_title')}}</h4>
+          <p class="card-subtitle">
+            {{translate.t('next-step.account_type_card_subtitle')}}
+          </p>
+        </div>
+        @if(accountType){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{translate.t('next-step.account_type_card_title')}}"
+        name="accountType"
+        [(ngModel)]="accountType"
+        (ngModelChange)="onAccountTypeChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button value="psychotherapist" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.account_type_psychotherapist_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.account_type_psychotherapist_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="psychiatrist" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.account_type_psychiatrist_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.account_type_psychiatrist_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="personal" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user-injured"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.account_type_personal_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.account_type_personal_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-card" [class.active]="maritalStatus">
+      <div class="card-header">
+        <div class="card-icon marital-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t('next-step.marital_status_card_title')}}</h4>
+          <p class="card-subtitle">
+            {{translate.t('next-step.marital_status_card_subtitle')}}
+          </p>
+        </div>
+        @if(maritalStatus){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{translate.t('next-step.marital_status_card_title')}}"
+        name="maritalStatus"
+        [(ngModel)]="maritalStatus"
+        (ngModelChange)="onMaritalStatusChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button value="single" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.marital_status_single_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.marital_status_single_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="married" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-ring"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.marital_status_married_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.marital_status_married_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="divorced" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-heart-broken"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.marital_status_divorced_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.marital_status_divorced_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="widowed" class="custom-radio-button">
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-user-times"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.marital_status_widowed_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.marital_status_widowed_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-card" [class.active]="consultation">
+      <div class="card-header">
+        <div class="card-icon consultation-icon">
+          <i class="fas fa-hand-holding-medical"></i>
+        </div>
+        <div class="card-title">
+          <h4>{{translate.t('next-step.consultation_card_title')}}</h4>
+          <p class="card-subtitle">
+            {{translate.t('next-step.consultation_card_subtitle')}}
+          </p>
+        </div>
+        @if(consultation){
+        <div class="selection-badge">
+          <i class="fas fa-check-circle"></i>
+          <span>{{translate.t('next-step.selection_done')}}</span>
+        </div>
+        }
+      </div>
+      <mat-radio-group
+        aria-label="{{translate.t('next-step.consultation_card_title')}}"
+        name="consultation"
+        [(ngModel)]="consultation"
+        (ngModelChange)="onConsultationChanged($event)"
+        class="custom-radio-group"
+      >
+        <mat-radio-button
+          value="medicalConsultation"
+          class="custom-radio-button"
+        >
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.consultation_medical_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.consultation_medical_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button
+          value="psychologicalConsultation"
+          class="custom-radio-button"
+        >
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.consultation_psychological_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.consultation_psychological_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button
+          value="anotherConsultation"
+          class="custom-radio-button"
+        >
+          <div class="radio-content">
+            <div class="radio-icon">
+              <i class="fas fa-notes-medical"></i>
+            </div>
+            <div class="radio-text">
+              <span class="radio-label"
+                >{{translate.t('next-step.consultation_another_label')}}</span
+              >
+              <span class="radio-description"
+                >{{translate.t('next-step.consultation_another_description')}}</span
+              >
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <div class="privacy-section">
+    <div class="privacy-header">
+      <div class="privacy-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <div class="privacy-title">
+        <h4>{{translate.t('next-step.privacy_header_title')}}</h4>
+        <p>{{translate.t('next-step.privacy_header_description')}}</p>
+      </div>
+    </div>
+    <div class="privacy-content">
+      <mat-checkbox
+        class="privacy-checkbox"
+        [(ngModel)]="privacyPolicy"
+        (ngModelChange)="onPrivacyPolicyChange($event)"
+        #privacyCheck
+      >
+        <div class="checkbox-content">
+          <div class="checkbox-text">
+            <span class="checkbox-label"
+              >{{translate.t('next-step.privacy_checkbox_label')}}</span
+            >
+            <span class="checkbox-description"
+              >{{translate.t('next-step.privacy_checkbox_description')}}</span
+            >
+          </div>
+          <div class="checkbox-links">
+            <div
+              class="privacy-link"
+              role="button"
+              tabindex="0"
+              (click)="onPrivacyPolicy()"
+            >
+              <i class="fas fa-user-shield"></i>
+              <span>{{translate.t('next-step.privacy_link_label')}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-checkbox>
+      <div class="privacy-highlights">
+        <div class="highlight-item">
+          <i class="fas fa-lock"></i>
+          <span
+            >{{translate.t('next-step.privacy_highlight_protected_data')}}</span
+          >
+        </div>
+        <div class="highlight-item">
+          <i class="fas fa-user-secret"></i>
+          <span
+            >{{translate.t('next-step.privacy_highlight_session_confidential')}}</span
+          >
+        </div>
+        <div class="highlight-item">
+          <i class="fas fa-check-circle"></i>
+          <span
+            >{{translate.t('next-step.privacy_highlight_service_quality')}}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="privacy-status" [class.accepted]="privacyPolicy">
+      @if(privacyPolicy){
+      <div class="status-accepted">
+        <i class="fas fa-check-circle"></i>
+        <span>{{translate.t('next-step.privacy_status_accepted')}}</span>
+      </div>
+      } @else {
+      <div class="status-pending">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{translate.t('next-step.privacy_status_pending')}}</span>
+      </div>
+      }
+    </div>
+  </div>
+</div>

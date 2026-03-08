@@ -1,0 +1,60 @@
+<mat-card class="chief-card">
+  <div class="card-title">
+    <mat-icon class="assignment-icon">assignment</mat-icon>
+    <span>{{translate.t('main-complaint.main_complaint')}}</span>
+  </div>
+
+  <mat-form-field appearance="outline" class="full complaint-field">
+    <p>{{translate.t('main-complaint.complaint')}}</p>
+    <textarea
+      matInput
+      rows="3"
+      dir="rtl"
+      name="complaint"
+      [(ngModel)]="complaint"
+      (ngModelChange)="emitComplaint($event)"
+      placeholder="{{translate.t('main-complaint.complaint_placeholder')}}"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="grid">
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('main-complaint.complaint_duration')}}</p>
+      <mat-radio-group
+        [(ngModel)]="complaintDuration"
+        (ngModelChange)="emitComplaintDuration($event)"
+      >
+        <mat-radio-button value="days">
+          {{translate.t('main-complaint.days')}}
+        </mat-radio-button>
+        <mat-radio-button value="weeks">
+          {{translate.t('main-complaint.weeks')}}
+        </mat-radio-button>
+        <mat-radio-button value="months">
+          {{translate.t('main-complaint.months')}}
+        </mat-radio-button>
+        <mat-radio-button value="years">
+          {{translate.t('main-complaint.years')}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('main-complaint.complaint_severity')}}</p>
+      <mat-radio-group
+        [(ngModel)]="complaintSeverity"
+        (ngModelChange)="emitComplaintSeverity($event)"
+      >
+        <mat-radio-button value="mild">
+          {{translate.t('main-complaint.mild_feminine')}}
+        </mat-radio-button>
+        <mat-radio-button value="moderate">
+          {{translate.t('main-complaint.moderate_feminine')}}
+        </mat-radio-button>
+        <mat-radio-button value="severe">
+          {{translate.t('main-complaint.severe_feminine')}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,52 @@
+<div class="activate-session-dialog">
+  <mat-dialog-content class="dialog-content">
+    <div class="change-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-calendar-edit edit"></i>
+        </div>
+        <div class="section-title">
+          <h3>{{ translate.t('dialog-send-edit-request.change_appointment_request_title') }}</h3>
+          <p>{{ translate.t('dialog-send-edit-request.change_appointment_instructions') }}</p>
+        </div>
+      </div>
+      <div class="change-input-container">
+        <mat-form-field appearance="outline" class="change-field">
+          <mat-label>{{ translate.t('dialog-send-edit-request.change_reason_label') }}</mat-label>
+          <textarea
+            matInput
+            id="change-reason"
+            name="changeDetails"
+            [(ngModel)]="changeDetails"
+            [placeholder]="translate.t('dialog-send-edit-request.change_reason_placeholder')"
+            rows="3"
+          ></textarea>
+          <mat-icon matPrefix>info_outline</mat-icon>
+          <mat-hint>{{ translate.t('dialog-send-edit-request.change_reason_hint') }}</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="cancel-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        <span>{{ translate.t('dialog-send-edit-request.cancel_button') }}</span>
+      </button>
+      <button
+        class="submit-btn"
+        mat-raised-button
+        [mat-dialog-close]="true"
+        (click)="onSendDatials()"
+      >
+        @if (isSubmitting) {
+        <mat-spinner diameter="20" class="spinner"></mat-spinner>
+        } @else {
+        <i class="fas fa-paper-plane"></i>
+        }
+        <span>{{ translate.t('dialog-send-edit-request.submit_button') }}</span>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

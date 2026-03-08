@@ -1,0 +1,222 @@
+<div class="about-us-container">
+  <section class="hero-section">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          {{translate.t("about_us_page.platform")}}
+          <span class="highlight">{{translate.t("main_titles.enara")}}</span>
+          {{translate.t("about_us_page.main_title")}}
+        </h1>
+        <p class="hero-subtitle">
+          {{translate.t("about_us_page.main_subtitle")}}
+        </p>
+        @if(!isAuth()){
+        <button class="login-box" (click)="goLogin()">
+          {{translate.t("main_titles.sign_in")}}
+        </button>
+        }
+      </div>
+    </div>
+    
+  </section>
+<div class="contact" dir="ltr">
+  <a href="mailto:enara.support@gmail.com" class="contact-item">
+    <span>📧</span>
+    <span>enara.support@gmail.com</span>
+  </a>
+  <a href="https://wa.me/+905525119301" class="contact-item" target="_blank">
+    <span>📱</span>
+    <span>+90 552 511 9301</span>
+  </a>
+</div>
+  <main class="main-content">
+    <div class="feature-card mission-card">
+      <div class="card-icon">
+        <i class="fas fa-brain"></i>
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">
+          {{translate.t("about_us_page.vision_and_mission")}}
+        </h2>
+        <p class="card-text">
+          {{translate.t("about_us_page.vision_main_paragragh")}}
+        </p>
+        <div class="mission-points">
+          <div class="point">
+            <i class="fas fa-check-circle"></i>
+            <span>{{translate.t("about_us_page.vision_item_one")}}</span>
+          </div>
+          <div class="point">
+            <i class="fas fa-check-circle"></i>
+            <span>{{translate.t("about_us_page.vision_item_two")}}</span>
+          </div>
+          <div class="point">
+            <i class="fas fa-check-circle"></i>
+            <span>{{translate.t("about_us_page.vision_item_three")}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-decoration"></div>
+    </div>
+
+    <div class="feature-card team-card">
+      <div class="card-content">
+        <h2 class="card-title">
+          {{translate.t("about_us_page.specialized_team")}}
+        </h2>
+        <p class="card-text">
+          {{translate.t("about_us_page.specialized_team_paragragh")}}
+        </p>
+
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="member-avatar">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <h3>
+              {{translate.t("about_us_page.specialized_team_psychologists")}}
+            </h3>
+            <p>
+              {{translate.t("about_us_page.specialized_team_psychologists_paragragh")}}
+            </p>
+          </div>
+
+          <div class="team-member">
+            <div class="member-avatar">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h3>
+              {{translate.t("about_us_page.specialized_team_consultants")}}
+            </h3>
+            <p>
+              {{translate.t("about_us_page.specialized_team_consultants_paragragh")}}
+            </p>
+          </div>
+
+          <div class="team-member">
+            <div class="member-avatar">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3>
+              {{translate.t("about_us_page.specialized_team_technical_support")}}
+            </h3>
+            <p>
+              {{translate.t("about_us_page.specialized_team_technical_support_paragragh")}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card-icon">
+        <i class="fas fa-users-line"></i>
+      </div>
+    </div>
+
+    <div class="feature-card goals-card">
+      <div class="card-icon">
+        <i class="fas fa-bullseye"></i>
+      </div>
+      <div class="card-content">
+        <h2 class="card-title">
+          {{translate.t("about_us_page.goals_to_achieve")}}
+        </h2>
+
+        <div class="goals-container">
+          <div class="goal-item">
+            <div class="goal-number">01</div>
+            <div class="goal-details">
+              <h3>
+                {{translate.t("about_us_page.goals_to_achieve_title_one")}}
+              </h3>
+              <p>
+                {{translate.t("about_us_page.goals_to_achieve_title_one_paragragh")}}
+              </p>
+            </div>
+          </div>
+
+          <div class="goal-item">
+            <div class="goal-number">02</div>
+            <div class="goal-details">
+              <h3>
+                {{translate.t("about_us_page.goals_to_achieve_title_two")}}
+              </h3>
+              <p>
+                {{translate.t("about_us_page.goals_to_achieve_title_two_paragragh")}}
+              </p>
+            </div>
+          </div>
+
+          <div class="goal-item">
+            <div class="goal-number">03</div>
+            <div class="goal-details">
+              <h3>
+                {{translate.t("about_us_page.goals_to_achieve_title_three")}}
+              </h3>
+              <p>
+                {{translate.t("about_us_page.goals_to_achieve_title_three_paragragh")}}
+              </p>
+            </div>
+          </div>
+
+          <div class="goal-item">
+            <div class="goal-number">04</div>
+            <div class="goal-details">
+              <h3>
+                {{translate.t("about_us_page.goals_to_achieve_title_four")}}
+              </h3>
+              <p>
+                {{translate.t("about_us_page.goals_to_achieve_title_four_paragragh")}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="values-section">
+      <h2 class="section-title">
+        {{translate.t("about_us_page.core_values")}}
+      </h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h3>{{translate.t("about_us_page.core_values_title_one")}}</h3>
+          <p>
+            {{translate.t("about_us_page.core_values_title_one_paragragh")}}
+          </p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3>{{translate.t("about_us_page.core_values_title_two")}}</h3>
+          <p>
+            {{translate.t("about_us_page.core_values_title_two_paragragh")}}
+          </p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <h3>{{translate.t("about_us_page.core_values_title_three")}}</h3>
+          <p>
+            {{translate.t("about_us_page.core_values_title_three_paragragh")}}
+          </p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h3>{{translate.t("about_us_page.core_values_title_four")}}</h3>
+          <p>
+            {{translate.t("about_us_page.core_values_title_four_paragragh")}}
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

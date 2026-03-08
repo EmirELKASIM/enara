@@ -1,0 +1,355 @@
+<div class="container">
+  <div class="add-date-layout">
+    <div class="form-section">
+      <div class="section-header">
+        <div class="header-icon">
+          <i class="fas fa-calendar-plus"></i>
+        </div>
+
+        <div class="header-content">
+          <h2 class="section-title">
+            {{translate.t("add_date_page.add_new_dates")}}
+          </h2>
+          <p class="section-subtitle">
+            {{translate.t("add_date_page.select_date_time")}}
+          </p>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="input-row">
+          <div class="input-group" [class.focused]="dateFocused">
+            <label for="date" class="input-label">
+              <i class="fas fa-calendar-days"></i>
+              <span>{{translate.t("add_date_page.session_date")}}</span>
+            </label>
+
+            <mat-form-field class="custom-input">
+              <input
+                matInput
+                id="date"
+                [matDatepicker]="datepicker"
+                [(ngModel)]="dateValue"
+                (focus)="dateFocused = true"
+                (blur)="dateFocused = false"
+                placeholder="{{translate.t('add_date_page.choose_date')}}"
+                [min]="minDate"
+              />
+
+              <mat-datepicker-toggle matSuffix [for]="datepicker">
+                <i class="fas fa-calendar-alt date-icon"></i>
+              </mat-datepicker-toggle>
+
+              <mat-datepicker #datepicker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="input-hint">
+              <i class="fas fa-info-circle"></i>
+              <span>{{translate.t("add_date_page.future_only")}}</span>
+            </div>
+          </div>
+
+          <div class="input-group" [class.focused]="timeFocused">
+            <label for="time" class="input-label">
+              <i class="fas fa-clock"></i>
+              <span>{{translate.t("add_date_page.session_time")}}</span>
+            </label>
+
+            <mat-form-field class="custom-input">
+              <input
+                matInput
+                id="time"
+                [matTimepicker]="timepicker"
+                [(ngModel)]="timeValue"
+                (focus)="timeFocused = true"
+                (blur)="timeFocused = false"
+                placeholder="{{translate.t('add_date_page.choose_time')}}"
+                [ngModelOptions]="{ updateOn: 'blur' }"
+              />
+
+              <mat-timepicker-toggle matSuffix [for]="timepicker">
+                <i class="fas fa-clock time-icon"></i>
+              </mat-timepicker-toggle>
+
+              <mat-timepicker #timepicker></mat-timepicker>
+            </mat-form-field>
+
+            <div class="input-hint">
+              <i class="fas fa-info-circle"></i>
+              <span>{{translate.t("add_date_page.duration_60")}}</span>
+            </div>
+          </div>
+
+          <div class="price">
+            <label for="time" class="input-label">
+              <i class="fa-solid fa-dollar-sign"></i>
+              <span>{{translate.t("add_date_page.session_price")}}</span>
+            </label>
+
+            <input
+              type="number"
+              name="price"
+              [(ngModel)]="price"
+              class="number-input"
+            />
+            <div class="radio-group">
+              <mat-radio-group
+                name="coinType"
+                [(ngModel)]="coinType"
+                (ngModelChange)="emitCoinType($event)"
+              >
+                <mat-radio-button value="USD">
+                  {{translate.t("add_date_page.usd")}}
+                </mat-radio-button>
+                <mat-radio-button value="TRY">
+                  {{translate.t("add_date_page.try")}}
+                </mat-radio-button>
+                <mat-radio-button value="EUR">
+                  {{translate.t("add_date_page.eur")}}
+                </mat-radio-button>
+                <mat-radio-button value="SYP">
+                  {{translate.t("add_date_page.syp")}}
+                </mat-radio-button>
+                <mat-radio-button value="JOD">
+                  {{translate.t("add_date_page.jod")}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="add-date-btn"
+            (click)="onAddDate()"
+            [disabled]="!dateValue || !timeValue"
+            [class.loading]="isAdding"
+          >
+            <div class="btn-content">
+              @if (isAdding) {
+              <div class="btn-spinner"></div>
+              } @else {
+              <i class="fas fa-plus-circle"></i>
+              }
+              <span>{{translate.t("add_date_page.add_appointment")}}</span>
+            </div>
+
+            <div class="btn-hover-effect"></div>
+          </button>
+
+          <div class="form-tips">
+            <div class="tip">
+              <i class="fas fa-lightbulb"></i>
+              <span>{{translate.t("add_date_page.adding_first_tip")}}</span>
+            </div>
+
+            <div class="tip">
+              <i class="fas fa-bell"></i>
+              <span>{{translate.t("add_date_page.adding_second_tip")}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="illustration">
+        <img
+          src="assets/booking-date.jpg"
+          alt="{{translate.t('add_date_page.add_new_dates')}}"
+          class="illustration-img"
+        />
+
+        <div class="illustration-overlay"></div>
+
+        <div class="illustration-content">
+          <h3>{{translate.t("add_date_page.effective_scheduling")}}</h3>
+          <ul class="tips-list">
+            <li>
+              <i class="fas fa-check"></i>
+              {{translate.t("add_date_page.choose_convenient_times")}}
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              {{translate.t("add_date_page.maintain_gaps")}}
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              {{translate.t("add_date_page.avoid_overlap")}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doctors-section">
+    <div class="doctors-header">
+      <div class="doctors-title">
+        <i class="fas fa-calendar-week"></i>
+        <h3>{{translate.t("add_date_page.added_appointments")}}</h3>
+      </div>
+    </div>
+
+    @if (dates().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-calendar-times"></i>
+      </div>
+
+      <h4>{{translate.t("add_date_page.no_appointments")}}</h4>
+      <p>{{translate.t("add_date_page.start_adding")}}</p>
+
+      <button class="empty-action" (click)="scrollToForm()">
+        <i class="fas fa-plus"></i>
+        <span>{{translate.t("add_date_page.add_first_appointment")}}</span>
+      </button>
+    </div>
+    }
+
+    <div class="doctors-grid">
+      @for (data of dates(); track data.date) {
+
+      <div class="doctor-card" [class.has-booked]="isOneBooked(data.times)">
+        <div class="card-header">
+          <div class="date-info">
+            <div class="day-display">
+              <span class="day-name">{{ getDaysLabel(data.day) }}</span>
+              <span class="date-number"> {{ formatDate(data.date) }} </span>
+            </div>
+
+            <div class="date-full">
+              <i class="fas fa-calendar"></i>
+              <span>{{ data.date }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            @if (isOneBooked(data.times)) {
+            <button
+              class="action-btn info-btn"
+              (click)="onInfoDialogOpen()"
+              matTooltip="{{translate.t('add_date_page.booked')}}"
+            >
+              <i class="fa-solid fa-circle-info"></i>
+              <span class="btn-label"
+                >{{translate.t("add_date_page.details")}}</span
+              >
+            </button>
+            } @if (!isOneBooked(data.times)) {
+            <button
+              class="action-btn delete-btn"
+              (click)="onDeleteDate(data.date)"
+              matTooltip="{{translate.t('add_date_page.delete_day')}}"
+            >
+              <i class="fa-solid fa-trash-can"></i>
+              <span class="btn-label"
+                >{{translate.t("add_date_page.delete_day")}}</span
+              >
+            </button>
+            }
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="slots-header">
+            <span class="slots-title"
+              >{{translate.t("add_date_page.available_times")}}</span
+            >
+            <span class="slots-count">
+              {{ data.times.length }} {{translate.t("add_date_page.available")}}
+            </span>
+          </div>
+
+          <div class="slots-grid">
+            @for (item of data.times; track item.time) {
+
+            <button
+              class="slot-btn"
+              [class.booked]="item.status === 'booked'"
+              [class.available]="item.status === 'available'"
+              [disabled]="item.status === 'booked'"
+              (click)="onDeleteDialog(item.time, data.date)"
+              matTooltip="
+                    {{ item.status === 'booked'
+                      ? translate.t('add_date_page.cannot_delete_booked')
+                      : translate.t('add_date_page.delete_time')
+                    }}"
+            >
+              <div class="slot-content">
+                <span class="slot-time"> {{ formatTime(item.time) }} </span>
+
+                <div class="slot-status">
+                  @if (item.status === 'booked') {
+                  <i class="fas fa-user-check"></i>
+                  <span class="status-text"
+                    >{{translate.t("add_date_page.booked")}}</span
+                  >
+                  } @else {
+                  <i class="fas fa-clock"></i>
+                  <span class="status-text"
+                    >{{translate.t("add_date_page.available")}}</span
+                  >
+                  }
+                </div>
+                <div class="slot-price">
+                  <span>{{item.price}} {{item.coinType}}</span>
+                </div>
+              </div>
+
+              @if (item.status !== 'booked') {
+              <div class="slot-hover">
+                <i class="fas fa-trash"></i>
+              </div>
+              }
+            </button>
+
+            }
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="card-stats">
+            <div class="card-stat">
+              <i class="fas fa-check-circle"></i>
+              <span
+                >{{ getAvailableCount(data.times) }}
+                {{translate.t("add_date_page.available")}}</span
+              >
+            </div>
+
+            <div class="card-stat">
+              <i class="fas fa-user-clock"></i>
+              <span
+                >{{ getBookedCount(data.times) }}
+                {{translate.t("add_date_page.booked")}}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    @if (dates().length > 0) {
+    <div class="progress-section">
+      <div class="progress-info">
+        <span class="progress-label"
+          >{{translate.t("add_date_page.booking_rate")}}:</span
+        >
+        <span class="progress-value"> {{ getBookingRate() }}% </span>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getBookingRate()"></div>
+      </div>
+
+      <div class="progress-hint">
+        <i class="fas fa-chart-line"></i>
+        <span
+          >{{translate.t("add_date_page.more_bookings_better_sessions")}}</span
+        >
+      </div>
+    </div>
+    }
+  </div>
+</div>

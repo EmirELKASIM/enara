@@ -1,0 +1,61 @@
+<mat-card class="chief-card">
+  <div class="card-title">
+    <mat-icon class="psychology-icon">psychology</mat-icon>
+    <span>{{translate.t('status-background.previous_psych_history')}}</span>
+  </div>
+
+  <mat-form-field appearance="outline" class="full complaint-field">
+    <p>{{translate.t('status-background.history_summary')}}</p>
+    <textarea
+      matInput
+      rows="3"
+      dir="rtl"
+      name="clinicalHistory"
+      [(ngModel)]="clinicalHistory"
+      (ngModelChange)="emitClinicalHistory($event)"
+      placeholder="{{translate.t('status-background.history_placeholder')}}"
+      [disabled]="isDisabled"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="grid">
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('status-background.previous_doctor_visit')}}</p>
+      <mat-radio-group
+        name="sawDoctorBefore"
+        [(ngModel)]="sawDoctorBefore"
+        (ngModelChange)="emitSawDoctorBefore($event)"
+        [disabled]="isDisabled"
+      >
+        <mat-radio-button value="yes">{{translate.t('status-background.yes')}}</mat-radio-button>
+        <mat-radio-button value="no">{{translate.t('status-background.no')}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('status-background.psychiatric_hospitalization')}}</p>
+      <mat-radio-group
+        name="sleepedAtHospital"
+        [(ngModel)]="sleepedAtHospital"
+        (ngModelChange)="emitSleepedAtHospital($event)"
+        [disabled]="isDisabled"
+      >
+        <mat-radio-button value="yes">{{translate.t('status-background.yes')}}</mat-radio-button>
+        <mat-radio-button value="no">{{translate.t('status-background.no')}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('status-background.previous_psych_medications')}}</p>
+      <mat-radio-group
+        name="drankMedicinesBefore"
+        [(ngModel)]="drankMedicinesBefore"
+        (ngModelChange)="emitDrankMedicinesBefore($event)"
+        [disabled]="isDisabled"
+      >
+        <mat-radio-button value="yes">{{translate.t('status-background.yes')}}</mat-radio-button>
+        <mat-radio-button value="no">{{translate.t('status-background.no')}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</mat-card>

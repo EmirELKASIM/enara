@@ -1,0 +1,16 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <h2>{{translate.t("dialog_delete.title")}}</h2>
+    <p>{{translate.t("dialog_delete.paragragh")}}</p>
+    <mat-dialog-actions align="end" class="dialog-actions">
+      <div class="modal-actions">
+        <button mat-button mat-dialog-close class="btn cancel">
+          {{translate.t("dialog_delete.cancel")}}
+        </button>
+        <button class="btn confirm" (click)="onDeleteDate()">
+          {{translate.t("dialog_delete.confirm")}}
+        </button>
+      </div></mat-dialog-actions
+    >
+  </div>
+</div>

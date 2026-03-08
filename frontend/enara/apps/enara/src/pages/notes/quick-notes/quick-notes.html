@@ -1,0 +1,330 @@
+<mat-accordion class="notes-accordion" [multi]="true">
+  <!-- معلومات المريض -->
+  <mat-expansion-panel expanded>
+    <mat-expansion-panel-header>
+      <mat-panel-description class="panel-title">
+        <mat-icon>person</mat-icon>
+        {{translate.t('quick-notes.patient_information')}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="info-card">
+      <div>
+        <p>{{translate.t('quick-notes.name')}}</p>
+        <span>{{computedFirstName()}} {{computedLastName()}}</span>
+      </div>
+      <div>
+        <p>{{translate.t('quick-notes.age')}}</p>
+        <span>{{computedAge()}}</span>
+      </div>
+      
+    </div>
+    <div class="info-item">
+        <div class="info-icon number-icon">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="info-content">
+          <span class="info-label">{{translate.t('quick-notes.phone_number')}}</span>
+          <a
+            class="info-value phone-link"
+            href="https://wa.me/{{ computedPatientPhoneNumber() }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ computedPatientPhoneNumber() }}
+          </a>
+        </div>
+      </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="false" [disabled]="isQuickNotesDisabled">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="panel-title">
+        <mat-icon>event_note</mat-icon>
+        {{translate.t('quick-notes.session_details')}}
+      </mat-panel-title>
+      <mat-panel-description class="panel-title">
+        <mat-icon>info</mat-icon>
+        {{ getMeetingTypeLabel() }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <!-- Loading state -->
+    @if (!appointment()) {
+      <div class="loading-container">
+        <mat-icon class="loading-spinner">autorenew</mat-icon>
+        <p class="loading">{{translate.t('quick-notes.loading_data')}}</p>
+      </div>
+    }
+
+    @else {
+      <div class="info-section">
+        <p>
+          <strong>
+            <mat-icon>doctor</mat-icon>
+            {{translate.t('quick-notes.doctor')}}:
+          </strong>
+          <span>
+            <mat-icon>badge</mat-icon>
+            {{ appointment()?.doctorFirstName }} {{ appointment()?.doctorLastName }}
+          </span>
+        </p>
+        <p>
+          <strong>
+            <mat-icon>patient</mat-icon>
+            {{translate.t('quick-notes.patient')}}:
+          </strong>
+          <span>
+            <mat-icon>person</mat-icon>
+            {{ appointment()?.firstName }} {{ appointment()?.lastName }}
+          </span>
+        </p>
+      </div>
+
+      <!-- ================= Individual ================= -->
+      @if (isIndividualSession()) {
+        <div class="field">
+          <span>
+            <mat-icon>support_agent</mat-icon>
+            {{translate.t('quick-notes.support')}}:
+          </span>
+          <p>
+            <mat-icon>favorite</mat-icon>
+            {{ getSupportLabel(individualReport?.support) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>speed</mat-icon>
+            {{translate.t('quick-notes.psychological_pressure')}}:
+          </span>
+          <p>
+            <mat-icon [class.high-pressure]="individualReport?.pressure === 'high'">gauge</mat-icon>
+            {{ getPressureLabel(individualReport?.pressure) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>security</mat-icon>
+            {{translate.t('quick-notes.psychological_safety')}}:
+          </span>
+          <p>
+            <mat-icon>verified</mat-icon>
+            {{ getPsychologicalSafetyLabel(individualReport?.psychologicalSafety) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>help</mat-icon>
+            {{translate.t('quick-notes.reason_for_seeking_advice')}}:
+          </span>
+          <div class="chips">
+            @for (item of getAdviceLabels(individualReport?.whySeekingAdvice); track item) {
+              <span class="chip">
+                <mat-icon>chat</mat-icon>
+                {{ item }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>mood</mat-icon>
+            {{translate.t('quick-notes.how_feeling_lately')}}:
+          </span>
+          <div class="chips">
+            @for (item of getFeelingLabels(individualReport?.howFeelingLately); track item) {
+              <span class="chip">
+                <mat-icon>sentiment_satisfied</mat-icon>
+                {{ item }}
+              </span>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ================= Couples ================= -->
+      @if (isCouplesSession()) {
+        <div class="field">
+          <span>
+            <mat-icon>group</mat-icon>
+            {{translate.t('quick-notes.number_of_individuals')}}:
+          </span>
+          <p>
+            <mat-icon>people</mat-icon>
+            {{ getGroupCountLabel(groupReport?.numberIndividuals) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>diversity_3</mat-icon>
+            {{translate.t('quick-notes.who_participating')}}:
+          </span>
+          <p>
+            <mat-icon>family_history</mat-icon>
+            {{ getWhoJoinedLabel(groupReport?.whoParticipating) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>question_answer</mat-icon>
+            {{translate.t('quick-notes.reason_for_consultation')}}:
+          </span>
+          <p>
+            <mat-icon>forum</mat-icon>
+            {{ getGroupReasonLabel(groupReport?.reasonForConsultation) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>family_restroom</mat-icon>
+            {{translate.t('quick-notes.what_happening_in_family')}}:
+          </span>
+          <p>
+            <mat-icon>home</mat-icon>
+            {{ getWhatHappeningFamilyLabel(groupReport?.whatHappeningFamily) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>track_changes</mat-icon>
+            {{translate.t('quick-notes.purpose_of_sessions')}}:
+          </span>
+          <p>
+            <mat-icon>flag</mat-icon>
+            {{ getPurposeSessionsLabel(groupReport?.purposeSessions) }}
+          </p>
+        </div>
+      }
+
+      <!-- ================= Children / Teen ================= -->
+      @if (isChildrenSession() || isTeenagersSession()) {
+        <div class="field">
+          <span>
+            <mat-icon>cake</mat-icon>
+            {{translate.t('quick-notes.age')}}:
+          </span>
+          <p>
+            <mat-icon>child_care</mat-icon>
+            {{ getChildAgeLabel(childReport?.childAge) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>help_center</mat-icon>
+            {{translate.t('quick-notes.reason_for_assistance')}}:
+          </span>
+          <p>
+            <mat-icon>psychology</mat-icon>
+            {{ getReasonForAssistanceLabel(childReport?.reasonForAssistance) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>school</mat-icon>
+            {{translate.t('quick-notes.school')}}:
+          </span>
+          <p>
+            <mat-icon>class</mat-icon>
+            {{ getSchoolLabels(childReport?.school) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>child_friendly</mat-icon>
+            {{translate.t('quick-notes.child_psychological_safety')}}:
+          </span>
+          <p>
+            <mat-icon>verified</mat-icon>
+            {{ getChildSafetyLabel(childReport?.psychologicalSafetyForChild) }}
+          </p>
+        </div>
+
+        <div class="field">
+          <span>
+            <mat-icon>emoji_emotions</mat-icon>
+            {{translate.t('quick-notes.behavior_and_feelings')}}:
+          </span>
+          <div class="chips">
+            @for (item of getBehaviorLabels(childReport?.behaviorAndFeelings); track item) {
+              <span class="chip">
+                <mat-icon>behavior</mat-icon>
+                {{ item }}
+              </span>
+            }
+          </div>
+        </div>
+      }
+    }
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [disabled]="isQuickNotesDisabled" [expanded]="isQuickNotesExpanded">
+    <mat-expansion-panel-header>
+      <mat-panel-description class="panel-title">
+        <mat-icon>sticky_note_2</mat-icon>
+        {{translate.t('quick-notes.quick_notes')}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="quick-box">
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>psychology</mat-icon>
+          {{translate.t('quick-notes.mood_status')}}
+        </div>
+        <mat-radio-group [(ngModel)]="mod" (ngModelChange)="onModChanged($event)">
+          <mat-radio-button value="anxiety">{{translate.t('quick-notes.anxiety')}}</mat-radio-button>
+          <mat-radio-button value="volatile">{{translate.t('quick-notes.volatile')}}</mat-radio-button>
+          <mat-radio-button value="stable">{{translate.t('quick-notes.stable')}}</mat-radio-button>
+          <mat-radio-button value="depressed">{{translate.t('quick-notes.depressed')}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>bedtime</mat-icon>
+          {{translate.t('quick-notes.sleep')}}
+        </div>
+        <mat-radio-group [(ngModel)]="sleep" (ngModelChange)="onSleepChanged($event)">
+          <mat-radio-button value="bad">{{translate.t('quick-notes.bad')}}</mat-radio-button>
+          <mat-radio-button value="middle">{{translate.t('quick-notes.middle')}}</mat-radio-button>
+          <mat-radio-button value="good">{{translate.t('quick-notes.good')}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>restaurant</mat-icon>
+          {{translate.t('quick-notes.appetite')}}
+        </div>
+        <mat-radio-group [(ngModel)]="appetite" (ngModelChange)="onAppetiteChanged($event)">
+          <mat-radio-button value="natural">{{translate.t('quick-notes.natural')}}</mat-radio-button>
+          <mat-radio-button value="low">{{translate.t('quick-notes.low')}}</mat-radio-button>
+          <mat-radio-button value="high">{{translate.t('quick-notes.high')}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="section danger">
+        <div class="section-title">
+          <mat-icon class="problem-icon">report_problem</mat-icon>
+          {{translate.t('quick-notes.suicidal_ideation')}}
+        </div>
+        <mat-radio-group [(ngModel)]="suicide" (ngModelChange)="onSuicideChanged($event)">
+          <mat-radio-button value="yes">{{translate.t('quick-notes.yes')}}</mat-radio-button>
+          <mat-radio-button value="no">{{translate.t('quick-notes.no')}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

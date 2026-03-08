@@ -1,0 +1,443 @@
+.chief-card {
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(199, 21, 133, 0.08);
+  border: 1px solid rgba(255, 65, 108, 0.15);
+  padding: 20px;
+  margin-bottom: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: cardGlide 0.5s ease;
+}
+
+@keyframes cardGlide {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chief-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b, #ff8e7a);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.chief-card::after {
+  content: '● ● ●';
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  color: rgba(255, 65, 108, 0.2);
+  font-size: 8px;
+  letter-spacing: 4px;
+}
+
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 65, 108, 0.1);
+  position: relative;
+}
+
+.assignment-icon {
+  color: #ff416c;
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  background: linear-gradient(135deg, rgba(255, 65, 108, 0.08), rgba(255, 75, 43, 0.08));
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.card-title span {
+  color: #ff416c;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  position: relative;
+}
+
+.card-title span::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, #ff416c, transparent);
+  border-radius: 2px;
+}
+.title-info-box{
+  display: flex;
+  justify-content: space-between;
+}
+.report-info{
+   display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 65, 108, 0.1);
+  position: relative;
+}
+.report-info span{
+  color: #ff416c;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  position: relative;
+}
+
+.report-info:hover{
+  cursor: pointer;
+}
+
+::ng-deep .chief-card .complaint-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+::ng-deep .chief-card .complaint-field p {
+  color: #ff416c;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+::ng-deep .chief-card .complaint-field p::before {
+  content: '✍️';
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+::ng-deep .chief-card .complaint-field .mat-mdc-text-field-wrapper {
+  background: #fafbfc !important;
+  border-radius: 16px !important;
+  border: 1.5px solid #ffe8ec !important;
+  transition: all 0.2s ease !important;
+  min-height: 80px !important;
+}
+
+::ng-deep .chief-card .complaint-field textarea {
+  color: #1a1e24 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  padding: 12px 16px !important;
+  min-height: 80px !important;
+  max-height: 100px !important;
+  resize: none !important;
+  background: transparent !important;
+}
+
+::ng-deep .chief-card .complaint-field textarea::placeholder {
+  color: #adb5bd !important;
+  font-size: 13px !important;
+  font-style: normal;
+  opacity: 0.8 !important;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+
+.radio-group {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  border: 1px solid #fff0f2;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.radio-group:hover {
+  border-color: rgba(255, 65, 108, 0.2);
+  box-shadow: 0 8px 20px rgba(255, 65, 108, 0.06);
+}
+
+
+.radio-title {
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.radio-group:nth-child(1) .radio-title::before {
+  content: '🕒';
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.radio-group:nth-child(2) .radio-title::before {
+  content: '⚡';
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+
+::ng-deep .radio-group .mat-mdc-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button {
+  display: flex;
+  flex: 1 0 calc(50% - 6px);
+  min-width: 80px;
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .radio-group .mat-mdc-radio-button {
+    flex: 1 0 100%;
+  }
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button .mdc-form-field {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #f8f9fa;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button .mdc-form-field:hover {
+  background: #fff1f3;
+  border-color: #ff416c;
+  transform: translateY(-1px);
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-form-field {
+  background: linear-gradient(145deg, #fff1f3, #ffe8ec);
+  border-color: #ff416c;
+  box-shadow: 0 2px 8px rgba(255, 65, 108, 0.12);
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button .mdc-label {
+  color: #495057;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 6px;
+  text-align: center;
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-label {
+  color: #ff416c;
+  font-weight: 600;
+}
+
+::ng-deep .radio-group .mdc-radio {
+  padding: 4px;
+}
+
+
+::ng-deep .radio-group:nth-child(2) .mat-mdc-radio-button[value="mild"] .mdc-form-field {
+  border-bottom: 2px solid #40c057;
+}
+
+::ng-deep .radio-group:nth-child(2) .mat-mdc-radio-button[value="moderate"] .mdc-form-field {
+  border-bottom: 2px solid #fd7e14;
+}
+
+::ng-deep .radio-group:nth-child(2) .mat-mdc-radio-button[value="severe"] .mdc-form-field {
+  border-bottom: 2px solid #fa5252;
+}
+
+
+.radio-group:has(.mat-mdc-radio-checked) {
+  background: linear-gradient(145deg, #ffffff, #fff9fa);
+}
+
+.radio-group:has(.mat-mdc-radio-checked) .radio-title {
+  color: #ff416c;
+}
+
+.radio-group:has(.mat-mdc-radio-checked) .radio-title::after {
+  content: '✓';
+  margin-right: auto;
+  color: #40c057;
+  font-size: 14px;
+  font-weight: 600;
+  background: #e6fcf5;
+  padding: 2px 6px;
+  border-radius: 20px;
+}
+
+
+.chief-card .complaint-field {
+  position: relative;
+}
+
+.chief-card .complaint-field::after {
+  content: attr(data-count);
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  color: #adb5bd;
+  font-size: 11px;
+  background: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid #ffe8ec;
+}
+
+
+.radio-group .mat-mdc-radio-button {
+  position: relative;
+}
+
+.radio-group .mat-mdc-radio-button:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+
+.chief-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.chief-card:focus-within::before {
+  transform: scaleX(1);
+}
+
+
+.chief-card {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.radio-group {
+  backdrop-filter: blur(5px);
+}
+
+
+@media (max-width: 768px) {
+  .chief-card {
+    padding: 16px;
+  }
+  
+  .card-title span {
+    font-size: 17px;
+  }
+  
+  .grid {
+    gap: 12px;
+  }
+  
+  .radio-group {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chief-card {
+    padding: 14px;
+  }
+  
+  .card-title {
+    margin-bottom: 14px;
+  }
+  
+  .assignment-icon {
+    padding: 6px;
+  }
+  
+  ::ng-deep .chief-card .complaint-field textarea {
+    padding: 10px 14px !important;
+    min-height: 70px !important;
+  }
+  
+  .radio-title {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+}
+
+
+.chief-card:active {
+  transform: scale(0.99);
+}
+
+.radio-group {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::ng-deep .mat-mdc-radio-button {
+  transition: transform 0.2s ease;
+}
+
+::ng-deep .mat-mdc-radio-button:active {
+  transform: scale(0.95);
+}

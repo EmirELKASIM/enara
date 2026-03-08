@@ -1,0 +1,100 @@
+<mat-card class="chief-card">
+  <div class="card-title">
+    <mat-icon class="fact-icon">fact_check</mat-icon>
+    <span>{{translate.t('diagnosis_page.diagnosis')}}</span>
+  </div>
+
+  <div class="fact-check-inputs">
+    <input
+      type="text"
+      dir="rtl"
+      class="fact-check"
+      name="accompanyingDiagnoses"
+      [(ngModel)]="accompanyingDiagnoses"
+      (ngModelChange)="emitAccompanyingDiagnoses($event)"
+      placeholder="{{translate.t('diagnosis_page.accompanying_diagnoses_placeholder')}}"
+      [disabled]="isDisabled"
+    />
+    
+    <input
+      type="text"
+      dir="rtl"
+      class="fact-check"
+      name="diseaseName"
+      [(ngModel)]="diseaseName"
+      (ngModelChange)="emitDiseaseName($event)"
+      placeholder="{{translate.t('diagnosis_page.disease_name_placeholder')}}"
+      [disabled]="isDisabled"
+    />
+  </div>
+
+  <mat-form-field appearance="outline" class="full complaint-field">
+    <p>{{translate.t('diagnosis_page.notes')}}</p>
+    <textarea
+      matInput
+      rows="3"
+      dir="rtl"
+      placeholder="{{translate.t('diagnosis_page.notes_placeholder')}}"
+      name="diagnosesNotes"
+      [(ngModel)]="diagnosesNotes"
+      [disabled]="isDisabled"
+      (ngModelChange)="emitDiagnosesNotes($event)"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="grid">
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('diagnosis_page.severity_of_disorder')}}</p>
+      <mat-radio-group
+        name="severityOfDisorder"
+        [(ngModel)]="severityOfDisorder"
+        (ngModelChange)="emitSeverityOfDisorder($event)"
+        [disabled]="isDisabled"
+      >
+        <mat-radio-button value="mild">
+          {{translate.t('diagnosis_page.mild')}}
+        </mat-radio-button>
+        <mat-radio-button value="moderate">
+          {{translate.t('diagnosis_page.moderate')}}
+        </mat-radio-button>
+        <mat-radio-button value="severe">
+          {{translate.t('diagnosis_page.severe')}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('diagnosis_page.duration_of_disorder')}}</p>
+      <mat-radio-group
+        name="durationOfDisorder"
+        [(ngModel)]="durationOfDisorder"
+        (ngModelChange)="emitDurationOfDisorder($event)"
+        [disabled]="isDisabled"
+      >
+        <mat-radio-button value="mild">
+          {{translate.t('diagnosis_page.recent')}}
+        </mat-radio-button>
+        <mat-radio-button value="moderate">
+          {{translate.t('diagnosis_page.chronic')}}
+        </mat-radio-button>
+        <mat-radio-button value="severe">
+          {{translate.t('diagnosis_page.recurrent')}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <section class="harm-section" [formGroup]="toppings">
+      <h4>{{translate.t('diagnosis_page.risk_level')}}</h4>
+      <p>
+        <mat-checkbox formControlName="selfharm" [disabled]="isDisabled">
+          {{translate.t('diagnosis_page.self_harm')}}
+        </mat-checkbox>
+      </p>
+      <p>
+        <mat-checkbox formControlName="harmingothers" [disabled]="isDisabled">
+          {{translate.t('diagnosis_page.harm_others')}}
+        </mat-checkbox>
+      </p>
+    </section>
+  </div>
+</mat-card>

@@ -1,0 +1,1 @@
+export const secretPass = 'Qwert1234!'

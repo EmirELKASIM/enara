@@ -1,0 +1,154 @@
+<div class="appointments">
+  <h3>{{translate.t('sessions.appointments_title')}}</h3>
+
+  @for (appointment of appointmentsInfo(); track appointment._id) {
+  <div class="appointment-card">
+    <div class="appointment-header">
+      <div class="person-info">
+        <div class="person-avatar">
+          @if (isPersonal()) {
+          <i class="fa-solid fa-user-doctor"></i>
+          } @else {
+          <i class="fa-solid fa-user"></i>
+          }
+        </div>
+
+        <div class="person-details">
+          <h4>
+            {{ isPersonal() ? appointment.doctorFirstName + ' ' +
+            appointment.doctorLastName : appointment.firstName + ' ' +
+            appointment.lastName }}
+          </h4>
+
+          <span class="person-type">
+            {{ isPersonal() ? appointment.doctorAccountType : translate.t('sessions.patient_label') }}
+          </span>
+        </div>
+      </div>
+
+      <a
+        class="whatsapp-link"
+        href="https://wa.me/{{
+            isPersonal()
+              ? appointment.doctorPhoneNumber
+              : appointment.patientPhoneNumber
+          }}"
+        target="_blank"
+      >
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+    </div>
+
+    <div class="appointment-body">
+      <div class="info-row">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>{{ appointment.appointmentDate }}</span>
+        <span>{{ appointment.appointmentDay }}</span>
+      </div>
+
+      <div class="info-row">
+        <i class="fa-solid fa-clock"></i>
+        <span>{{ appointment.appointmentTime }}</span>
+        <span>{{translate.t('sessions.appointment_duration')}}</span>
+      </div>
+
+      <div class="info-row">
+        <i class="fa-solid fa-video"></i>
+        <span>{{ appointment.meetingType }}</span>
+      </div>
+
+      <div class="info-row">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <span>
+          {{ appointment.appointmentPrice }} {{ appointment.appointmentCoinType }}
+        </span>
+      </div>
+
+      @if(appointment.paymentStatus){
+      <div class="info-row success">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{{translate.t('sessions.payment_confirmed')}}</span>
+      </div>
+      } 
+      @if (appointment.onChange) {
+        <div
+          class="info-row change"
+          role="button"
+          tabindex="0"
+          (click)="onInfoChange(appointment._id)"
+        >
+          <i class="fas fa-info-circle"></i>
+          <h5>{{translate.t('sessions.change_request')}}</h5>
+        </div>
+      }
+    </div>
+
+    <div class="appointment-footer">
+      <button
+        class="btn-start"
+        (click)="
+            isPersonal()
+              ? onStartMeetingForUser(
+                  appointment._id,
+                  appointment.doctorFirstName,
+                  appointment.doctorLastName
+                )
+              : onStartMeetingForDoctor(
+                  appointment._id,
+                  appointment.firstName,
+                  appointment.lastName,
+                  appointment.appointmentDate,
+                  appointment.appointmentTime
+                )
+          "
+        [disabled]="isPersonal() && !appointment.isActive"
+      >
+        <i class="fa-solid fa-play"></i>
+        {{translate.t('sessions.start_session')}}
+      </button>
+
+      <button
+        class="btn-cancel"
+        (click)="onAppoitmentCanceled(
+            appointment._id,
+            appointment.appointmentDate,
+            appointment.appointmentTime,
+            appointment.doctorId
+          )"
+        [disabled]="appointment.paymentStatus"
+      >
+        <i class="fa-solid fa-xmark"></i>
+        {{translate.t('sessions.cancel_btn')}}
+      </button>
+
+      <button
+        class="btn-edit"
+        (click)="!isPersonal() ? onEditAppointmentForDoctor(appointment._id) : onSendAppointmentEdit(appointment._id)"
+      >
+        <i class="fa-solid fa-info-circle"></i>
+        {{translate.t('sessions.edit_btn')}}
+      </button>
+
+      <button
+        class="btn-pay"
+        (click)="isPersonal() ? onPayment(
+            appointment._id,
+            appointment.appointmentDate,
+            appointment.appointmentTime,
+            appointment.appointmentPrice,
+            appointment.appointmentCoinType
+          ) : onShowDekontDetails(appointment._id,appointment.userId)"
+        [disabled]="isPersonal() && appointment.paymentStatus"
+      >
+        <i class="fa-solid fa-dollar-sign"></i>
+        {{translate.t('sessions.pay_btn')}}
+      </button>
+    </div>
+  </div>
+  } @if (appointmentsInfo()?.length === 0) {
+  <div class="no-appointments">
+    <i class="fa-solid fa-calendar-xmark"></i>
+    <p>{{translate.t('sessions.no_appointments')}}</p>
+  </div>
+  }
+</div>

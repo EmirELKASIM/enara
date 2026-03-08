@@ -1,0 +1,257 @@
+<div class="booking-page">
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="fas fa-calendar-check"></i>
+        {{translate.t("booking-page.main_title")}}
+      </h1>
+      <p class="page-subtitle">
+        {{translate.t("booking-page.subtitle")}}
+      </p>
+    </div>
+  </div>
+
+  <div class="booking-content">
+    <div class="filters-section">
+      <mat-card class="filters-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">
+            <i class="fas fa-filter"></i>
+            {{translate.t("booking-page.card_title")}}
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="filter-group">
+            <h3 class="filter-title">
+              <i class="fas fa-calendar-alt"></i>
+              {{translate.t("booking-page.select_date")}}
+            </h3>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{translate.t("booking-page.date_label")}}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="datepicker"
+                [(ngModel)]="dateValue"
+              />
+              <mat-datepicker-toggle matSuffix [for]="datepicker">
+                <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #datepicker></mat-datepicker>
+              <mat-hint>{{translate.t("booking-page.date_hint")}}</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-title">
+              <i class="fas fa-clock"></i>
+              {{translate.t("booking-page.select_time")}}
+            </h3>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{translate.t("booking-page.time_label")}}</mat-label>
+              <input
+                matInput
+                [matTimepicker]="timepicker"
+                [(ngModel)]="timeValue"
+                [ngModelOptions]="{ updateOn: 'blur' }"
+              />
+              <mat-timepicker-toggle matSuffix [for]="timepicker">
+                <mat-icon matTimepickerToggleIcon>access_time</mat-icon>
+              </mat-timepicker-toggle>
+              <mat-timepicker #timepicker></mat-timepicker>
+              <mat-hint>{{translate.t("booking-page.time_hint")}}</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-title">
+              <i class="fas fa-search"></i>
+              {{translate.t("booking-page.search_specialist")}}
+            </h3>
+            <div class="search-container">
+              <div class="search-box">
+                <input
+                  type="text"
+                  placeholder="{{translate.t('booking-page.search_placeholder')}}"
+                  class="search-input"
+                  [(ngModel)]="searchQuery"
+                  (keyup.enter)="onSearch()"
+                />
+                <button class="search-btn" (click)="onSearch()">
+                  <i class="fas fa-search"></i>
+                  {{translate.t("booking-page.search_button")}}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="info-content">
+              <h4>{{translate.t("booking-page.tips_header")}}</h4>
+              <p>{{translate.t("booking-page.tip1")}}</p>
+              <p>{{translate.t("booking-page.tip2")}}</p>
+              <p>{{translate.t("booking-page.tip3")}}</p>
+            </div>
+          </div>
+
+          @if(!isMobile){
+          <div class="illustration">
+            <img src="assets/booking-date.jpg" alt="{{translate.t('booking-page.illustration_text')}}" />
+            <div class="illustration-overlay">
+              <p>{{translate.t("booking-page.illustration_text")}}</p>
+            </div>
+          </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="doctors-section">
+      <div class="results-header">
+        <div class="results-info">
+          <h2 class="results-title">
+            <i class="fas fa-user-md"></i>
+            {{translate.t("booking-page.results_title")}}
+            <span class="results-count">({{ filteredDoctors.length }})</span>
+          </h2>
+          <p class="results-description">
+            {{translate.t("booking-page.results_description")}}
+          </p>
+        </div>
+      </div>
+
+      @if (filteredDoctors.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">
+          <i class="fas fa-user-md"></i>
+        </div>
+        <h3 class="empty-title">{{translate.t("booking-page.empty_title")}}</h3>
+        <p class="empty-description">
+          {{translate.t("booking-page.empty_description")}}
+        </p>
+      </div>
+      }
+
+      <div class="doctors-grid">
+        @for(doctor of filteredDoctors; track doctor._id) {
+        <mat-card class="doctor-card">
+          <mat-card-header class="doctor-header">
+            <div class="doctor-avatar">
+              <div class="avatar-circle">
+                {{ doctor.firstName.charAt(0) }}{{ doctor.lastName.charAt(0) }}
+              </div>
+              @if (doctor.verified) {
+              <div class="verified-badge">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              }
+            </div>
+
+            <div class="doctor-info">
+              <div class="name-specialty">
+                <button
+                  type="button"
+                  class="name-btn"
+                  (click)="onRequestDialog(doctor.userId, doctor.firstName,doctor.lastName)"
+                >
+                 {{translate.t("booking-page.dr")}} {{ doctor.firstName }} {{ doctor.lastName }}
+                </button>
+                <span class="specialty-badge">
+                  <i class="fas fa-stethoscope"></i>
+                  {{ doctor.accountType === 'psychiatrist' ? translate.t("booking-page.psychiatrist") : translate.t("booking-page.psychologist") }}
+                </span>
+              </div>
+
+              <!-- <div class="doctor-meta">
+                <div class="meta-item">
+                  <i class="fas fa-graduation-cap"></i>
+                  <span>{{translate.t("booking-page.experience")}} {{ doctor.experience || '5+'}} years</span>
+                </div>
+                <div class="meta-item">
+                  <i class="fas fa-star"></i>
+                  <span>{{translate.t("booking-page.rating")}} : {{doctor.rating || '4.8'}}</span>
+                </div>
+              </div> -->
+            </div>
+          </mat-card-header>
+
+          <div class="date-info">
+            <div class="date-badge">
+              <i class="fas fa-calendar-day"></i>
+              <div class="date-details">
+                <span class="date">{{ doctor.date || 'اليوم' }}</span>
+                <span class="day">{{ getDaysLabel(doctor.day) || 'الإثنين' }}</span>
+              </div>
+            </div>
+            <div class="available-slots">
+              <span class="slots-count">
+                <i class="fas fa-clock"></i>
+                {{ doctor.times?.length || 0 }} {{translate.t("booking-page.available_slots_title")}}
+              </span>
+            </div>
+          </div>
+
+          <mat-card-content>
+            <div class="slots-container">
+              <h4 class="slots-title">
+                <i class="fas fa-list-ol"></i>
+                {{translate.t("booking-page.available_slots_title")}}
+              </h4>
+              <div class="slots-grid">
+                @for(appointment of doctor.times; track appointment.time) {
+                <button
+                  class="time-slot"
+                  [class.booked]="appointment.status === 'booked'"
+                  [class.available]="appointment.status === 'available'"
+                  [disabled]="appointment.status === 'booked'"
+                  (click)="onBookItDialog(
+                        appointment._id,
+                        doctor.firstName,
+                        doctor.lastName,
+                        appointment.time,
+                        doctor.date,
+                        doctor.day,
+                        doctor.accountType,
+                        doctor.userId,
+                        appointment.price,
+                        appointment.coinType
+                      )"
+                >
+                  <span class="slot-time">{{ appointment.time }}</span>
+                  <span class="slot-time">{{ appointment.price }} {{appointment.coinType}}</span>
+                  @if (appointment.status === 'booked') {
+                  <span class="slot-status">
+                    <i class="fas fa-ban"></i>
+                    {{translate.t("booking-page.slot_booked")}}
+                  </span>
+                  } @else {
+                  <span class="slot-status">
+                    <i class="fas fa-check"></i>
+                    {{translate.t("booking-page.slot_available")}}
+                  </span>
+                  }
+                </button>
+                }
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions class="card-actions">
+            <button
+              mat-button
+              class="profile-btn"
+              (click)="onRequestDialog(doctor.userId, doctor.firstName,doctor.lastName)"
+            >
+              <i class="fas fa-user-circle"></i>
+              {{translate.t("booking-page.profile_button")}}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        }
+      </div>
+    </div>
+  </div>
+</div>

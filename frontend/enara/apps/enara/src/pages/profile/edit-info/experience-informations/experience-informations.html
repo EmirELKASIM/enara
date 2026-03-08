@@ -1,0 +1,162 @@
+<div class="experience-section">
+  <div class="section-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="section-title">{{ translate.t('experience-informations.experience_section_title') || 'الخبرات والمؤهلات' }}</h2>
+        <p class="section-subtitle">{{ translate.t('experience-informations.experience_section_subtitle') }}</p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="edit-toggle-btn" (click)="toggleExperience()">
+        @if (!enableExperience) {
+        <i class="fas fa-edit"></i>
+        <span>{{ translate.t('experience-informations.edit_information') }}</span>
+        } @else {
+        <i class="fas fa-times"></i>
+        <span>{{ translate.t('experience-informations.cancel_edit') }}</span>
+        }
+      </button>
+
+      <button
+        type="button"
+        class="submit-btn"
+        [class.disabled]="!enableExperience"
+        [disabled]="!enableExperience"
+        (click)="onExperienceUpdate()"
+      >
+        <i class="fas fa-check-circle"></i>
+        <span>{{ translate.t('experience-informations.save_changes') }}</span>
+        @if (isUpdating) {
+        <mat-spinner diameter="20" class="spinner"></mat-spinner>
+        }
+      </button>
+    </div>
+  </div>
+
+  <div class="experience-form">
+    <div class="form-row">
+      <div class="form-field">
+        <div class="field-header">
+          <div class="field-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <div class="field-title">
+            <h3>{{ translate.t('experience-informations.academic_certificates_title') || 'الشهادات الأكاديمية' }}</h3>
+            <p>{{ translate.t('experience-informations.academic_certificates_subtitle') }}</p>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="form-control">
+          <mat-label>{{ translate.t('experience-informations.academic_certificates_label') || 'الشهادات والمؤهلات' }}</mat-label>
+          <textarea
+            matInput
+            rows="6"
+            name="certificates"
+            [(ngModel)]="certificates"
+            [disabled]="!enableExperience"
+            placeholder="{{ translate.t('experience-informations.academic_certificates_placeholder') }}"
+          ></textarea>
+          <mat-hint>{{ translate.t('experience-informations.academic_certificates_hint') }}</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <div class="field-header">
+          <div class="field-icon">
+            <i class="fas fa-language"></i>
+          </div>
+          <div class="field-title">
+            <h3>{{ translate.t('experience-informations.languages_title') || 'اللغات المتقنة' }}</h3>
+            <p>{{ translate.t('experience-informations.languages_subtitle') }}</p>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="form-control">
+          <mat-label>{{ translate.t('experience-informations.languages_label') || 'المهارات اللغوية' }}</mat-label>
+          <textarea
+            matInput
+            rows="6"
+            name="language"
+            [(ngModel)]="language"
+            [disabled]="!enableExperience"
+            placeholder="{{ translate.t('experience-informations.languages_placeholder') }}"
+          ></textarea>
+          <mat-hint>{{ translate.t('experience-informations.languages_hint') }}</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <div class="field-header">
+          <div class="field-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="field-title">
+            <h3>{{ translate.t('experience-informations.experience_title') || 'الخبرة العملية' }}</h3>
+            <p>{{ translate.t('experience-informations.experience_subtitle') }}</p>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="form-control">
+          <mat-label>{{ translate.t('experience-informations.experience_label') || 'تفاصيل الخبرة' }}</mat-label>
+          <textarea
+            matInput
+            rows="6"
+            name="experienceDesc"
+            [(ngModel)]="experienceDesc"
+            [disabled]="!enableExperience"
+            placeholder="{{ translate.t('experience-informations.experience_placeholder') }}"
+          ></textarea>
+          <mat-hint>{{ translate.t('experience-informations.experience_hint') }}</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field full-width">
+        <div class="field-header">
+          <div class="field-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="field-title">
+            <h3>{{ translate.t('experience-informations.experience_summary_title') || 'ملخص الخبرة' }}</h3>
+            <p>{{ translate.t('experience-informations.experience_summary_subtitle') }}</p>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="form-control full-height">
+          <mat-label>{{ translate.t('experience-informations.experience_summary_label') || 'ملخص احترافي عن خبراتك' }}</mat-label>
+          <textarea
+            matInput
+            rows="8"
+            name="experienceSummary"
+            [(ngModel)]="experienceSummary"
+            [disabled]="!enableExperience"
+            placeholder="{{ translate.t('experience-informations.experience_summary_placeholder') }}"
+          ></textarea>
+          <mat-hint>{{ translate.t('experience-informations.experience_summary_hint') }}</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-tips">
+      <div class="tip-card">
+        <div class="tip-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="tip-content">
+          <h4>{{ translate.t('experience-informations.tips_title') }}</h4>
+          <ul class="tips-list">
+            <li>{{ translate.t('experience-informations.tip1') }}</li>
+            <li>{{ translate.t('experience-informations.tip2') }}</li>
+            <li>{{ translate.t('experience-informations.tip3') }}</li>
+            <li>{{ translate.t('experience-informations.tip4') }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

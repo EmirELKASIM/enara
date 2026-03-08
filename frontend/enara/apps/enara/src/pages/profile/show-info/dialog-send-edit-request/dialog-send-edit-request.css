@@ -1,0 +1,742 @@
+.activate-session-dialog {
+  font-family: 'Segoe UI', 'Cairo', sans-serif;
+  overflow: hidden;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+  box-shadow: var(--shadow-heavy);
+  animation: dialogEntrance 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes dialogEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+
+.dialog-content {
+  padding: 32px !important;
+  background: transparent;
+  position: relative;
+  overflow: visible;
+}
+
+
+.dialog-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--accent-color) 50%,
+    var(--primary-color) 100%
+  );
+  z-index: 1;
+  border-radius: 20px 20px 0 0;
+}
+
+
+.change-section {
+  position: relative;
+  z-index: 2;
+}
+
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--primary-light);
+  position: relative;
+}
+
+.section-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 2px;
+}
+
+.section-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.section-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.section-icon:hover::before {
+  left: 100%;
+}
+
+.section-icon:hover {
+  transform: translateY(-3px) rotate(5deg);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.3);
+}
+
+.section-title {
+  flex: 1;
+}
+
+.section-title h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-title p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 20px;
+}
+
+.section-title p::before {
+  content: '💡';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 1rem;
+}
+
+
+.change-input-container {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  
+  border: 2px solid var(--gray-light);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.change-input-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 4px 4px 0 0;
+}
+
+.change-input-container:hover {
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+
+.change-field {
+  width: 100%; 
+  margin: 0;
+}
+.change-field textarea {
+  width: 80%;
+  min-height: 110px;
+  padding: 14px 16px;
+  font-family: 'Cairo', 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+
+  border-radius: 14px;
+  border: 2px solid #e5e7eb;
+  background: #f9fafb;
+  color: #111827;
+
+  resize: vertical;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+}
+
+
+.change-field textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(99, 102, 241, 0.15),
+    inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+
+.change-field textarea:hover {
+  border-color: #c7d2fe;
+}
+
+
+.change-field textarea::placeholder {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+
+.change-field textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.change-field textarea::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 10px;
+}
+.change-field textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+
+::ng-deep .change-field.mat-form-field {
+  font-family: 'Segoe UI', 'Cairo', sans-serif;
+}
+
+::ng-deep .change-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+  margin: 0;
+}
+
+::ng-deep .change-field .mat-form-field-outline {
+  background: var(--white);
+  border-radius: 12px !important;
+  border-width: 2px !important;
+  transition: var(--transition);
+}
+
+::ng-deep .change-field .mat-form-field-outline-start,
+::ng-deep .change-field .mat-form-field-outline-gap,
+::ng-deep .change-field .mat-form-field-outline-end {
+  border-color: var(--gray-medium) !important;
+  border-width: 2px !important;
+}
+
+::ng-deep .change-field .mat-form-field-outline-thick {
+  border-width: 2px !important;
+}
+
+::ng-deep
+  .change-field
+  .mat-form-field-outline-thick
+  .mat-form-field-outline-start,
+::ng-deep
+  .change-field
+  .mat-form-field-outline-thick
+  .mat-form-field-outline-gap,
+::ng-deep
+  .change-field
+  .mat-form-field-outline-thick
+  .mat-form-field-outline-end {
+  border-color: var(--primary-color) !important;
+}
+
+::ng-deep .change-field.mat-focused .mat-form-field-outline {
+  box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+}
+
+::ng-deep .change-field .mat-form-field-label {
+  color: var(--text-light) !important;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+  transform-origin: top right;
+}
+
+::ng-deep .change-field.mat-form-field-should-float .mat-form-field-label,
+::ng-deep .change-field.mat-focused .mat-form-field-label {
+  color: var(--primary-color) !important;
+  transform: translateY(-1.2em) scale(0.85);
+}
+
+::ng-deep .change-field .mat-input-element {
+  font-size: 1rem;
+  color: var(--text-dark);
+  padding: 16px 20px 16px 52px !important;
+  font-weight: 500;
+  line-height: 1.5;
+  min-height: 120px;
+  resize: vertical;
+  transition: var(--transition);
+  font-family: 'Segoe UI', 'Cairo', sans-serif;
+}
+
+::ng-deep .change-field .mat-input-element::placeholder {
+  color: var(--gray-dark);
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+::ng-deep .change-field .mat-input-element:focus {
+  outline: none;
+}
+
+::ng-deep .change-field mat-icon[matPrefix] {
+  color: var(--primary-color) !important;
+  font-size: 1.3rem;
+  margin-left: 16px !important;
+  margin-right: 12px !important;
+  transition: var(--transition);
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+::ng-deep .change-field.mat-focused mat-icon[matPrefix] {
+  color: var(--accent-color) !important;
+  transform: translateY(-50%) scale(1.1);
+}
+
+::ng-deep .change-field .mat-form-field-hint-wrapper {
+  padding: 8px 0 0 0;
+}
+
+::ng-deep .change-field .mat-hint {
+  color: var(--text-light) !important;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.8;
+  transition: var(--transition);
+}
+
+::ng-deep .change-field .mat-hint::before {
+  content: '📝';
+  font-size: 0.9rem;
+}
+
+::ng-deep .change-field.mat-focused .mat-hint {
+  opacity: 1;
+  color: var(--primary-color) !important;
+}
+
+::ng-deep .change-field .mat-form-field-underline {
+  display: none !important;
+}
+
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(138, 43, 226, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+  }
+}
+
+::ng-deep .change-field.mat-focused .mat-form-field-outline {
+  animation: pulse 2s infinite;
+}
+
+
+.dialog-actions {
+  padding: 24px 32px !important;
+  background: linear-gradient(to top, var(--gray-light), var(--white));
+  border-top: 2px solid var(--gray-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dialog-actions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gray-medium),
+    transparent
+  );
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+
+.cancel-btn {
+  border: 2px solid var(--gray-medium);
+  border-radius: 50px;
+  padding: 12px 28px;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  justify-content: center;
+  font-family: 'Segoe UI', 'Cairo', sans-serif;
+}
+
+.cancel-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--gray-light);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+.cancel-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.cancel-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-light);
+}
+
+.cancel-btn:active {
+  transform: translateY(0);
+}
+
+.cancel-btn i {
+  font-size: 1.1rem;
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+
+.cancel-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+
+.submit-btn {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  ) !important;
+  color: var(--white) !important;
+  border-radius: 50px !important;
+  padding: 14px 32px !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition) !important;
+  min-width: 140px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: none !important;
+  box-shadow: var(--shadow-medium) !important;
+  font-family: 'Segoe UI', 'Cairo', sans-serif;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4) !important;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    var(--primary-color) 100%
+  ) !important;
+  cursor: pointer;
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3) !important;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.submit-btn i {
+  font-size: 1.2rem;
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+
+.submit-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+.submit-btn .spinner {
+  position: relative;
+  z-index: 2;
+}
+
+.submit-btn .spinner ::ng-deep circle {
+  stroke: var(--white) !important;
+}
+
+
+@keyframes buttonPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(138, 43, 226, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+  }
+}
+
+.submit-btn:not(:disabled):hover {
+  animation: buttonPulse 2s infinite;
+}
+
+
+@media (max-width: 768px) {
+  .activate-session-dialog {
+    max-width: 95%;
+    margin: 10px;
+    border-radius: 16px;
+  }
+
+  .dialog-content {
+    padding: 24px !important;
+  }
+
+  .section-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .section-header::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .section-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+
+  .section-title h3 {
+    font-size: 1.3rem;
+  }
+
+  .section-title p {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .section-title p::before {
+    display: none;
+  }
+
+  .change-input-container {
+    padding: 24px;
+  }
+
+  ::ng-deep .change-field .mat-input-element {
+    padding: 14px 16px 14px 48px !important;
+    min-height: 100px;
+  }
+
+  .dialog-actions {
+    padding: 20px 24px !important;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .submit-btn {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .activate-session-dialog {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+
+  .dialog-content {
+    padding: 20px !important;
+  }
+
+  .change-input-container {
+    padding: 20px;
+  }
+
+  ::ng-deep .change-field .mat-input-element {
+    min-height: 80px;
+    font-size: 0.95rem;
+  }
+}
+
+
+::ng-deep .change-field .mat-form-field-flex {
+  align-items: flex-start !important;
+}
+
+::ng-deep .change-field textarea.mat-input-element {
+  resize: vertical;
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+
+::ng-deep .change-field textarea.mat-input-element::-webkit-scrollbar {
+  width: 6px;
+}
+
+::ng-deep .change-field textarea.mat-input-element::-webkit-scrollbar-track {
+  background: var(--gray-light);
+  border-radius: 3px;
+}
+
+::ng-deep .change-field textarea.mat-input-element::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 3px;
+}
+
+::ng-deep
+  .change-field
+  textarea.mat-input-element::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+
+.change-field:focus-within {
+  transform: translateY(-2px);
+}
+
+
+::ng-deep .change-field .mat-error {
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(244, 67, 54, 0.1);
+  border-radius: 6px;
+  border-right: 3px solid var(--error-color);
+}
+
+::ng-deep .change-field .mat-error::before {
+  content: '⚠️';
+  font-size: 0.9rem;
+}

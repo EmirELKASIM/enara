@@ -1,0 +1,126 @@
+<div class="main-box">
+  <div class="quick-notes">
+    <app-quick-notes
+      (sendQuickNotes)="onQuickNotesChange($event)"
+      (sendReportInfo)="onReportInfo($event)"
+      [requestId]="requestId"
+      [patientId]="patientId"
+      [complaintAndTreatment]="notesRouter.isStatusBackgroundAndDiagnosis()"
+      [examinationHistory]="notesRouter.isExaminationHistory()"
+    ></app-quick-notes>
+
+    @if(notesRouter.isComplaintAndTreatment()){
+    <div class="complaint-save-bnt-box">
+      <button type="text" class="complaint-save" (click)="onComplaintSave()">
+        {{translate.t('notes.save_button')}}
+      </button>
+    </div>
+    }
+  </div>
+
+  <div class="main-content">
+    @if(notesRouter.isComplaintAndTreatment()){
+    <app-main-complaint
+      (mainComplaint)="mainComplaint = $event"
+      [patientId]="patientId"
+    ></app-main-complaint>
+
+    <app-treatment-plan
+      (sendTreatment)="onTreatmentChange($event)"
+    ></app-treatment-plan>
+    } @if(notesRouter.isStatusBackgroundAndDiagnosis()){
+    <app-status-background
+      (backgroundStatus)="backgroundStatus = $event"
+      [patientId]="patientId"
+      [isDisabled]="isDisabled"
+    ></app-status-background>
+
+    <app-diagnosis
+      (diagnosis)="diagnosis = $event"
+      [patientId]="patientId"
+      [isDisabled]="isDisabled"
+    ></app-diagnosis>
+
+    <div class="diagnosis-save-bnt-box">
+      <button
+        type="text"
+        class="diagnosis-cancel"
+        (click)="onDiagnosisCanceled()"
+      >
+        @if(isDisabled){ {{translate.t('notes.edit_button')}} }@else{
+        {{translate.t('notes.cancel_button')}} }
+      </button>
+
+      <button type="text" class="diagnosis-save" (click)="onDiagnosisSave()">
+        {{translate.t('notes.save_button')}}
+      </button>
+    </div>
+    } @if(notesRouter.isPatientSummary()){
+    <app-patient-summary [patientId]="patientId"></app-patient-summary>
+    }@if(notesRouter.isExaminationHistory()){
+    <app-examination-history [patientId]="patientId"></app-examination-history>
+    }
+  </div>
+
+  <div class="sidebar">
+    <div class="top-items">
+      <div
+        class="item"
+        role="button"
+        tabindex="0"
+        (click)="onComplaintAndTreatment()"
+      >
+        <mat-icon>assignment</mat-icon>
+        <span>{{translate.t('notes.sidebar_complaint_treatment')}}</span>
+        <mat-icon
+          class="arrow-icon"
+          [class.active]="notesRouter.isComplaintAndTreatment()"
+          >chevron_right</mat-icon
+        >
+      </div>
+
+      <div
+        class="item"
+        role="button"
+        tabindex="0"
+        (click)="onStatusBackgroundAndDiagnosis()"
+      >
+        <mat-icon>psychology</mat-icon>
+        <span>{{translate.t('notes.sidebar_status_diagnosis')}}</span>
+        <mat-icon
+          class="arrow-icon"
+          [class.active]="notesRouter.isStatusBackgroundAndDiagnosis()"
+          >chevron_right</mat-icon
+        >
+      </div>
+      <div
+        class="item"
+        role="button"
+        tabindex="0"
+        (click)="onPatientSummary()"
+      >
+        <mat-icon>monitor_heart</mat-icon>
+        <span>{{translate.t('notes.sidebar_patient_summary')}}</span>
+        <mat-icon
+          class="arrow-icon"
+          [class.active]="notesRouter.isPatientSummary()"
+          >chevron_right</mat-icon
+        >
+      </div>
+      <div
+        class="item"
+        role="button"
+        tabindex="0"
+        (click)="onExaminationHistory()"
+      >
+        <mat-icon>list_alt</mat-icon>
+        <span>{{translate.t('notes.sidebar_examination_history')}}</span>
+        <mat-icon
+          class="arrow-icon"
+          [class.active]="notesRouter.isExaminationHistory()"
+          >chevron_right</mat-icon
+        >
+      </div>
+    </div>
+  </div>
+</div>

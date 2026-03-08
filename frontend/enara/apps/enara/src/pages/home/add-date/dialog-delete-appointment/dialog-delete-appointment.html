@@ -1,0 +1,168 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-calendar-times"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">
+          {{translate.t("dialog_delete_appointment.delete_appointment_title")}}
+        </h2>
+        <p class="dialog-subtitle">
+          {{translate.t("dialog_delete_appointment.delete_appointment_paragragh")}}
+        </p>
+      </div>
+    </div>
+    <div class="close-indicator">
+      <div class="danger-pulse"></div>
+    </div>
+  </div>
+
+  <mat-dialog-content class="mat-typography dialog-content">
+    <div class="confirmation-message">
+      <div class="warning-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div class="message-content">
+        <h3 class="message-title">
+          {{translate.t("dialog_delete_appointment.sure_delete_appointment")}}
+        </h3>
+        <p class="message-description">
+          {{translate.t("dialog_delete_appointment.sure_delete_appointment_paragragh")}}
+        </p>
+      </div>
+    </div>
+
+    <div class="appointment-details">
+      <div class="details-header">
+        <i class="fas fa-info-circle"></i>
+        <h4>
+          {{translate.t("dialog_delete_appointment.details_appointment_deleted")}}
+        </h4>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-card">
+          <div class="detail-icon">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label"
+              >{{translate.t("dialog_delete_appointment.date")}}</span
+            >
+            <span class="detail-value">{{ data.appointmentDate }}</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label"
+              >{{translate.t("dialog_delete_appointment.time")}}</span
+            >
+            <span class="detail-value">{{ data.appointmentTime }}</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label"
+              >{{translate.t("dialog_delete_appointment.type")}}</span
+            >
+            <span class="detail-value"
+              >{{ data.appointmentType ||
+              translate.t("dialog_delete_appointment.consultation") }}</span
+            >
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <i class="fas fa-history"></i>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label"
+              >{{translate.t("dialog_delete_appointment.duration")}}</span
+            >
+            <span class="detail-value"
+              >{{ data.duration ||
+              translate.t("dialog_delete_appointment.minutes") }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="important-notices">
+      <div class="notice-header">
+        <i class="fas fa-bell"></i>
+        <h4>
+          {{translate.t("dialog_delete_appointment.notes_before_deletion")}}
+        </h4>
+      </div>
+
+      <div class="notice-list">
+        <div class="notice-item">
+          <i class="fas fa-times-circle"></i>
+          <span
+            >{{translate.t("dialog_delete_appointment.notes_before_deletion_text_one")}}</span
+          >
+        </div>
+        <div class="notice-item">
+          <i class="fas fa-calendar-check"></i>
+          <span
+            >{{translate.t("dialog_delete_appointment.notes_before_deletion_text_two")}}</span
+          >
+        </div>
+        <div class="notice-item">
+          <i class="fas fa-user-clock"></i>
+          <span
+            >{{translate.t("dialog_delete_appointment.notes_before_deletion_text_three")}}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="final-warning">
+      <div class="warning-content">
+        <i class="fas fa-shield-alt"></i>
+        <div class="warning-text">
+          <strong
+            >{{translate.t("dialog_delete_appointment.warning")}} :
+          </strong>
+          {{translate.t("dialog_delete_appointment.warning_text")}}
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <div class="action-buttons">
+      <button mat-button mat-dialog-close class="cancel-button">
+        <i class="fas fa-times"></i>
+        <span>{{translate.t("dialog_delete_appointment.cancel")}}</span>
+      </button>
+
+      <button
+        mat-raised-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        class="confirm-deleting-button"
+        (click)="onDelete()"
+      >
+        <div class="button-content">
+          <i class="fas fa-trash-alt"></i>
+          <span
+            >{{translate.t("dialog_delete_appointment.delete_appointment")}}</span
+          >
+        </div>
+        <div class="button-hover-effect"></div>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

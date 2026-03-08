@@ -1,0 +1,37 @@
+<mat-toolbar class="main-navbar">
+  <div class="nav-brand">
+    <div class="logo-container">
+     <i class="fa-regular fa-lightbulb logo-icon"></i>
+      <span class="logo-text">{{translate.t('main_titles.enara')}}</span>
+    </div>
+  </div>
+
+  <div class="nav-spacer"></div> 
+  <div class="user-section">
+     <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
+    <i class="fas fa-globe"></i>
+    <span>{{translate.t('main_titles.language')}}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeLang('en')">English</button>
+    <button mat-menu-item (click)="changeLang('ar')">العربية</button>
+    <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
+  </mat-menu>
+  </div>
+ 
+</mat-toolbar>
+<div class="verify-wrapper">
+  <div class="verify-card">
+
+    <div class="icon-success">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <p class="title">{{ message() }}</p>
+
+    <button class="login-btn" (click)="goLogin()">
+      {{translate.t("verify-email-page.go_login")}}
+    </button>
+
+  </div>
+</div>

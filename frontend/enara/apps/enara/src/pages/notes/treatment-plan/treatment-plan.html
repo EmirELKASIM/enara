@@ -1,0 +1,115 @@
+<mat-card class="chief-card medication-card">
+  <div class="card-title">
+    <mat-icon class="medication-icon">medication</mat-icon>
+    <span>{{translate.t('treatment-plan.treatment_plan')}}</span>
+  </div>
+
+  <div class="medication-inputs">
+    <input
+      type="text"
+      dir="rtl"
+      class="medication"
+      placeholder="{{translate.t('treatment-plan.dose_placeholder')}}"
+      name="doz"
+      [(ngModel)]="doz"
+    />
+
+    <input
+      type="text"
+      dir="rtl"
+      class="medication"
+      placeholder="{{translate.t('treatment-plan.drug_name_placeholder')}}"
+      name="drugName"
+      [(ngModel)]="drugName"
+    />
+  </div>
+
+  <mat-form-field appearance="outline" class="full complaint-field">
+    <p>{{translate.t('treatment-plan.notes')}}</p>
+    <textarea
+      matInput
+      rows="3"
+      dir="rtl"
+      placeholder="{{translate.t('treatment-plan.notes_placeholder')}}"
+      name="intakeNotes"
+      [(ngModel)]="intakeNotes"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="grid">
+    <div class="radio-group">
+      <p class="radio-title">{{translate.t('treatment-plan.how_to_take')}}</p>
+      <mat-radio-group
+        [(ngModel)]="drankMedicinesBefore"
+        name="drankMedicinesBefore"
+      >
+        <mat-radio-button value="beforefood">{{translate.t('treatment-plan.before_food')}}</mat-radio-button>
+        <mat-radio-button value="afterfood">{{translate.t('treatment-plan.after_food')}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="times-section" [formGroup]="toppings">
+      <p class="radio-title">{{translate.t('treatment-plan.medication_times')}}</p>
+      <mat-checkbox class="checkbox-items" formControlName="breakfast">
+        {{translate.t('treatment-plan.breakfast')}}
+      </mat-checkbox>
+      <mat-checkbox class="checkbox-items" formControlName="lunch">
+        {{translate.t('treatment-plan.lunch')}}
+      </mat-checkbox>
+      <mat-checkbox class="checkbox-items" formControlName="dinner">
+        {{translate.t('treatment-plan.dinner')}}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div class="save-btn-box">
+    <button type="button" class="save-btn" (click)="onAddition()">
+      {{translate.t('treatment-plan.add_button')}}
+    </button>
+  </div>
+</mat-card>
+
+<div class="medicine-list">
+  @for (med of medicines(); track $index) {
+    <mat-card class="medicine-card" appearance="outlined">
+      <div class="card-header">
+        <div class="name-icon">
+          <mat-icon class="pill-icon">medication</mat-icon>
+          <span class="drug-name">{{ med.drugName }}</span>
+        </div>
+        <mat-icon class="delete-icon" role="button" tabindex="0" (click)="onMedDelete($index)">delete_outline</mat-icon>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="card-content">
+        <div class="info-row">
+          <span class="label">{{translate.t('treatment-plan.dose')}}:</span>
+          <span class="value">{{ med.doz }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">{{translate.t('treatment-plan.notes')}}:</span>
+          <span class="value">{{ med.intakeNotes || '—' }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">{{translate.t('treatment-plan.before_or_after')}}:</span>
+          <span class="value">
+            {{ med.drankMedicinesBefore === 'beforefood' ? translate.t('treatment-plan.before') : translate.t('treatment-plan.after') }}
+          </span>
+        </div>
+
+        <div class="times">
+          @for(time of med.drugTimes; track time){
+            <span class="time-chip">
+              {{ time === 'breakfast' ? translate.t('treatment-plan.breakfast') : time === 'lunch' ? translate.t('treatment-plan.lunch') : translate.t('treatment-plan.dinner') }}
+            </span>
+          }
+        </div>
+      </div>
+    </mat-card>
+  }
+</div>
+
+<mat-divider></mat-divider>

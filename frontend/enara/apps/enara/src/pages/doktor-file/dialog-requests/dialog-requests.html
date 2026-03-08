@@ -1,0 +1,66 @@
+<mat-dialog-content class="dialog-content">
+  @if (requestsInfo().length === 0) {
+  <p class="empty-state">{{translate.t("dialog_requests.no_order_found")}}</p>
+  } @for (request of requestsInfo(); track request._id) {
+  <mat-card class="patient-card" appearance="outlined">
+    <mat-card-header class="card-header">
+      <div mat-card-avatar class="avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+
+      <mat-card-title class="patient-name">
+        {{ request.firstName }} {{ request.lastName }}
+      </mat-card-title>
+      <div class="info-item">
+        <div class="info-icon number-icon">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="info-content">
+          <span class="info-label"
+            >{{translate.t("dialog_requests.number")}}</span
+          >
+          <a
+            class="info-value phone-link"
+            href="https://wa.me/{{ request.patientPhoneNumber }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ request.patientPhoneNumber}}
+          </a>
+        </div>
+      </div>
+      <mat-card-subtitle class="patient-age">
+        {{translate.t("dialog_requests.age")}} : {{ request.age }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="card-actions">
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="onBlockRequest(request._id)"
+      >
+        <mat-icon>block</mat-icon>
+        {{translate.t("dialog_requests.reject")}}
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="onAcceptedRequest(request._id)"
+      >
+        <mat-icon>verified</mat-icon>
+        {{translate.t("dialog_requests.accept_order")}}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class="cancel-button">
+    {{translate.t("dialog_requests.back")}}
+  </button>
+</mat-dialog-actions>

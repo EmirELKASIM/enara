@@ -1,0 +1,79 @@
+{
+  "name": "enara",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/enara/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/enara",
+        "browser": "apps/enara/src/main.ts",
+        "tsConfig": "apps/enara/tsconfig.app.json",
+        "assets": [
+          "apps/enara/src/favicon.ico",
+          "apps/enara/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/enara/public"
+          }
+        ],
+        "styles": [
+          "apps/enara/src/styles.scss",
+          "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "20kb",
+              "maximumError": "20kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "enara:build:production"
+        },
+        "development": {
+          "buildTarget": "enara:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "enara:build",
+        "staticFilePath": "dist/apps/enara/browser",
+        "spa": true
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+<div class="delete-dialog">
+  <div class="dialog-header warning-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">{{ translate.t('dialog-delete-account.delete_warning_title') || 'حذف الحساب نهائياً' }}</h2>
+        <p class="dialog-subtitle">{{ translate.t('dialog-delete-account.delete_warning_subtitle') || 'عملية خطيرة لا يمكن التراجع عنها' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="warning-message">
+      <div class="warning-icon">
+        <i class="fas fa-shield-exclamation"></i>
+      </div>
+      <div class="warning-text">
+        <h3 class="warning-title">{{ translate.t('dialog-delete-account.delete_warning_title_main') || 'تنبيه مهم!' }}</h3>
+        <p class="warning-description">
+          {{ translate.t('dialog-delete-account.delete_warning_message') }}
+        </p>
+      </div>
+    </div>
+
+    <div class="consequences-section">
+      <div class="section-header">
+        <i class="fas fa-list-check"></i>
+        <h3>{{ translate.t('dialog-delete-account.consequences_title') || 'ما الذي سيتم حذفه؟' }}</h3>
+      </div>
+      
+      <div class="consequences-list">
+        <div class="consequence-item">
+          <div class="consequence-icon danger">
+            <i class="fas fa-trash"></i>
+          </div>
+          <div class="consequence-content">
+            <h4>{{ translate.t('dialog-delete-account.personal_data_deleted') }}</h4>
+            <p>{{ translate.t('dialog-delete-account.personal_data_deleted_description') || '' }}</p>
+          </div>
+        </div>
+
+        <div class="consequence-item">
+          <div class="consequence-icon danger">
+            <i class="fas fa-calendar-times"></i>
+          </div>
+          <div class="consequence-content">
+            <h4>{{ translate.t('dialog-delete-account.upcoming_appointments_canceled') }}</h4>
+            <p>{{ translate.t('dialog-delete-account.upcoming_appointments_canceled_description') || '' }}</p>
+          </div>
+        </div>
+
+        <div class="consequence-item">
+          <div class="consequence-icon danger">
+            <i class="fas fa-file-medical"></i>
+          </div>
+          <div class="consequence-content">
+            <h4>{{ translate.t('dialog-delete-account.medical_records_deleted') }}</h4>
+            <p>{{ translate.t('dialog-delete-account.medical_records_deleted_description') || '' }}</p>
+          </div>
+        </div>
+
+        <div class="consequence-item">
+          <div class="consequence-icon danger">
+            <i class="fas fa-history"></i>
+          </div>
+          <div class="consequence-content">
+            <h4>{{ translate.t('dialog-delete-account.session_history_lost') }}</h4>
+            <p>{{ translate.t('dialog-delete-account.session_history_lost_description') || '' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="confirmation-section">
+      <div class="confirmation-header">
+        <i class="fas fa-keyboard"></i>
+        <h3>{{ translate.t('dialog-delete-account.confirm_delete_title') || 'تأكيد الحذف النهائي' }}</h3>
+      </div>
+      <div class="delete-confirmation">
+        <mat-checkbox
+          class="delete-checkbox"
+          [(ngModel)]="confirmDelete"
+          color="warn"
+        >
+          <span class="delete-checkbox-text">
+            {{ translate.t('dialog-delete-account.confirm_delete_checkbox') }}
+          </span>
+        </mat-checkbox>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="cancel-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        {{ translate.t('dialog-delete-account.cancel_button') }}
+      </button>
+      
+      <button
+        class="delete-btn"
+        mat-raised-button
+        [mat-dialog-close]="true"
+        (click)="onDelete()"
+        [disabled]="!confirmDelete"
+      >
+        <div class="button-content">
+          <i class="fas fa-trash-alt"></i>
+          <span>{{ translate.t('dialog-delete-account.delete_account_button') }}</span>
+        </div>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

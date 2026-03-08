@@ -1,0 +1,202 @@
+<div class="booking-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">{{translate.t("dialog_book_it.appointment_booking_confirmation")}}</h2>
+        <p class="dialog-subtitle">{{translate.t("dialog_book_it.final_step_to_complete_booking")}}</p>
+      </div>
+    </div>
+    <button
+      class="close-btn"
+      mat-icon-button
+      mat-dialog-close
+      aria-label="{{translate.t('dialog_book_it.close')}}"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="appointment-info">
+      <div class="info-card">
+        <div class="info-header">
+          <i class="fas fa-user-md"></i>
+          <h3>{{translate.t("dialog_book_it.specialist_information")}}</h3>
+        </div>
+        <div class="info-body">
+          <div class="doctor-info">
+            <div class="doctor-avatar">
+              {{ data.doctorFirstName.charAt(0) }}{{ doctorLastName.charAt(0) }}
+            </div>
+            <div class="doctor-details">
+              <h4 class="doctor-name">
+                د. {{ data.doctorFirstName }} {{ doctorLastName }}
+              </h4>
+              <p class="doctor-specialty">
+                <i class="fas fa-stethoscope"></i>
+                {{ data.accountType === 'psychiatrist' ? translate.t("dialog_book_it.psychiatrist") : translate.t("dialog_book_it.psychological_therapist") }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-header">
+          <i class="fas fa-clock"></i>
+          <h3>{{translate.t("dialog_book_it.appointment_details")}}</h3>
+        </div>
+        <div class="info-body">
+          <div class="time-details">
+            <div class="date-item">
+              <i class="fas fa-calendar-day"></i>
+              <div class="item-content">
+                <span class="item-label">{{translate.t("dialog_book_it.date")}}</span>
+                <span class="item-value">{{ appointmentDate }}</span>
+              </div>
+            </div>
+            <div class="date-item">
+              <i class="fas fa-clock"></i>
+              <div class="item-content">
+                <span class="item-label">{{translate.t("dialog_book_it.time")}}</span>
+                <span class="item-value">{{ appointmentTime }}</span>
+              </div>
+            </div>
+            <div class="date-item">
+              <i class="fas fa-calendar-alt"></i>
+              <div class="item-content">
+                <span class="item-label">{{translate.t("dialog_book_it.day")}}</span>
+                <span class="item-value">{{ appointmentDay }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-type-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="section-title">
+          <h3>{{translate.t("dialog_book_it.select_session_type")}}</h3>
+          <p>{{translate.t("dialog_book_it.choose_session_type")}}</p>
+        </div>
+      </div>
+
+      <div class="session-options">
+        <mat-radio-group
+          class="session-radio-group"
+          name="meetingType"
+          [(ngModel)]="meetingType"
+          (ngModelChange)="onMeetingTypeChanged($event)"
+        >
+          <div class="radio-row">
+            <mat-radio-button class="session-option" value="individualSession">
+              <div class="option-content">
+                <div class="option-icon">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="option-text">
+                  <span class="option-title">{{translate.t("dialog_book_it.individual_session")}}</span>
+                  <span class="option-description">{{translate.t("dialog_book_it.individual_session_description")}}</span>
+                </div>
+              </div>
+            </mat-radio-button>
+
+            <mat-radio-button class="session-option" value="couplesSession">
+              <div class="option-content">
+                <div class="option-icon">
+                  <i class="fas fa-heart"></i>
+                </div>
+                <div class="option-text">
+                  <span class="option-title">{{translate.t("dialog_book_it.couples_therapy")}}</span>
+                  <span class="option-description">{{translate.t("dialog_book_it.couples_therapy_description")}}</span>
+                </div>
+              </div>
+            </mat-radio-button>
+          </div>
+
+          <div class="radio-row">
+            <mat-radio-button class="session-option" value="childrensSession">
+              <div class="option-content">
+                <div class="option-icon">
+                  <i class="fas fa-child"></i>
+                </div>
+                <div class="option-text">
+                  <span class="option-title">{{translate.t("dialog_book_it.children_sessions")}}</span>
+                  <span class="option-description">{{translate.t("dialog_book_it.children_sessions_description")}}</span>
+                </div>
+              </div>
+            </mat-radio-button>
+
+            <mat-radio-button class="session-option" value="teenagersSession">
+              <div class="option-content">
+                <div class="option-icon">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="option-text">
+                  <span class="option-title">{{translate.t("dialog_book_it.teenagers_sessions")}}</span>
+                  <span class="option-description">{{translate.t("dialog_book_it.teenagers_sessions_description")}}</span>
+                </div>
+              </div>
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+
+      @if(meetingType){
+      <app-general-info
+        [sendMeetingType]="meetingType"
+        (sendAccepted)="onAcceptedInfo($event)"
+        (isAccepted)="onIsTrue($event)"
+      ></app-general-info>
+      }
+    </div>
+
+    <div class="booking-summary">
+      <div class="summary-header">
+        <h3><i class="fas fa-receipt"></i> {{translate.t("dialog_book_it.booking_summary")}}</h3>
+      </div>
+      <div class="summary-content">
+        <div class="summary-item">
+          <span class="item-label">{{translate.t("dialog_book_it.session_duration")}}</span>
+          <span class="item-value">{{translate.t("dialog_book_it.session_duration_value")}}</span>
+        </div>
+        <div class="summary-item">
+          <span class="item-label">{{translate.t("dialog_book_it.price")}}</span>
+          <span class="item-value price">{{appointmentPrice}} {{appointmentCoinType}}</span>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="cancel-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        {{translate.t("dialog_book_it.cancel")}}
+      </button>
+      <button
+        class="confirm-btn"
+        mat-raised-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        (click)="onBookingIt()"
+        [disabled]="!meetingType || !isTrue"
+      >
+        <i class="fas fa-check-circle"></i>
+        {{translate.t("dialog_book_it.confirm_booking")}}
+      </button>
+    </div>
+
+    <div class="terms-notice">
+      <i class="fas fa-shield-alt"></i>
+      <span>{{translate.t("dialog_book_it.cancellation_policy_notice")}}</span>
+    </div>
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,350 @@
+@if(sendMeetingType === "individualSession") {
+<div class="assessment-section">
+  <div class="times-section" [formGroup]="whySeekingAdvice">
+    <p class="section-title">
+      {{translate.t("general-info.why_request_consultation")}}
+    </p>
+    <div class="checkbox-grid">
+      <mat-checkbox class="checkbox-items" formControlName="anxiety"
+        >{{translate.t("general-info.anxiety")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="depression"
+        >{{translate.t("general-info.depression")}}</mat-checkbox
+      >
+      <mat-checkbox
+        class="checkbox-items"
+        formControlName="psychologicalPressure"
+        >{{translate.t("general-info.psychological_pressure")}}</mat-checkbox
+      >
+      <mat-checkbox
+        class="checkbox-items"
+        formControlName="relationshipProblems"
+        >{{translate.t("general-info.relationship_problems")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="shock"
+        >{{translate.t("general-info.shock")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="anotherReason"
+        >{{translate.t("general-info.another_reason")}}</mat-checkbox
+      >
+    </div>
+  </div>
+
+  <div class="times-section" [formGroup]="howFeelingLately">
+    <p class="section-title">
+      {{translate.t("general-info.how_feeling_lately")}}
+    </p>
+    <div class="checkbox-grid">
+      <mat-checkbox class="checkbox-items" formControlName="difficultySleeping"
+        >{{translate.t("general-info.difficulty_sleeping")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="overwork"
+        >{{translate.t("general-info.overwork")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="poorConcentration"
+        >{{translate.t("general-info.poor_concentration")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="moodSwings"
+        >{{translate.t("general-info.mood_swings")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="panicAttacks"
+        >{{translate.t("general-info.panic_attacks")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="noneAbove"
+        >{{translate.t("general-info.none_above")}}</mat-checkbox
+      >
+    </div>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">{{translate.t("general-info.pressure_level")}}</p>
+    <mat-radio-group [(ngModel)]="pressure" name="pressure">
+      <mat-radio-button value="low"
+        >{{translate.t("general-info.low")}}</mat-radio-button
+      >
+      <mat-radio-button value="medium"
+        >{{translate.t("general-info.medium")}}</mat-radio-button
+      >
+      <mat-radio-button value="high"
+        >{{translate.t("general-info.high")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.do_you_have_support")}}
+    </p>
+    <mat-radio-group [(ngModel)]="support" name="support">
+      <mat-radio-button value="haveSupportivePerson"
+        >{{translate.t("general-info.have_supportive_person")}}</mat-radio-button
+      >
+      <mat-radio-button value="feelLonely"
+        >{{translate.t("general-info.feel_lonely")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.psychological_safety")}}
+    </p>
+    <mat-radio-group
+      [(ngModel)]="psychologicalSafety"
+      name="psychologicalSafety"
+    >
+      <mat-radio-button value="harmfulThoughts"
+        >{{translate.t("general-info.harmful_thoughts")}}</mat-radio-button
+      >
+      <mat-radio-button value="noHarmfulThoughts"
+        >{{translate.t("general-info.no_harmful_thoughts")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <button
+    class="submit-button"
+    type="button"
+    [disabled]="!checkAll()"
+    (click)="onSubmit()"
+  >
+    {{translate.t("general-info.submit")}}
+  </button>
+</div>
+} @if(sendMeetingType === "couplesSession"){
+<div class="assessment-section">
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.number_of_individuals")}}
+    </p>
+    <mat-radio-group [(ngModel)]="numberIndividuals" name="numberIndividuals">
+      <mat-radio-button value="two"
+        >{{translate.t("general-info.two")}}</mat-radio-button
+      >
+      <mat-radio-button value="three"
+        >{{translate.t("general-info.three")}}</mat-radio-button
+      >
+      <mat-radio-button value="four"
+        >{{translate.t("general-info.four")}}</mat-radio-button
+      >
+      <mat-radio-button value="more"
+        >{{translate.t("general-info.more")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">{{translate.t("general-info.who_participating")}}</p>
+    <mat-radio-group [(ngModel)]="whoParticipating" name="whoParticipating">
+      <mat-radio-button value="couple"
+        >{{translate.t("general-info.couple")}}</mat-radio-button
+      >
+      <mat-radio-button value="parentsChildren"
+        >{{translate.t("general-info.parents_children")}}</mat-radio-button
+      >
+      <mat-radio-button value="extendedFamily"
+        >{{translate.t("general-info.extended_family")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.reason_for_consultation")}}
+    </p>
+    <mat-radio-group
+      [(ngModel)]="reasonForConsultation"
+      name="reasonForConsultation"
+    >
+      <mat-radio-button value="maritalDisputes"
+        >{{translate.t("general-info.marital_disputes")}}</mat-radio-button
+      >
+      <mat-radio-button value="communicationProblems"
+        >{{translate.t("general-info.communication_problems")}}</mat-radio-button
+      >
+      <mat-radio-button value="difficultiesWithChildren"
+        >{{translate.t("general-info.difficulties_with_children")}}</mat-radio-button
+      >
+      <mat-radio-button value="lifePressures"
+        >{{translate.t("general-info.life_pressures")}}</mat-radio-button
+      >
+      <mat-radio-button value="separationOrDivorce"
+        >{{translate.t("general-info.separation_or_divorce")}}</mat-radio-button
+      >
+      <mat-radio-button value="recentPressureEvent"
+        >{{translate.t("general-info.recent_pressure_event")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.what_happening_family")}}
+    </p>
+    <mat-radio-group
+      [(ngModel)]="whatHappeningFamily"
+      name="whatHappeningFamily"
+    >
+      <mat-radio-button value="frequentConflicts"
+        >{{translate.t("general-info.frequent_conflicts")}}</mat-radio-button
+      >
+      <mat-radio-button value="constantTension"
+        >{{translate.t("general-info.constant_tension")}}</mat-radio-button
+      >
+      <mat-radio-button value="difficultyExpressingFeelings"
+        >{{translate.t("general-info.difficulty_expressing_feelings")}}</mat-radio-button
+      >
+      <mat-radio-button value="avoidDialogue"
+        >{{translate.t("general-info.avoid_dialogue")}}</mat-radio-button
+      >
+      <mat-radio-button value="supportAndCooperation"
+        >{{translate.t("general-info.support_and_cooperation")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">{{translate.t("general-info.purpose_sessions")}}</p>
+    <mat-radio-group [(ngModel)]="purposeSessions" name="purposeSessions">
+      <mat-radio-button value="improvingCommunication"
+        >{{translate.t("general-info.improving_communication")}}</mat-radio-button
+      >
+      <mat-radio-button value="reducingDisagreements"
+        >{{translate.t("general-info.reducing_disagreements")}}</mat-radio-button
+      >
+      <mat-radio-button value="supportingFamilyMember"
+        >{{translate.t("general-info.supporting_family_member")}}</mat-radio-button
+      >
+      <mat-radio-button value="understandingRelationships"
+        >{{translate.t("general-info.understanding_relationships")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <button
+    class="submit-button"
+    type="button"
+    [disabled]="!checkAll()"
+    (click)="onSubmit()"
+  >
+    {{translate.t("general-info.submit")}}
+  </button>
+</div>
+} @if(sendMeetingType === 'childrensSession' || sendMeetingType ===
+'teenagersSession'){
+<div class="assessment-section">
+  <div class="radio-group">
+    <p class="radio-title">{{translate.t("general-info.child_age")}}</p>
+    <mat-radio-group [(ngModel)]="childAge" name="childAge">
+      <mat-radio-button value="4between8"
+        >{{translate.t("general-info.age_4_8")}}</mat-radio-button
+      >
+      <mat-radio-button value="9between14"
+        >{{translate.t("general-info.age_9_14")}}</mat-radio-button
+      >
+      <mat-radio-button value="15between18"
+        >{{translate.t("general-info.age_15_18")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.reason_for_assistance")}}
+    </p>
+    <mat-radio-group
+      [(ngModel)]="reasonForAssistance"
+      name="reasonForAssistance"
+    >
+      <mat-radio-button value="anxietyConcerns"
+        >{{translate.t("general-info.anxiety_concerns")}}</mat-radio-button
+      >
+      <mat-radio-button value="angerFits"
+        >{{translate.t("general-info.anger_fits")}}</mat-radio-button
+      >
+      <mat-radio-button value="distractibilityHyperactivity"
+        >{{translate.t("general-info.distractibility_hyperactivity")}}</mat-radio-button
+      >
+      <mat-radio-button value="socialWithdrawal"
+        >{{translate.t("general-info.social_withdrawal")}}</mat-radio-button
+      >
+      <mat-radio-button value="behavioralProblems"
+        >{{translate.t("general-info.behavioral_problems")}}</mat-radio-button
+      >
+      <mat-radio-button value="learningDifficulties"
+        >{{translate.t("general-info.learning_difficulties")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="times-section" [formGroup]="behaviorAndFeelings">
+    <p class="section-title">
+      {{translate.t("general-info.how_feeling_lately")}}
+    </p>
+    <div class="checkbox-grid">
+      <mat-checkbox class="checkbox-items" formControlName="moodSwings"
+        >{{translate.t("general-info.mood_swings")}}</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="frequentCrying"
+        >Frequent Crying</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="aggression"
+        >Aggressiveness</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="excessiveAttachment"
+        >Excessive Attachment</mat-checkbox
+      >
+      <mat-checkbox class="checkbox-items" formControlName="sleepProblems"
+        >Sleep Problems</mat-checkbox
+      >
+    </div>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">{{translate.t("general-info.school")}}</p>
+    <mat-radio-group [(ngModel)]="school" name="school">
+      <mat-radio-button value="academicDecline"
+        >{{translate.t("general-info.academic_decline")}}</mat-radio-button
+      >
+      <mat-radio-button value="schoolComplaints"
+        >{{translate.t("general-info.school_complaints")}}</mat-radio-button
+      >
+      <mat-radio-button value="difficultyFriendships"
+        >{{translate.t("general-info.difficulty_friendships")}}</mat-radio-button
+      >
+      <mat-radio-button value="noProblems"
+        >{{translate.t("general-info.no_problems")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="radio-group">
+    <p class="radio-title">
+      {{translate.t("general-info.psychological_safety_child")}}
+    </p>
+    <mat-radio-group
+      [(ngModel)]="psychologicalSafetyForChild"
+      name="psychologicalSafetyForChild"
+    >
+      <mat-radio-button value="PsychologicalDistress"
+        >{{translate.t("general-info.psychological_distress")}}</mat-radio-button
+      >
+      <mat-radio-button value="selfHarmfulThoughts"
+        >{{translate.t("general-info.self_harmful_thoughts")}}</mat-radio-button
+      >
+      <mat-radio-button value="nothingWorry"
+        >{{translate.t("general-info.nothing_worry")}}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <button
+    class="submit-button"
+    type="button"
+    [disabled]="!checkAll()"
+    (click)="onSubmit()"
+  >
+    {{translate.t("general-info.submit")}}
+  </button>
+</div>
+}

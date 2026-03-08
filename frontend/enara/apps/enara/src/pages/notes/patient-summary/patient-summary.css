@@ -1,0 +1,45 @@
+.summary-container {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  max-width: 700px;
+  margin: 20px auto;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: #4CAF50;
+}
+
+.summary-header mat-icon {
+  font-size: 28px;
+}
+
+.summary-header h2 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.summary-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  overflow-wrap: anywhere;
+  word-break: break-all;/* يحافظ على الأسطر الجديدة */
+}
+
+
+.text-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.text-ltr {
+  direction: ltr;
+  text-align: left;
+}

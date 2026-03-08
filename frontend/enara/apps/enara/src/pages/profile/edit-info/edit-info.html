@@ -1,0 +1,248 @@
+<div class="update-profile-page" [ngClass]="translate.currentLang() === 'ar' ? 'update-profile-page-rtl' : 'update-profile-page-ltr' ">
+  <div class="page-header">
+    <div class="header-content">
+      <div class="user-avatar">
+        <div class="avatar-circle">
+          {{ computedFirstName()?.charAt(0) }}{{ computedLastName()?.charAt(0) }}
+        </div>
+      </div>
+      <div class="header-text">
+        <h1 class="page-title">{{translate.t('edit-info.page_title')}}</h1>
+        <p class="page-subtitle">{{translate.t('edit-info.page_subtitle')}}</p>
+      </div>
+    </div>
+    <div class="header-status">
+      <div class="status-badge" [class.editing]="enable">
+        <i class="fas" [class.fa-edit]="!enable" [class.fa-pen]="enable"></i>
+        <span>{{ enable ? translate.t('edit-info.editing_mode') : translate.t('edit-info.view_mode') }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div class="left-section">
+      <form class="profile-form" (ngSubmit)="onUpdateSubmit()">
+        <mat-card class="info-card">
+          <mat-card-header class="card-header">
+            <mat-card-title class="card-title">
+              <i class="fas fa-user-edit"></i>
+              <span>{{translate.t('edit-info.basic_info')}}</span>
+            </mat-card-title>
+            <mat-card-subtitle class="card-subtitle">
+              {{translate.t('edit-info.basic_info_subtitle')}}
+            </mat-card-subtitle>
+            @if(!isMobile){
+            <div class="action-buttons">
+              <button
+                type="button"
+                class="edit-toggle-btn"
+                mat-raised-button
+                (click)="toggleInfo()"
+              >
+                @if (!enable) {
+                <i class="fas fa-edit"></i>
+                <span>{{translate.t('edit-info.edit_info')}}</span>
+                } @else {
+                <i class="fas fa-times"></i>
+                <span>{{translate.t('edit-info.cancel_edit')}}</span>
+                }
+              </button>
+
+              <button
+                type="submit"
+                class="submit-btn"
+                mat-raised-button
+                [disabled]="!enable || !checkData()"
+                [class.loading]="isSubmitting"
+              >
+                @if (isSubmitting) {
+                <mat-spinner diameter="20" class="spinner"></mat-spinner>
+                } @else {
+                <i class="fas fa-check-circle"></i>
+                }
+                <span>{{translate.t('edit-info.save_changes')}}</span>
+              </button>
+            </div>
+            }
+          </mat-card-header>
+
+          @if(isMobile){
+          <div class="action-buttons">
+            <button
+              type="button"
+              class="edit-toggle-btn"
+              mat-raised-button
+              (click)="toggleInfo()"
+            >
+              @if (!enable) {
+              <i class="fas fa-edit"></i>
+              <span>{{translate.t('edit-info.edit_info')}}</span>
+              } @else {
+              <i class="fas fa-times"></i>
+              <span>{{translate.t('edit-info.cancel_edit')}}</span>
+              }
+            </button>
+
+            <button
+              type="submit"
+              class="submit-btn"
+              mat-raised-button
+              [disabled]="!enable || !checkData()"
+              [class.loading]="isSubmitting"
+            >
+              @if (isSubmitting) {
+              <mat-spinner diameter="20" class="spinner"></mat-spinner>
+              } @else {
+              <i class="fas fa-check-circle"></i>
+              }
+              <span>{{translate.t('edit-info.save_changes')}}</span>
+            </button>
+          </div>
+          }
+
+          <mat-card-content class="card-content">
+            <div class="main-box">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>{{translate.t('edit-info.first_name')}}</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="firstName"
+                    name="firstName"
+                    [value]="computedFirstName()"
+                    placeholder="{{translate.t('edit-info.first_name_placeholder')}}"
+                    [disabled]="!enable"
+                    required
+                  />
+                  <mat-icon matPrefix>person</mat-icon>
+                  <mat-hint>{{translate.t('edit-info.first_name_hint')}}</mat-hint>
+                  @if (!firstName && !enable) {
+                  <mat-error>{{translate.t('edit-info.first_name_error')}}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>{{translate.t('edit-info.last_name')}}</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="lastName"
+                    name="lastName"
+                    [value]="computedLastName()"
+                    placeholder="{{translate.t('edit-info.last_name_placeholder')}}"
+                    [disabled]="!enable"
+                    required
+                  />
+                  <mat-icon matPrefix>people</mat-icon>
+                  <mat-hint>{{translate.t('edit-info.last_name_hint')}}</mat-hint>
+                  @if (!lastName && !enable) {
+                  <mat-error>{{translate.t('edit-info.last_name_error')}}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field
+                  appearance="outline"
+                  class="form-field date-field"
+                >
+                  <mat-label>{{translate.t('edit-info.birthday')}}</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [(ngModel)]="birthday"
+                    name="birthday"
+                    [value]="computedBirthday()"
+                    [disabled]="!enable"
+                    required
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-icon matPrefix>cake</mat-icon>
+                  <mat-hint>{{translate.t('edit-info.birthday_hint')}}</mat-hint>
+                </mat-form-field>
+
+                <div class="input-field">
+                  <label for="phoneNumber" class="input-label">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>{{translate.t('edit-info.phone_number')}}</span>
+                  </label>
+
+                  <div class="phone-box">
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      maxlength="4"
+                      name="codeNumber"
+                      [(ngModel)]="codeNumber"
+                      value="computedCodeNumber()"
+                      placeholder="{{translate.t('edit-info.phone_code_placeholder')}}"
+                      class="call-input"
+                      [disabled]="!enable"
+                    />
+
+                    <input
+                      type="tel"
+                      id="phoneNumber"
+                      maxlength="10"
+                      name="phoneNumber"
+                      value="computedPhoneNumber()"
+                      [(ngModel)]="phoneNumber"
+                      placeholder="{{translate.t('edit-info.phone_input_placeholder')}}"
+                      class="phone-input"
+                      [disabled]="!enable"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              @if (!isMobile) {
+              <div class="desktop-options">
+                <app-toggle-options
+                  (sendToggleOptions)="getToggleOptions($event)"
+                  [isEnabled]="enabledInfoPressed"
+                  class="desktop-toggle"
+                ></app-toggle-options>
+              </div>
+              }
+            </div>
+
+            @if(isMobile){
+            <div class="mobile-options">
+              <app-toggle-options
+                (sendToggleOptions)="getToggleOptions($event)"
+                [isEnabled]="enabledInfoPressed"
+                class="mobile-toggle"
+              ></app-toggle-options>
+            </div>
+            }
+
+            <div class="form-info">
+              <div class="info-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="info-text">
+                <p>{{translate.t('edit-info.form_info_text')}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <div class="dynamic-section">
+          @if (isPersonal()) {
+          <app-summary-informations
+            [id]="computedId()"
+            class="summary-section"
+          ></app-summary-informations>
+          } @if (!isPersonal()) {
+          <app-experience-informations
+            [id]="computedId()"
+            class="experience-section"
+          ></app-experience-informations>
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

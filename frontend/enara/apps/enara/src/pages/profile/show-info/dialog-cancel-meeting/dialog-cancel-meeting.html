@@ -1,0 +1,135 @@
+<div class="cancel-appointment-dialog">
+  <div class="dialog-header warning-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-calendar-times"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">{{translate.t('dialog-cancel-meeting.dialog_title')}}</h2>
+        <p class="dialog-subtitle">{{translate.t('dialog-cancel-meeting.dialog_subtitle')}}</p>
+      </div>
+    </div>
+    <button
+      class="close-btn"
+      mat-icon-button
+      mat-dialog-close
+      [attr.aria-label]="translate.t('dialog-cancel-meeting.back_button')"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="warning-message">
+      <div class="warning-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div class="warning-text">
+        <h3 class="warning-title">{{translate.t('dialog-cancel-meeting.warning_title')}}</h3>
+        <p class="warning-description" [innerHTML]="translate.t('dialog-cancel-meeting.warning_description')"></p>
+      </div>
+    </div>
+
+    <div class="appointment-info">
+      <div class="info-card">
+        <div class="info-header">
+          <i class="fas fa-calendar-alt"></i>
+          <h3>{{translate.t('dialog-cancel-meeting.appointment_details_title')}}</h3>
+        </div>
+        <div class="info-body">
+          <div class="appointment-details">
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label">{{translate.t('dialog-cancel-meeting.appointment_time_label')}}</span>
+                <span class="detail-value">{{ appointmentTime }} ---- {{appointmentDate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cancellation-policy">
+      <div class="policy-header">
+        <i class="fas fa-file-contract"></i>
+        <h3>{{translate.t('dialog-cancel-meeting.cancellation_policy_title')}}</h3>
+      </div>
+
+      <div class="policy-content">
+        <div class="policy-item">
+          <div class="policy-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="policy-details">
+            <h4>{{translate.t('dialog-cancel-meeting.policy_before_24h_title')}}</h4>
+            <p>{{translate.t('dialog-cancel-meeting.policy_before_24h_text')}}</p>
+          </div>
+        </div>
+
+        <div class="policy-item">
+          <div class="policy-icon warning">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="policy-details">
+            <h4>{{translate.t('dialog-cancel-meeting.policy_less_24h_title')}}</h4>
+            <p>{{translate.t('dialog-cancel-meeting.policy_less_24h_text')}}</p>
+          </div>
+        </div>
+
+        <div class="policy-item">
+          <div class="policy-icon critical">
+            <i class="fas fa-ban"></i>
+          </div>
+          <div class="policy-details">
+            <h4>{{translate.t('dialog-cancel-meeting.policy_less_2h_title')}}</h4>
+            <p>{{translate.t('dialog-cancel-meeting.policy_less_2h_text')}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cancellation-reason">
+      <div class="reason-header">
+        <i class="fas fa-comment-medical"></i>
+        <h3>{{translate.t('dialog-cancel-meeting.cancellation_reason_title')}}</h3>
+      </div>
+    </div>
+
+    <div class="cancel-action-section">
+      <button
+        class="cancel-appointment-btn"
+        (click)="onAppoitmentCanceled()"
+      >
+        <div class="button-content">
+          <div class="button-icon">
+            <i class="fas fa-calendar-times"></i>
+          </div>
+          <div class="button-text">
+            <span class="button-title">{{translate.t('dialog-cancel-meeting.cancel_button_title')}}</span>
+          </div>
+          <div class="button-arrow">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+        </div>
+
+        @if (isCanceling) {
+        <div class="loading-overlay">
+          <mat-spinner diameter="24"></mat-spinner>
+        </div>
+        }
+      </button>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="back-button" mat-button mat-dialog-close>
+        <i class="fas fa-arrow-right"></i>
+        {{translate.t('dialog-cancel-meeting.back_button')}}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

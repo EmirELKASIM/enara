@@ -1,0 +1,626 @@
+.edit-appointment-dialog {
+  font-family: 'Segoe UI', 'Cairo', sans-serif;
+  overflow: hidden;
+  max-width: 800px;
+  width: 100%;
+  background: var(--light-bg);
+}
+
+
+.dialog-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+  color: white;
+  padding: 25px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.dialog-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+}
+
+.dialog-subtitle {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.close-btn {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 24px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+.dialog-content {
+  padding: 30px !important;
+  background: var(--light-bg);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  margin-bottom: 20px;
+}
+
+.loading-text {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+
+.appointments-list {
+  margin-bottom: 30px;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--gray-light);
+}
+
+.list-header .header-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-size: 1.8rem;
+}
+
+.header-title h3 {
+  margin: 0 0 5px 0;
+  color: var(--primary-dark);
+  font-size: 1.4rem;
+}
+
+.header-title p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+
+.days-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.day-card {
+  background: var(--white);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--gray-light);
+  transition: all 0.3s ease;
+}
+
+.day-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+.day-header {
+  background: var(--primary-light);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.day-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.3rem;
+}
+
+.day-info {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.day-name {
+  margin: 0 0 5px 0;
+  color: var(--primary-dark);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.date-display {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  background: var(--white);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-light);
+}
+
+.day-actions .action-btn {
+  color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.day-actions .action-btn:hover {
+  color: var(--primary-color);
+  background: var(--white);
+}
+
+
+.times-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.time-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 12px;
+  background: var(--light-bg);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.time-item.available {
+  border-color: var(--success-light);
+  background: rgba(76, 175, 80, 0.05);
+}
+
+.time-item.unavailable {
+  border-color: var(--gray-light);
+  opacity: 0.7;
+}
+
+.time-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.time-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+}
+
+.time-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.time-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.time-status {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 15px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.status-available {
+  background: var(--success-light);
+  color: var(--success-color);
+}
+
+.status-unavailable {
+  background: var(--gray-light);
+  color: var(--text-light);
+}
+
+.time-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.status-btn,
+.edit-btn,
+.delete-btn {
+  transition: all 0.3s ease;
+}
+
+.status-btn.btn-available {
+  background: var(--success-color) !important;
+  color: white !important;
+}
+
+.status-btn.btn-unavailable {
+  background: var(--warning-color) !important;
+  color: white !important;
+}
+
+.edit-btn {
+  background: var(--primary-color) !important;
+  color: white !important;
+}
+
+.delete-btn {
+  background: var(--warn-color) !important;
+  color: white !important;
+}
+
+
+.fancy-edit-btn {
+  width: 42px !important;
+  height: 42px !important;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 15px rgba(79, 70, 229, 0.35);
+  transition: all 0.3s ease;
+}
+
+
+.fancy-edit-btn i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+
+.fancy-edit-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+}
+
+
+.fancy-edit-btn:hover i {
+  transform: rotate(-10deg);
+}
+
+
+.fancy-edit-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+
+.add-time-section {
+  padding: 20px;
+  border-top: 1px solid var(--gray-light);
+  background: var(--light-bg);
+}
+
+.add-time-form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.time-input {
+  flex: 1;
+}
+
+::ng-deep .time-input .mat-form-field-wrapper {
+  margin-bottom: 0;
+}
+
+.add-btn {
+  padding: 10px 25px !important;
+  border-radius: 10px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.add-day-section {
+  background: var(--white);
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 30px;
+  border: 2px dashed var(--gray-light);
+  transition: all 0.3s ease;
+}
+
+.add-day-section:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.section-header i {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: 1.3rem;
+}
+
+.add-day-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.day-field,
+.date-field {
+  flex: 1;
+}
+
+::ng-deep .day-field .mat-form-field-wrapper,
+::ng-deep .date-field .mat-form-field-wrapper {
+  margin-bottom: 0;
+}
+
+.add-day-btn {
+  padding: 12px 30px !important;
+  border-radius: 12px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-end;
+}
+
+
+.stats-section {
+  margin-top: 30px;
+}
+
+.stats-card {
+  background: var(--white);
+  border-radius: 15px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--gray-light);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+
+.dialog-actions {
+  padding: 25px 30px !important;
+  background: var(--white);
+  border-top: 1px solid var(--gray-light);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  border: 2px solid var(--gray-light);
+  border-radius: 12px;
+  padding: 10px 25px;
+  color: var(--text-dark);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 10px 30px !important;
+  font-weight: 600;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+.save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium) !important;
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.final-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  padding-top: 15px;
+  border-top: 1px solid var(--gray-light);
+  text-align: center;
+}
+
+.final-note i {
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  .edit-appointment-dialog {
+    max-width: 95%;
+    margin: 10px;
+  }
+  
+  .dialog-header {
+    padding: 20px;
+  }
+  
+  .dialog-content {
+    padding: 20px !important;
+  }
+  
+  .header-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .dialog-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .time-item {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .time-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .stats-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .cancel-btn,
+  .save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .day-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .add-time-form {
+    flex-direction: column;
+  }
+  
+  .add-day-btn {
+    width: 100%;
+  }
+}

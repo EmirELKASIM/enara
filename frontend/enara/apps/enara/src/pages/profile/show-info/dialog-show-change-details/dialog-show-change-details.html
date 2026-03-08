@@ -1,0 +1,139 @@
+<div class="change-details-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">
+          {{ translate.t('dialog-show-change-details.change_details_title') }}
+        </h2>
+        <p class="dialog-subtitle">
+          {{ translate.t('dialog-show-change-details.change_details_subtitle') }}
+        </p>
+      </div>
+    </div>
+    <button
+      class="close-btn"
+      mat-icon-button
+      mat-dialog-close
+      [attr.aria-label]="translate.t('dialog-show-change-details.close_button_aria')"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    @if (!changeInfo()) {
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>{{ translate.t('dialog-show-change-details.loading_change_details') }}</p>
+      </div>
+    </div>
+    }
+
+    @if (changeInfo()) {
+    <div class="change-details-section">
+      <div class="details-header">
+        <i class="fas fa-edit"></i>
+        <h3>
+          {{ translate.t('dialog-show-change-details.change_reason_section_title') }}
+        </h3>
+      </div>
+
+      <div class="details-body">
+        @if (changeInfo()?.onChange) {
+        <div class="change-reason-card">
+          <div class="reason-header">
+            <i class="fas fa-comment-medical"></i>
+            <h4>
+              {{ translate.t('dialog-show-change-details.entered_reason_label') }}
+            </h4>
+          </div>
+          <div class="reason-content">
+            <p>{{ computedChangeDetailsText() }}</p>
+          </div>
+        </div>
+        } @else {
+        <div class="no-change-message">
+          <div class="no-change-icon">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <div class="no-change-text">
+            <h4>
+              {{ translate.t('dialog-show-change-details.no_change_request_title') }}
+            </h4>
+            <p>
+              {{ translate.t('dialog-show-change-details.no_change_request_text') }}
+            </p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- <div class="tips-section">
+      <div class="tips-header">
+        <i class="fas fa-lightbulb"></i>
+        <h3>
+          {{ translate.t('dialog-show-change-details.tips_section_title') }}
+        </h3>
+      </div>
+
+      <div class="tips-content">
+        <ul class="tips-list">
+          @if (changeInfo()?.onChange && changeInfo()?.changeDetails) {
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('dialog-show-change-details.tip_respond_quickly') }}</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('dialog-show-change-details.tip_contact_patient') }}</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('dialog-show-change-details.tip_update_session_status') }}</span>
+          </li>
+          }
+          @else if (changeInfo()?.isActive) {
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('dialog-show-change-details.tip_session_ready') }}</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('dialog-show-change-details.tip_prepare_requirements') }}</span>
+          </li>
+          }
+          @else {
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('dialog-show-change-details.tip_contact_for_cancellation') }}</span>
+          </li>
+          }
+        </ul>
+      </div>
+    </div> -->
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="close-action-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        <span>
+          {{ translate.t('dialog-show-change-details.close_action_button') }}
+        </span>
+      </button>
+    </div>
+
+    <div class="footer-note">
+      <i class="fas fa-info-circle"></i>
+      <span>
+        {{ translate.t('dialog-show-change-details.footer_note') }}
+      </span>
+    </div>
+  </mat-dialog-actions>
+</div>

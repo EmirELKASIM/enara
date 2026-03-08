@@ -1,0 +1,152 @@
+<div class="activate-session-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-video"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="dialog-title">{{ translate.t('dialog-doctor-start-meeting.dialog_title') }}</h2>
+        <p class="dialog-subtitle">{{ translate.t('dialog-doctor-start-meeting.dialog_subtitle') }}</p>
+      </div>
+    </div>
+    <button
+      class="close-btn"
+      mat-icon-button
+      mat-dialog-close
+      [attr.aria-label]="translate.t('dialog-doctor-start-meeting.cancel_button')"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="session-info">
+      <div class="info-card">
+        <div class="info-header">
+          <i class="fas fa-info-circle"></i>
+          <h3>{{ translate.t('dialog-doctor-start-meeting.dialog_subtitle') }}</h3>
+        </div>
+        <div class="info-body">
+          <div class="session-details">
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-user-injured"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label">{{ translate.t('dialog-doctor-start-meeting.patient_label') }}</span>
+                <span class="detail-value">{{patientFirstName}} {{patientLastName}}</span>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label">{{ translate.t('dialog-doctor-start-meeting.date_time_label') }}</span>
+                <span class="detail-value">{{ appointmentTime }} ---- {{appointmentDate}}</span>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label">{{ translate.t('dialog-doctor-start-meeting.duration_label') }}</span>
+                <span class="detail-value">60 دقيقة</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-url-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-link"></i>
+        </div>
+        <div class="section-title">
+          <h3>{{ translate.t('dialog-doctor-start-meeting.session_url_title') }}</h3>
+          <p>{{ translate.t('dialog-doctor-start-meeting.session_url_subtitle') }}</p>
+        </div>
+      </div>
+
+      <div class="url-input-container">
+        <mat-form-field appearance="outline" class="url-field">
+          <mat-label>{{ translate.t('dialog-doctor-start-meeting.session_url_label') }}</mat-label>
+          <input
+            matInput
+            type="url"
+            id="session-url"
+            name="meetingUrl"
+            [(ngModel)]="meetingUrl"
+            placeholder="https://meet.google.com/abc-defg-hij"
+            required
+            pattern="https?://.+"
+            #urlInput="ngModel"
+          />
+          <mat-icon matPrefix>insert_link</mat-icon>
+
+          @if (urlInput.invalid && urlInput.touched) {
+          <mat-error>
+            @if (urlInput.errors?.['required']) { {{ translate.t('dialog-doctor-start-meeting.url_required_error') }} } 
+            @if (urlInput.errors?.['pattern']) { {{ translate.t('dialog-doctor-start-meeting.url_pattern_error') }} }
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <div class="url-tips">
+          <div class="tips-header">
+            <i class="fas fa-shield-alt"></i>
+            <h4>{{ translate.t('dialog-doctor-start-meeting.url_tips_title') }}</h4>
+          </div>
+          <ul class="tips-list">
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>{{ translate.t('dialog-doctor-start-meeting.url_tip_1') }}</span>
+            </li>
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>{{ translate.t('dialog-doctor-start-meeting.url_tip_2') }}</span>
+            </li>
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>{{ translate.t('dialog-doctor-start-meeting.url_tip_3') }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <div class="action-buttons">
+      <button class="cancel-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        <span>{{ translate.t('dialog-doctor-start-meeting.cancel_button') }}</span>
+      </button>
+
+      <button
+        class="submit-btn"
+        mat-raised-button
+        [mat-dialog-close]="true"
+        (click)="onActiveMeeting()"
+        [class.loading]="isSubmitting"
+      >
+        @if (isSubmitting) {
+        <mat-spinner diameter="20" class="spinner"></mat-spinner>
+        } @else {
+        <i class="fas fa-paper-plane"></i>
+        }
+        <span>{{ setActive ? translate.t('dialog-doctor-start-meeting.submit_button_activate') : translate.t('dialog-doctor-start-meeting.submit_button_save') }}</span>
+      </button>
+    </div>
+
+    <div class="final-note">
+      <i class="fas fa-history"></i>
+      <span>{{ translate.t('dialog-doctor-start-meeting.final_note') }}</span>
+    </div>
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ translate.t('dialog-payment.payment_details_title') }}</h2>
+
+<div mat-dialog-content class="dialog-content">
+
+  <div class="appointment-info">
+    <p><strong>{{ translate.t('dialog-payment.appointment_info.date') }}:</strong> {{ appointmentDate }}</p>
+    <p><strong>{{ translate.t('dialog-payment.appointment_info.time') }}:</strong> {{ appointmentTime }}</p>
+    <p>
+      <strong>{{ translate.t('dialog-payment.appointment_info.price') }}:</strong>
+      {{ appointmentPrice }} {{ appointmentCoinType }}
+    </p>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label class="title">{{ translate.t('dialog-payment.dekont_code_label') }}</mat-label>
+    <input
+      matInput
+      name="dekontCode"
+      [(ngModel)]="dekontCode"
+      [placeholder]="translate.t('dialog-payment.dekont_code_placeholder')"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label class="title">{{ translate.t('dialog-payment.notes_label') }}</mat-label>
+    <textarea
+      matInput
+      rows="3"
+      name="dekontNotes"
+      [(ngModel)]="dekontNotes"
+      [placeholder]="translate.t('dialog-payment.notes_placeholder')"
+    ></textarea>
+  </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ translate.t('dialog-payment.cancel_button') }}</button>
+  <button mat-raised-button color="primary" (click)="onSendDekont()">
+    {{ translate.t('dialog-payment.send_button') }}
+  </button>
+</div>

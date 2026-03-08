@@ -1,0 +1,97 @@
+@if(doctorInfo()){
+
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="avatar">
+      <i class="fas fa-user-md"></i>
+    </div>
+
+    <div class="doctor-basic">
+      <h2>{{ doctorInfo()?.firstName }} {{ doctorInfo()?.lastName }}</h2>
+      <p class="account-type">{{ doctorInfo()?.accountType }}</p>
+      <p class="contact">
+        <span><i class="fas fa-envelope"></i> {{ doctorInfo()?.email }}</span>
+      </p>
+
+      <div class="info-content">
+        <span class="info-label"
+          >{{translate.t("dialog-send-requests.number")}}</span
+        >
+        <a
+          class="info-value phone-link"
+          href="https://wa.me/{{ doctorPhoneNumber() }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ doctorPhoneNumber() }}
+        </a>
+      </div>
+    </div>
+
+    <div class="back-button">
+      <button type="button" (click)="returnBooking()">
+        {{translate.t('profile-view-page.return_to_booking')}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Personal Info Section -->
+  <div class="info-section" >
+    <h3>{{translate.t('profile-view-page.personal_information')}}</h3>
+    <div class="info-grid">
+      <div>
+        <strong>{{translate.t('profile-view-page.gender_title')}} : </strong> {{
+        getGenderLabels(doctorInfo()?.gender) }}
+      </div>
+      <div>
+        <strong>{{translate.t('profile-view-page.age_title')}} : </strong> {{
+        doctorInfo()?.age }}
+      </div>
+      <div>
+        <strong
+          >{{translate.t('profile-view-page.marital_status_title')}} :
+        </strong>
+        {{ getMaritalStatusLabels(doctorInfo()?.maritalStatus) }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience Section -->
+  @if(doctorExperience()){
+
+  <div class="experience-section">
+    <h3>{{translate.t('profile-view-page.experience_certificates')}}</h3>
+    <div class="experience-card">
+      <p
+        [ngClass]="getTextDirection(doctorExperience()?.experienceSummary) === 'rtl' ? 'text-rtl' : 'text-ltr'"
+      >
+        <strong>{{translate.t('profile-view-page.summary_title')}} : </strong>
+        {{ doctorExperience()?.experienceSummary }}
+      </p>
+      <p
+        [ngClass]="getTextDirection(doctorExperience()?.experienceDesc ) === 'rtl' ? 'text-rtl' : 'text-ltr'"
+      >
+        <strong
+          >{{translate.t('profile-view-page.description_title')}} :
+        </strong>
+        {{ doctorExperience()?.experienceDesc }}
+      </p>
+      <p
+        [ngClass]="getTextDirection(doctorExperience()?.certificates) === 'rtl' ? 'text-rtl' : 'text-ltr'"
+      >
+        <strong
+          >{{translate.t('profile-view-page.certificates_title')}} :
+        </strong>
+        {{ doctorExperience()?.certificates }}
+      </p>
+      <p
+        [ngClass]="getTextDirection(doctorExperience()?.language) === 'rtl' ? 'text-rtl' : 'text-ltr'"
+      >
+        <strong>{{translate.t('profile-view-page.languages_title')}} : </strong>
+        {{ doctorExperience()?.language }}
+      </p>
+    </div>
+  </div>
+  }
+</div>
+}

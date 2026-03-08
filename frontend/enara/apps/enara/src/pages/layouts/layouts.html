@@ -1,0 +1,108 @@
+<mat-toolbar class="main-navbar">
+  @if (backService.showBack$ | async) {
+  <button
+    class="nav-back-btn"
+    mat-icon-button
+    (click)="goBack()"
+    aria-label="رجوع"
+  >
+  @if(translate.currentLang()=== 'ar'){
+    <i class="fas fa-arrow-right"></i>
+
+  }@else{
+    <i class="fas fa-arrow-left"></i>
+
+  }
+  </button>
+  }
+
+  <div class="nav-brand" [ngClass]="translate.currentLang() === 'ar' ? 'nav-brand-rtl' : 'nav-brand-ltr' " role="button" tabindex="0" (click)="goHome()">
+    <div class="logo-container">
+     <i class="fa-regular fa-lightbulb logo-icon"></i>
+      <span class="logo-text">{{translate.t('main_titles.enara')}}</span>
+    </div>
+  </div>
+
+  <div class="nav-spacer"></div>
+
+  <nav class="nav-links">
+    <a
+      class="nav-link"
+      [class.active]="selectedIndex === 0"
+      role="button"
+      tabindex="0"
+      (click)="goHome()"
+    >
+      <i class="fas fa-home link-icon"></i>
+      <span class="link-text">{{translate.t('layout.home')}}</span>
+    </a>
+
+    <a
+      class="nav-link"
+      [class.active]="selectedIndex === 1"
+      role="button"
+      tabindex="0"
+      (click)="goAboutUs()"
+    >
+      <i class="fas fa-info-circle link-icon"></i>
+      <span class="link-text">{{translate.t('layout.about_us')}}</span>
+    </a>
+
+    @if ((auth.isLoggedIn$ | async) === true) { @if(isMobile){
+    <a
+      class="nav-link"
+      [class.active]="selectedIndex === 2"
+      role="button"
+      tabindex="0"
+      (click)="goSessions()"
+    >
+      <i class="fas fa-calendar-check link-icon"></i>
+      <span class="link-text">{{translate.t('layout.sessions')}}</span>
+    </a>
+    }
+
+    <a
+      class="nav-link"
+      [class.active]="selectedIndex === 3"
+      role="button"
+      tabindex="0"
+      (click)="goProfile()"
+    >
+      <i class="fas fa-user-circle link-icon"></i>
+      <span class="link-text">{{translate.t('layout.profile')}}</span>
+    </a>
+    }
+  </nav>
+
+  <div class="nav-spacer"></div>
+
+  <div class="user-section">
+    @if ((auth.isLoggedIn$ | async) === false) {
+    <button class="login-btn" mat-raised-button (click)="goLogin()">
+      <i class="fas fa-sign-in-alt btn-icon"></i>
+      <span>{{translate.t('main_titles.sign_in')}}</span>
+    </button>
+    }
+     <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
+    <i class="fas fa-globe"></i>
+    <span>{{translate.t('main_titles.language')}}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeLang('en')">English</button>
+    <button mat-menu-item (click)="changeLang('ar')">العربية</button>
+    <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
+  </mat-menu>
+  </div>
+ 
+</mat-toolbar>
+
+<div class="tab-indicator-container">
+  <div
+    class="tab-indicator"
+    [style.transform]="'translateX(' + (selectedIndex * 100) + '%)'"
+  ></div>
+</div>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

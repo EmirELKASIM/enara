@@ -1,0 +1,90 @@
+<div class="patient-layout">
+  <div class="form-section">
+    <div class="btn-search-row">
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="{{translate.t('doctor_file.search_file')}}"
+          class="search-input"
+          name="search"
+          [(ngModel)]="search"
+        />
+        <i class="fa fa-search search-icon"></i>
+      </div>
+    </div>
+    <div
+      [matBadge]="computedBadge()"
+      [matBadgeHidden]="computedBadge() === 0"
+      matBadgeSize="large"
+      class="badge"
+    >
+      <div
+        class="show-requests show-requests--danger"
+        role="button"
+        tabindex="0"
+        (click)="showRequests()"
+      >
+        <mat-icon>near_me</mat-icon>
+        <span>{{translate.t("doctor_file.examination_requests")}}</span>
+      </div>
+    </div>
+    <img src="assets/requests-logo.jpg" alt="" />
+  </div>
+  <div class="patients-section">
+    <mat-dialog-content class="dialog-content">
+      @for (request of requestsInfo() | search: search ; track request._id) {
+      <mat-card class="patient-card" appearance="outlined">
+        <mat-card-header class="card-header">
+          <div mat-card-avatar class="avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <mat-card-title class="patient-name">
+            {{ request.firstName }} {{ request.lastName }}
+          </mat-card-title>
+
+          <mat-card-subtitle class="patient-age">
+            {{translate.t("doctor_file.age")}} : {{ request.age }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <div class="info-item">
+          <div class="info-icon number-icon">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div class="info-content">
+            <span class="info-label"
+              >{{translate.t("doctor_file.number")}}</span
+            >
+            <a
+              class="info-value phone-link"
+              href="https://wa.me/{{ request.patientPhoneNumber }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ request.patientPhoneNumber}}
+            </a>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-card-actions class="card-actions">
+          <mat-icon
+            class="delete-Icon"
+            role="button"
+            tabindex="0"
+            (click)="onRequestDeleted(request._id,request.patientId)"
+            >delete</mat-icon
+          >
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="onAcceptedRequest(request._id, request.patientId)"
+          >
+            <mat-icon>visibility</mat-icon>
+            {{translate.t("doctor_file.examination")}}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      }
+    </mat-dialog-content>
+  </div>
+</div>

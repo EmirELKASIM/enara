@@ -1,0 +1,84 @@
+<div class="psychological-summary-section">
+  <div class="summary-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-notes-medical"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="section-title">{{ translate.t('summary-informations.section_title') || 'ملخص الحالة المرضية' }}</h2>
+        <p class="section-subtitle">{{ translate.t('summary-informations.psychological_summary_subtitle') }}</p>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="edit-toggle-btn" (click)="toggleSummary()">
+        @if (!enableSummary) {
+        <i class="fas fa-edit"></i>
+        <span>{{ translate.t('summary-informations.edit_information') }}</span>
+        } @else {
+        <i class="fas fa-times"></i>
+        <span>{{ translate.t('summary-informations.cancel_edit') }}</span>
+        }
+      </button>
+
+      <button
+        type="button"
+        class="submit-btn"
+        [class.disabled]="!enableSummary"
+        [disabled]="!enableSummary"
+        (click)="onSummaryUpdate()"
+      >
+        <i class="fas fa-check-circle"></i>
+        <span>{{ translate.t('summary-informations.save_changes') }}</span>
+        @if (isUpdating) {
+        <mat-spinner diameter="20" class="spinner"></mat-spinner>
+        }
+      </button>
+    </div>
+  </div>
+
+  @if (enableSummary) {
+    <div class="summary-editor">
+      <div class="editor-header">
+        <h3><i class="fas fa-edit"></i> {{ translate.t('summary-informations.edit_information') }}</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="summary-field">
+        <mat-label>{{ translate.t('summary-informations.summary_placeholder') }}</mat-label>
+        <textarea
+          matInput
+          rows="8"
+          name="psychologicalSummary"
+          [(ngModel)]="psychologicalSummary"
+          placeholder="{{ translate.t('summary-informations.summary_placeholder') }}"
+          #summaryTextarea
+        ></textarea>
+      </mat-form-field>
+
+      <div class="writing-tips">
+        <div class="tips-header">
+          <i class="fas fa-graduation-cap"></i>
+          <h4>{{ translate.t('summary-informations.writing_tips_title') }}</h4>
+        </div>
+        <div class="tips-content">
+          <div class="tip-item">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('summary-informations.tip1') }}</span>
+          </div>
+          <div class="tip-item">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('summary-informations.tip2') }}</span>
+          </div>
+          <div class="tip-item">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('summary-informations.tip3') }}</span>
+          </div>
+          <div class="tip-item">
+            <i class="fas fa-check-circle"></i>
+            <span>{{ translate.t('summary-informations.tip4') }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

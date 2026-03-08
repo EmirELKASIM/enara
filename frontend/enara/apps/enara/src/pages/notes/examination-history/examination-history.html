@@ -1,0 +1,218 @@
+<div class="preview-container">
+  @if (data().length > 0) { @for (item of data(); track item._id) {
+
+  <mat-accordion class="notes-accordion" [multi]="true">
+    <mat-expansion-panel expanded="false">
+      <mat-expansion-panel-header>
+        <mat-panel-description class="panel-title">
+          <div class="delete-icon">
+            <mat-icon role="button" tabindex="0" (click)="onDeletePanel(item._id,item.patientId,item.doctorId)">delete</mat-icon>
+          </div>
+          <p>{{ formatDay(item.createdAt) }}</p>
+          <p>{{ formatDate(item.createdAt) }}</p>
+          <p>{{ formatTime(item.createdAt) }}</p>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-card class="section-card">
+
+        <mat-card-title class="section-title">
+          <mat-icon class="title-icon">assignment</mat-icon>
+          {{translate.t('examination-history.report_information')}}
+        </mat-card-title>
+
+        <mat-card-content class="section-content">
+
+        @if (getIndividualReport(item); as report) {
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.support')}}:</strong>
+            <span>{{ getSupportLabel(report.support) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.psychological_pressure')}}:</strong>
+            <span>{{ getPressureLabel(report.pressure) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.psychological_safety')}}:</strong>
+            <span>{{ getPsychologicalSafetyLabel(report.psychologicalSafety) }}</span>
+          </div>
+
+          @if (report.whySeekingAdvice?.length) {
+            <div class="field">
+              <strong>{{translate.t('examination-history.reason_for_seeking_advice')}}:</strong>
+              <div class="chips">
+                @for (reason of getAdviceLabels(report.whySeekingAdvice); track reason) {
+                  <mat-chip>{{ reason }}</mat-chip>
+                }
+              </div>
+            </div>
+          }
+
+          @if (report.howFeelingLately?.length) {
+            <div class="field">
+              <strong>{{translate.t('examination-history.how_feeling_lately')}}:</strong>
+              <div class="chips">
+                @for (feeling of getFeelingLabels(report.howFeelingLately); track feeling) {
+                  <mat-chip>{{ feeling }}</mat-chip>
+                }
+              </div>
+            </div>
+          }
+        }
+
+        @if (getGroupReport(item); as report) {
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.number_of_individuals')}}:</strong>
+            <span>{{ getGroupCountLabel(report.numberIndividuals) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.who_participating')}}:</strong>
+            <span>{{ getWhoJoinedLabel(report.whoParticipating) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.reason_for_consultation')}}:</strong>
+            <span>{{ getGroupReasonLabel(report.reasonForConsultation) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.what_happening_in_family')}}:</strong>
+            <span>{{ getWhatHappeningFamilyLabel(report.whatHappeningFamily) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.purpose_of_sessions')}}:</strong>
+            <span>{{ getPurposeSessionsLabel(report.purposeSessions) }}</span>
+          </div>
+        }
+
+        @if (getChildReport(item); as report) {
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.age')}}:</strong>
+            <span>{{ getChildAgeLabel(report.childAge) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.school')}}:</strong>
+            <span>{{ getSchoolLabels(report.school) }}</span>
+          </div>
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.psychological_safety')}}:</strong>
+            <span>{{ getChildSafetyLabel(report.psychologicalSafetyForChild) }}</span>
+          </div>
+
+          @if (report.behaviorAndFeelings?.length) {
+            <div class="field">
+              <strong>{{translate.t('examination-history.behavior_and_feelings')}}:</strong>
+              <div class="chips">
+                @for (behavior of getBehaviorLabels(report.behaviorAndFeelings); track behavior) {
+                  <mat-chip>{{ behavior }}</mat-chip>
+                }
+              </div>
+            </div>
+          }
+
+          <div class="field">
+            <strong>{{translate.t('examination-history.reason_for_assistance')}}:</strong>
+            <span>{{ getReasonForAssistanceLabel(report.reasonForAssistance) }}</span>
+          </div>
+        }
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="section-card">
+        <mat-card-title>
+          <mat-icon>report</mat-icon>
+          {{translate.t('examination-history.main_complaint')}}
+        </mat-card-title>
+
+        <mat-card-content>
+          <p class="complaint-text">{{ item.complaint }}</p>
+
+          <div class="meta-row">
+            <mat-chip>
+              {{translate.t('examination-history.duration')}}:
+              {{ getComplaintDurationLabel(item.complaintDuration) }}
+            </mat-chip>
+
+            <mat-chip>
+              {{translate.t('examination-history.severity')}}:
+              {{ getComplaintSeverityLabel(item.complaintSeverity) }}
+            </mat-chip>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="section-card">
+        <mat-card-title>
+          <mat-icon>psychology</mat-icon>
+          {{translate.t('examination-history.quick_notes')}}
+        </mat-card-title>
+
+        <mat-card-content class="chips-grid">
+          <mat-chip>
+            {{translate.t('examination-history.mood')}}:
+            {{ getModLabel(item.quickNotes.mod )}}
+          </mat-chip>
+
+          <mat-chip>
+            {{translate.t('examination-history.sleep')}}:
+            {{ getSleepLabel(item.quickNotes.sleep) }}
+          </mat-chip>
+
+          <mat-chip>
+            {{translate.t('examination-history.appetite')}}:
+            {{ getAppetiteLabel(item.quickNotes.appetite) }}
+          </mat-chip>
+
+          <mat-chip
+            [color]="item.quickNotes.suicide === 'no' ? 'primary' : 'warn'"
+          >
+            {{translate.t('examination-history.suicidal_ideation')}}:
+            {{ getSuicideLabel(item.quickNotes.suicide) }}
+          </mat-chip>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="section-card">
+        <mat-card-title>
+          <mat-icon>medication</mat-icon>
+          {{translate.t('examination-history.medications')}}
+        </mat-card-title>
+
+        <mat-card-content>
+          @for (med of item.medicines; track med._id) {
+          <mat-card class="medicine-card">
+            <div class="medicine-header">
+              <strong>{{ med.drugName }}</strong>
+              <span class="dose">{{ med.doz }} mg</span>
+            </div>
+
+            <p class="food">
+              🕒 {{getDrankMedicinesLabel(med.drankMedicinesBefore) }}
+            </p>
+
+            <div class="times">
+              @for (t of med.drugTimes; track t) {
+              <mat-chip>{{ getDrugTimesLabel(t) }}</mat-chip>
+              }
+            </div>
+
+            <p class="notes">📝 {{ med.intakeNotes }}</p>
+          </mat-card>
+          }
+        </mat-card-content>
+      </mat-card>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+  } }
+</div>

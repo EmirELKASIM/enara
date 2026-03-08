@@ -1,0 +1,227 @@
+.assessment-section {
+  background: linear-gradient(145deg, var(--white), var(--light-bg));
+  border-radius: 24px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--primary-light);
+  box-shadow: var(--shadow-light);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  margin: 0.5rem 0;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.section-title {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem 0;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid var(--primary-light);
+  display: inline-block;
+  letter-spacing: 0.3px;
+}
+
+::ng-deep .checkbox-items {
+  display: flex !important;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0.25rem 0.5rem !important;
+  background: var(--white);
+  border-radius: 30px;
+  border: 1px solid var(--gray-medium);
+  transition: all 0.2s ease;
+  font-size: 0.8rem;
+}
+
+::ng-deep .checkbox-items:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+::ng-deep .checkbox-items.mat-checkbox-checked {
+  background: linear-gradient(
+    145deg,
+    var(--primary-light),
+    rgba(199, 21, 133, 0.05)
+  );
+  border-color: var(--primary-color);
+}
+
+::ng-deep .mat-checkbox-label {
+  color: var(--text-dark);
+  font-size: 0.8rem !important;
+  font-weight: 400;
+}
+
+.radio-group {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--primary-light);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.radio-title {
+  color: var(--secondary-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+  min-width: 100px;
+}
+
+::ng-deep .mat-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+::ng-deep .mat-radio-button {
+  margin: 0 !important;
+  padding: 0.2rem 0.75rem !important;
+  background: var(--gray-light);
+  border-radius: 30px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .mat-radio-button:hover {
+  background: var(--primary-light);
+  border-color: var(--primary-color);
+}
+
+::ng-deep .mat-radio-button.mat-radio-checked {
+  background: linear-gradient(
+    145deg,
+    var(--primary-light),
+    rgba(199, 21, 133, 0.05)
+  );
+  border: 1px solid var(--primary-color);
+}
+
+::ng-deep .mat-radio-label-content {
+  color: var(--text-dark);
+  font-size: 0.8rem !important;
+}
+
+::ng-deep .mat-radio-outer-circle {
+  border-color: var(--gray-dark);
+  border-width: 1px !important;
+}
+
+::ng-deep .mat-radio-inner-circle {
+  background-color: var(--primary-color) !important;
+}
+
+.submit-button {
+  background: linear-gradient(
+    145deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
+  color: white;
+  border: none;
+  border-radius: 40px;
+  padding: 0.6rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  letter-spacing: 0.5px;
+}
+
+.submit-button:hover {
+  background: linear-gradient(
+    145deg,
+    var(--primary-dark),
+    var(--secondary-color)
+  );
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium) !important;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.family-session .radio-group:has([name='numberIndividuals']) {
+  background: linear-gradient(145deg, #fff0f7, var(--white));
+  border-color: var(--accent-color);
+}
+
+.children-session .radio-group:has([name='childAge']) {
+  background: linear-gradient(145deg, #fff0f7, var(--white));
+  border-color: var(--accent-color);
+}
+
+.divider {
+  margin: 0.75rem 0;
+  border: none;
+  border-top: 1px solid var(--primary-light);
+}
+
+@media (max-width: 768px) {
+  .assessment-section {
+    padding: 1rem;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.7rem;
+  }
+
+  .radio-title {
+    margin-bottom: 0.2rem;
+  }
+
+  ::ng-deep .mat-radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  ::ng-deep .mat-radio-button {
+    width: 100%;
+    padding: 0.25rem 0.75rem !important;
+  }
+}
+
+[dir='rtl'] .section-title {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+[dir='rtl'] .radio-group {
+  text-align: right;
+}
+
+.radio-group:has([name='school']):nth-of-type(2) {
+  margin-top: 0.25rem;
+}

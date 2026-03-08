@@ -1,0 +1,25 @@
+<mat-toolbar class="main-navbar">
+  @if (backService.showBack$ | async) {
+  <button
+    class="nav-back-btn"
+    mat-icon-button
+    (click)="goBack()"
+    aria-label="رجوع"
+  >
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  }
+
+  <div class="nav-brand">
+    <div class="logo-container">
+      <i class="fas fa-heartbeat logo-icon"></i>
+      <span class="logo-text">Rawaa</span>
+    </div>
+  </div>
+</mat-toolbar>
+
+
+
+<main class="main-content">
+  <app-dashboard></app-dashboard>
+</main>

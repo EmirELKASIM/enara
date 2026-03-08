@@ -1,0 +1,13 @@
+<div class="summary-container">
+  <div class="summary-header">
+    <mat-icon>monitor_heart</mat-icon>
+    <h2>{{translate.t("patient-summary.patient_summary")}}</h2>
+  </div>
+
+  <div class="summary-content">
+    <p [attr.dir]="getTextDirection(patientSummary()?.psychologicalSummary)">
+      {{ patientSummary()?.psychologicalSummary ||
+      translate.t("patient-summary.no_summary_available") }}
+    </p>
+  </div>
+</div>

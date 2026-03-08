@@ -1,0 +1,112 @@
+@use '@angular/material' as mat;
+
+@import 'ngx-toastr/toastr';
+
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --primary-color: mediumvioletred;
+  --primary-light: rgba(199, 21, 133, 0.1);
+  --primary-dark: #8b008b;
+  --secondary-color: #4a154b;
+  --accent-color: #ff69b4;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --danger-color: #f44336;
+  --light-bg: #f9f0fa;
+  --white: #ffffff;
+  --gray-light: #f5f5f5;
+  --gray-medium: #e0e0e0;
+  --gray-dark: #757575;
+  --text-dark: #333;
+  --text-light: #666;
+  --shadow-light: 0 2px 15px rgba(199, 21, 133, 0.08);
+  --shadow-medium: 0 5px 20px rgba(199, 21, 133, 0.12);
+}
+
+.toast-top-right {
+  top: 80px !important;
+}
+
+.request-send-dialog,
+.mat-mdc-dialog-container {
+  height: 250px;
+  border-radius: 16px;
+}
+
+.booking-appointment-dialog,
+.delete-account-dialog,
+.info-dialog,
+.doctor-start-meeting-dialog {
+  width: 600px;
+  height: 1000px;
+}
+
+.request-send-dialog,
+.logout-dialog {
+  height: 1000px;
+}
+
+.user-start-meeting-dialog,
+.delete-appointment-dialog {
+  height: 800px;
+}
+.requests-dialog {
+  height: 650px;
+  width: 850px;
+  border-radius: 16px;
+}
+.delete-appointment-dialog,
+.info-dialog,
+.doctor-start-meeting-dialog,
+.user-start-meeting-dialog,
+.request-send-dialog,
+.requests-dialog,
+.mat-mdc-dialog-surface {
+  border-radius: 16px;
+}
+
+.mat-datepicker-content {
+  background: #ffffff !important;
+  color: #000000;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+.mat-calendar {
+  background: #ffffff !important;
+}
+.mat-timepicker-content,
+.mat-timepicker-panel {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.mat-timepicker-clock {
+  background-color: #ffffff !important;
+}
+
+.mat-timepicker-clock-number,
+.mat-timepicker-clock-cell {
+  color: #000000 !important;
+}
+.mat-timepicker-header {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+
+
+
+:root {
+  @include mat.menu-overrides((
+    container-color: #ffffff,
+    container-shape: 12px,
+    divider-color: #eeeeee,
+  ));
+}
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
