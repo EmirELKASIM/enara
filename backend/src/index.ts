@@ -12,10 +12,12 @@ import examinationRoute from "./routes/examinationRoute";
 import "../utils/bookingAutoCancel";
 import "../utils/bookingCompleteJob";
 import "../utils/appointmentCleanup";
+import path from "path";
+
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port: number = Number(process.env.PORT)|| 3001;
 const cors = require("cors");
 
 app.use(
@@ -40,7 +42,10 @@ app.use("/booking", bookingRoute);
 app.use("/diagnosis", diagnosisRoute);
 app.use("/request", requestRoute);
 app.use("/examination", examinationRoute);
-
+app.use(express.static(path.join(__dirname, "../frontend/enara/dist/enara")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/enara/dist/enara/index.html"));
+});
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running at: http://localhost/:${port}`);
 });
