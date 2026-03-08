@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "npm install -g nx && npx nx build enara --prod"
+    "build": "npx nx build enara --configuration=production"
   },
   "keywords": [],
   "author": "",
