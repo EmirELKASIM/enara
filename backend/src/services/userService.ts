@@ -37,53 +37,36 @@ export const register = async ({
   codeNumber,
 }: RegisterParams) => {
   try {
-     const findUser = await userModel.findOne({ email });
-  if (findUser) {
-    return { data: "User already exists!", statusCode: 400 };
-  }
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const calculateAge = (birthday: string): number => {
-    const birthDate = new Date(birthday);
-    const today = new Date();
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
+    const findUser = await userModel.findOne({ email });
+    if (findUser) {
+      return { data: "User already exists!", statusCode: 400 };
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    return age < 0 ? 0 : age; // حماية من تاريخ مستقبلي
-  };
-  const age = calculateAge(birthday);
+    const calculateAge = (birthday: string): number => {
+      const birthDate = new Date(birthday);
+      const today = new Date();
 
-  const newUser = new userModel({
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-    accountType,
-    birthday,
-    age,
-    gender,
-    maritalStatus,
-    consultation,
-    privacyPolicy,
-    phoneNumber,
-    codeNumber,
-  });
-  await newUser.save();
-  await sendVerificationEmail(newUser);
-  return {
-    data: generateJWT({
-      id: newUser._id,
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+
+      return age < 0 ? 0 : age; // حماية من تاريخ مستقبلي
+    };
+    const age = calculateAge(birthday);
+
+    const newUser = new userModel({
       firstName,
       lastName,
       email,
+      password: hashedPassword,
+      accountType,
       birthday,
       age,
       gender,
@@ -92,13 +75,34 @@ export const register = async ({
       privacyPolicy,
       phoneNumber,
       codeNumber,
-    }),
-    statusCode: 200,
-  };
-  } catch (error:any) {
-    return {data: error.message, statusCode: 400}
+    });
+    await newUser.save();
+    setImmediate(() => {
+      sendVerificationEmail(newUser).catch((err) =>
+        console.error("Email error:", err),
+      );
+    });
+    // await sendVerificationEmail(newUser);
+    return {
+      data: generateJWT({
+        id: newUser._id,
+        firstName,
+        lastName,
+        email,
+        birthday,
+        age,
+        gender,
+        maritalStatus,
+        consultation,
+        privacyPolicy,
+        phoneNumber,
+        codeNumber,
+      }),
+      statusCode: 200,
+    };
+  } catch (error: any) {
+    return { data: error.message, statusCode: 400 };
   }
- 
 };
 
 interface LoginParams {
@@ -113,10 +117,10 @@ export const login = async ({ email, password }: LoginParams) => {
   }
   const checkVerify = await userModel.findOne({
     email,
-    isEmailVerified: true
-  })
-  if(!checkVerify){
-    return { data: "should verify your email", statusCode: 404}
+    isEmailVerified: true,
+  });
+  if (!checkVerify) {
+    return { data: "should verify your email", statusCode: 404 };
   }
   const passwordMatch = await bcrypt.compare(password, findUser.password);
   if (!passwordMatch) {
@@ -426,5 +430,3 @@ export const getImpersonalUsers = async () => {
   }
   return { data: impersonalUsers, statusCode: 200 };
 };
-
-

@@ -49,7 +49,10 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             codeNumber,
         });
         await newUser.save();
-        await (0, sendEmail_1.sendVerificationEmail)(newUser);
+        setImmediate(() => {
+            (0, sendEmail_1.sendVerificationEmail)(newUser).catch((err) => console.error("Email error:", err));
+        });
+        // await sendVerificationEmail(newUser);
         return {
             data: (0, helperJWT_1.generateJWT)({
                 id: newUser._id,
@@ -80,7 +83,7 @@ const login = async ({ email, password }) => {
     }
     const checkVerify = await userModel_1.default.findOne({
         email,
-        isEmailVerified: true
+        isEmailVerified: true,
     });
     if (!checkVerify) {
         return { data: "should verify your email", statusCode: 404 };
