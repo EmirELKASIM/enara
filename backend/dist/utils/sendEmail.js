@@ -18,17 +18,14 @@ const sendEmail = async (to, subject, html) => {
     }
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
-        port: 465,
-        secure: true, // استخدام SSL
+        port: 587,
+        secure: false, // يجب أن تكون false مع المنفذ 587
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
         },
-        // أضف هذه الإعدادات لضمان عدم التعليق
-        connectionTimeout: 10000, // 10 ثوانٍ للاتصال
-        greetingTimeout: 10000,
         tls: {
-            rejectUnauthorized: false,
+            rejectUnauthorized: false, // تجاوز فحص الشهادة
             minVersion: "TLSv1.2",
         },
     });
