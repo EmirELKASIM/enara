@@ -4,16 +4,9 @@ import jwt from "jsonwebtoken";
 export const sendEmail = async (to: string, subject: string, html: string) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // يجب أن تكون false للمنفذ 587
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
-    },
-    tls: {
-      rejectUnauthorized: false,
-      minVersion: "TLSv1.2", // إضافة إصدار التشفير قد يحل مشكلة الـ Timeout
     },
   });
 
