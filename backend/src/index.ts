@@ -22,7 +22,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin:true, // Angular
+    origin:"https://fancy-halva-61b1ed.netlify.app", // Angular
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization","ngrok-skip-browser-warning"],
   }),
