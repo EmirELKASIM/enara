@@ -18,15 +18,17 @@ const sendEmail = async (to, subject, html) => {
             rejectUnauthorized: false, // ضروري جداً لسيرفرات Render
         },
     });
-    await transporter
-        .sendMail({
-        from: `"Support" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        html,
-    })
-        .then(() => console.log("Email sent successfully"))
-        .catch((err) => console.error("Error sending email:", err));
+    try {
+        await transporter.sendMail({
+            from: `"Support" <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
+        });
+    }
+    catch (error) {
+        console.error("Error sending email:", error.message);
+    }
 };
 exports.sendEmail = sendEmail;
 const sendVerificationEmail = async (user) => {

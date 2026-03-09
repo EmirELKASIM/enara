@@ -12,16 +12,16 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
       rejectUnauthorized: false, // ضروري جداً لسيرفرات Render
     },
   });
-
-  await transporter
-    .sendMail({
+  try {
+    await transporter.sendMail({
       from: `"Support" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
-    })
-    .then(() => console.log("Email sent successfully"))
-    .catch((err) => console.error("Error sending email:", err));
+    });
+  } catch (error:any) {
+    console.error("Error sending email:", error.message);
+  }
 };
 
 export const sendVerificationEmail = async (user: any) => {
