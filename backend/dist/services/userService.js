@@ -49,8 +49,8 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             codeNumber,
         });
         await newUser.save();
-        setImmediate(() => {
-            (0, sendEmail_1.sendVerificationEmail)(newUser).catch((err) => console.error("Email error:", err));
+        setImmediate(async () => {
+            await (0, sendEmail_1.sendVerificationEmail)(newUser).catch((err) => console.error("Email error:", err));
         });
         // await sendVerificationEmail(newUser);
         return {

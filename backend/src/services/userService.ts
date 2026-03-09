@@ -77,8 +77,8 @@ export const register = async ({
       codeNumber,
     });
     await newUser.save();
-    setImmediate(() => {
-      sendVerificationEmail(newUser).catch((err) =>
+    setImmediate(async () => {
+     await sendVerificationEmail(newUser).catch((err) =>
         console.error("Email error:", err),
       );
     });
