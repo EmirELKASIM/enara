@@ -8,6 +8,14 @@ exports.sendVerificationEmail = exports.sendEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sendEmail = async (to, subject, html) => {
+    console.log("--- Email Debug Start ---");
+    console.log("Target Email:", to);
+    console.log("Env User:", process.env.EMAIL_USER); // هل سيظهر الاسم أم undefined؟
+    console.log("Env Pass Length:", process.env.EMAIL_PASS?.length || 0); // هل الرمز موجود؟
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        console.error("❌ خطأ: المتغيرات غير موجودة في بيئة العمل!");
+        return; // توقف هنا لكي لا يعلق السيرفر في Timeout
+    }
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
         port: 465, // استخدم 465 مع secure:true
