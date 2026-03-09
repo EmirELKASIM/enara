@@ -3,7 +3,9 @@ import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 export const sendEmail = async (to: string, subject: string, html: string) => {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465, // استخدم 465 مع secure:true
+    secure: true,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -19,8 +21,8 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
       subject,
       html,
     });
-  } catch (error:any) {
-    console.error("Error sending email:", error.message);
+  } catch (error: any) {
+    console.error("Error sending email:", error);
   }
 };
 

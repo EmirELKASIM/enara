@@ -9,7 +9,9 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sendEmail = async (to, subject, html) => {
     const transporter = nodemailer_1.default.createTransport({
-        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 465, // استخدم 465 مع secure:true
+        secure: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
@@ -27,7 +29,7 @@ const sendEmail = async (to, subject, html) => {
         });
     }
     catch (error) {
-        console.error("Error sending email:", error.message);
+        console.error("Error sending email:", error);
     }
 };
 exports.sendEmail = sendEmail;
