@@ -13,12 +13,15 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
     },
   });
 
-  await transporter.sendMail({
-    from: `"Support" <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    html,
-  });
+  await transporter
+    .sendMail({
+      from: `"Support" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      html,
+    })
+    .then(() => console.log("Email sent successfully"))
+    .catch((err) => console.error("Error sending email:", err));
 };
 
 export const sendVerificationEmail = async (user: any) => {
