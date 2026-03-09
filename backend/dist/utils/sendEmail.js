@@ -14,6 +14,9 @@ const sendEmail = async (to, subject, html) => {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
         },
+        tls: {
+            rejectUnauthorized: false, // ضروري جداً لسيرفرات Render
+        },
     });
     await transporter.sendMail({
         from: `"Support" <${process.env.EMAIL_USER}>`,
