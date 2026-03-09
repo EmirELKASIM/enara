@@ -13,7 +13,7 @@ interface RegisterParams {
     codeNumber: string;
 }
 export declare const register: ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, codeNumber, }: RegisterParams) => Promise<{
-    data: string;
+    data: any;
     statusCode: number;
 }>;
 interface LoginParams {

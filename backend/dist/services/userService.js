@@ -15,46 +15,30 @@ const requestModel_1 = __importDefault(require("../models/requestModel"));
 const appointmentModul_1 = __importDefault(require("../models/appointmentModul"));
 const bookingModel_1 = __importDefault(require("../models/bookingModel"));
 const register = async ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, codeNumber, }) => {
-    const findUser = await userModel_1.default.findOne({ email });
-    if (findUser) {
-        return { data: "User already exists!", statusCode: 400 };
-    }
-    const hashedPassword = await bcrypt_1.default.hash(password, 10);
-    const calculateAge = (birthday) => {
-        const birthDate = new Date(birthday);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 ||
-            (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
+    try {
+        const findUser = await userModel_1.default.findOne({ email });
+        if (findUser) {
+            return { data: "User already exists!", statusCode: 400 };
         }
-        return age < 0 ? 0 : age; // حماية من تاريخ مستقبلي
-    };
-    const age = calculateAge(birthday);
-    const newUser = new userModel_1.default({
-        firstName,
-        lastName,
-        email,
-        password: hashedPassword,
-        accountType,
-        birthday,
-        age,
-        gender,
-        maritalStatus,
-        consultation,
-        privacyPolicy,
-        phoneNumber,
-        codeNumber,
-    });
-    await newUser.save();
-    await (0, sendEmail_1.sendVerificationEmail)(newUser);
-    return {
-        data: (0, helperJWT_1.generateJWT)({
-            id: newUser._id,
+        const hashedPassword = await bcrypt_1.default.hash(password, 10);
+        const calculateAge = (birthday) => {
+            const birthDate = new Date(birthday);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 ||
+                (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age < 0 ? 0 : age; // حماية من تاريخ مستقبلي
+        };
+        const age = calculateAge(birthday);
+        const newUser = new userModel_1.default({
             firstName,
             lastName,
             email,
+            password: hashedPassword,
+            accountType,
             birthday,
             age,
             gender,
@@ -63,9 +47,30 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             privacyPolicy,
             phoneNumber,
             codeNumber,
-        }),
-        statusCode: 200,
-    };
+        });
+        await newUser.save();
+        await (0, sendEmail_1.sendVerificationEmail)(newUser);
+        return {
+            data: (0, helperJWT_1.generateJWT)({
+                id: newUser._id,
+                firstName,
+                lastName,
+                email,
+                birthday,
+                age,
+                gender,
+                maritalStatus,
+                consultation,
+                privacyPolicy,
+                phoneNumber,
+                codeNumber,
+            }),
+            statusCode: 200,
+        };
+    }
+    catch (error) {
+        return { data: error.message, statusCode: 400 };
+    }
 };
 exports.register = register;
 const login = async ({ email, password }) => {

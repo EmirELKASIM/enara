@@ -36,7 +36,8 @@ export const register = async ({
   phoneNumber,
   codeNumber,
 }: RegisterParams) => {
-  const findUser = await userModel.findOne({ email });
+  try {
+     const findUser = await userModel.findOne({ email });
   if (findUser) {
     return { data: "User already exists!", statusCode: 400 };
   }
@@ -94,6 +95,10 @@ export const register = async ({
     }),
     statusCode: 200,
   };
+  } catch (error:any) {
+    return {data: error.message, statusCode: 400}
+  }
+ 
 };
 
 interface LoginParams {
