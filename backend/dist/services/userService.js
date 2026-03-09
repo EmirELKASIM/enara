@@ -50,7 +50,9 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
         });
         await newUser.save();
         setImmediate(async () => {
+            console.log("2. Starting Email Call...");
             await (0, sendEmail_1.sendVerificationEmail)(newUser).catch((err) => console.error("Email error:", err));
+            console.log("3. Email Call Finished");
         });
         // await sendVerificationEmail(newUser);
         return {
