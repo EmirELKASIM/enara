@@ -1,2 +1,2 @@
 export const apiUrl =
-  'https://colors-dat-bennett-evolution.trycloudflare.com';
+  'https://enara-server.onrender.com';
