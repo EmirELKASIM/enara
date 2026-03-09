@@ -21,12 +21,13 @@ const sendEmail = async (to, subject, html) => {
         },
     });
     try {
-        await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: `"Support" <${process.env.EMAIL_USER}>`,
             to,
             subject,
             html,
         });
+        console.log("email", info);
     }
     catch (error) {
         console.error("Error sending email:", error);
