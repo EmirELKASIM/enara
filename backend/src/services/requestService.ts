@@ -1,4 +1,4 @@
-import { verifyJWT } from "../../middlewares/helperJWT";
+import { verifyJWT } from "../middlewares/helperJWT";
 import requestModel from "../models/requestModel";
 import summaryModel from "../models/summaryModel";
 import userModel from "../models/userModel";

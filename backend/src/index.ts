@@ -9,9 +9,9 @@ import bookingRoute from "./routes/bookingRoute";
 import diagnosisRoute from "./routes/diagnosisRoute";
 import requestRoute from "./routes/requestRoute";
 import examinationRoute from "./routes/examinationRoute";
-import "../utils/bookingAutoCancel";
-import "../utils/bookingCompleteJob";
-import "../utils/appointmentCleanup";
+import "./utils/bookingAutoCancel";
+import "./utils/bookingCompleteJob";
+import "./utils/appointmentCleanup";
 import path from "path";
 
 dotenv.config();
@@ -43,7 +43,7 @@ app.use("/diagnosis", diagnosisRoute);
 app.use("/request", requestRoute);
 app.use("/examination", examinationRoute);
 app.use(express.static(path.join(__dirname, "../frontend/enara/dist/enara")));
-app.get("*", (req, res) => {
+app.get(/^(?!\/api).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/enara/dist/enara/index.html"));
 });
 app.listen(port, "0.0.0.0", () => {

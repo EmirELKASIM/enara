@@ -1,7 +1,7 @@
-import { verifyJWT } from "../../middlewares/helperJWT";
+import { verifyJWT } from "../middlewares/helperJWT";
 import examinationModel from "../models/examinationModel";
 import userModel from "../models/userModel";
-import { decrypt, encrypt } from "../../utils/encryption";
+import { decrypt, encrypt } from "../utils/encryption";
 
 interface QuickNotes {
   suicide: string;

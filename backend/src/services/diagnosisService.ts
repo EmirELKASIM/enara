@@ -1,5 +1,5 @@
-import { verifyJWT } from "../../middlewares/helperJWT";
-import { decrypt, encrypt } from "../../utils/encryption";
+import { verifyJWT } from "../middlewares/helperJWT";
+import { decrypt, encrypt } from "../utils/encryption";
 import diagnosisModel from "../models/diagnosisModel";
 
 interface addDiagnosisParams {

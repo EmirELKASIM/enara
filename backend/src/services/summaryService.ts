@@ -1,5 +1,5 @@
-import { generateJWT, verifyJWT } from "../../middlewares/helperJWT";
-import { decrypt, encrypt } from "../../utils/encryption";
+import { generateJWT, verifyJWT } from "../middlewares/helperJWT";
+import { decrypt, encrypt } from "../utils/encryption";
 import summaryModel from "../models/summaryModel";
 import userModel from "../models/userModel";
 

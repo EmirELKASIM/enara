@@ -1,6 +1,6 @@
 import appointmentModel from "../models/appointmentModul";
 import userModel from "../models/userModel";
-import { verifyJWT } from "../../middlewares/helperJWT";
+import { verifyJWT } from "../middlewares/helperJWT";
 import bookingModel from "../models/bookingModel";
 
 interface addAppointmentParams {

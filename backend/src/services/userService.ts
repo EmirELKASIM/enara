@@ -1,8 +1,8 @@
 import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
-import { verifyJWT, generateJWT } from "../../middlewares/helperJWT";
+import { verifyJWT, generateJWT } from "../middlewares/helperJWT";
 import jwt from "jsonwebtoken";
-import { sendEmail, sendVerificationEmail } from "../../utils/sendEmail";
+import { sendEmail, sendVerificationEmail } from "../utils/sendEmail";
 import summaryModel from "../models/summaryModel";
 import experienceModel from "../models/experienceModel";
 import requestModel from "../models/requestModel";

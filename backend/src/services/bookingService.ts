@@ -1,5 +1,5 @@
 import { parseIsolatedEntityName } from "typescript";
-import { verifyJWT } from "../../middlewares/helperJWT";
+import { verifyJWT } from "../middlewares/helperJWT";
 import appointmentModel from "../models/appointmentModul";
 import bookingModel from "../models/bookingModel";
 import userModel from "../models/userModel";
