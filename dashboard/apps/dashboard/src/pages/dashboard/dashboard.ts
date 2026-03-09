@@ -7,7 +7,7 @@ import Bookings from './bookings/bookings';
 import Earnings from './earnings/earnings';
 import Login from '../login/login';
 import { FormsModule } from '@angular/forms';
-import { secretPass } from '../../constants/secretPass';
+import { secretPass } from '../../../../../secretPass';
 
 @Component({
   selector: 'app-dashboard',
