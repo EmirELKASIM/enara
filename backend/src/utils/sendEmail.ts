@@ -5,14 +5,15 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // يجب أن تكون true للمنفذ 465
+    port: 587,
+    secure: false, // يجب أن تكون false للمنفذ 587
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
     tls: {
-      rejectUnauthorized: false, // هذا السطر ضروري جداً لتجاوز الـ Timeout في Render
+      rejectUnauthorized: false,
+      minVersion: "TLSv1.2", // إضافة إصدار التشفير قد يحل مشكلة الـ Timeout
     },
   });
 
