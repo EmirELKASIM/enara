@@ -23,7 +23,7 @@ const app = (0, express_1.default)();
 const port = Number(process.env.PORT) || 3001;
 const cors = require("cors");
 app.use(cors({
-    origin: true, // Angular
+    origin: "https://fancy-halva-61b1ed.netlify.app", // Angular
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "ngrok-skip-browser-warning"],
 }));

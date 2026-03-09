@@ -10,9 +10,16 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sendEmail = async (to, subject, html) => {
     const transporter = nodemailer_1.default.createTransport({
         service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // يجب أن تكون false للمنفذ 587
         auth: {
             user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS, // App Password
+            pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+            rejectUnauthorized: false,
+            minVersion: "TLSv1.2", // إضافة إصدار التشفير قد يحل مشكلة الـ Timeout
         },
     });
     await transporter.sendMail({
@@ -24,7 +31,9 @@ const sendEmail = async (to, subject, html) => {
 };
 exports.sendEmail = sendEmail;
 const sendVerificationEmail = async (user) => {
-    const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+    });
     const link = `${process.env.FRONTEND_URL}/user/verify-email/${token}`;
     const html = `
     <h2>Email Verification</h2>
