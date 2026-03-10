@@ -77,14 +77,9 @@ export const register = async ({
       codeNumber,
     });
     await newUser.save();
-    setImmediate(async () => {
-      console.log("2. Starting Email Call...");
-      await sendVerificationEmail(newUser).catch((err) =>
-        console.error("Email error:", err),
-      );
-      console.log("3. Email Call Finished");
-    });
-    // await sendVerificationEmail(newUser);
+    console.log("Before sendMail");
+    await sendVerificationEmail(newUser);
+    console.log("After sendMail");
     return {
       data: generateJWT({
         id: newUser._id,

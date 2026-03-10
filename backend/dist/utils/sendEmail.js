@@ -8,15 +8,19 @@ exports.sendVerificationEmail = exports.sendEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sendEmail = async (to, subject, html) => {
-    const testAccount = await nodemailer_1.default.createTestAccount();
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.ethereal.email",
         port: 587,
         secure: false,
         auth: {
-            user: testAccount.user,
-            pass: testAccount.pass,
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
         },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
+        debug: true,
+        logger: true,
     });
     const info = await transporter.sendMail({
         from: '"Support" <support@test.com>',
@@ -31,16 +35,16 @@ exports.sendEmail = sendEmail;
 // export const sendEmail = async (to: string, subject: string, html: string) => {
 //   console.log("--- Email Debug Start ---");
 //   console.log("Target Email:", to);
-//   console.log("Env User:", process.env.EMAIL_USER); 
-//   console.log("Env Pass Length:", process.env.EMAIL_PASS?.length || 0); 
+//   console.log("Env User:", process.env.EMAIL_USER);
+//   console.log("Env Pass Length:", process.env.EMAIL_PASS?.length || 0);
 //   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
 //     console.error("❌ خطأ: المتغيرات غير موجودة في بيئة العمل!");
-//     return; 
+//     return;
 //   }
 //   const transporter = nodemailer.createTransport({
 //     host: "smtp.ethereal.email",
 //     port: 587,
-//     secure: false, 
+//     secure: false,
 //     auth: {
 //       user: process.env.EMAIL_USER,
 //       pass: process.env.EMAIL_PASS,
