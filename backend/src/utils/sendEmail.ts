@@ -62,8 +62,8 @@ export const sendVerificationEmail = async (user: any) => {
   `;
 
   await resend.emails.send({
-    from: `"Enara" <${process.env.EMAIL_USER}>`,
-    to: "amirsy005@gmail.com",
+    from: "support@enaraapp.com",
+    to: user.email,
     subject: "Verify Your Email",
     html: html,
   });
