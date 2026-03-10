@@ -1,6 +1,7 @@
 // utils/sendEmail.ts
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
+import sgMail from "@sendgrid/mail";
 
 import { Resend } from "resend";
 
@@ -43,9 +44,10 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
 // };
 
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export const sendVerificationEmail = async (user: any) => {
+  // إنشاء توكن JWT
   const token = jwt.sign(
     { userId: user._id },
     process.env.JWT_SECRET!,
@@ -57,13 +59,16 @@ export const sendVerificationEmail = async (user: any) => {
   const html = `
     <h2>Email Verification</h2>
     <p>Please click the link below to verify your email:</p>
-    <a href="${link}">Verify Email</a>
+    <a href="${link}" style="background:#4CAF50;color:white;padding:10px 20px;text-decoration:none;">Verify Email</a>
   `;
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: user.email,
+  const msg = {
+    to: user.email, // البريد الذي ستصله الرسالة
+    from: process.env.EMAIL_FROM!, // البريد المرسل
     subject: "Verify Your Email",
     html: html,
-  });
+  };
+
+  await sgMail.send(msg);
+  console.log("Email sent successfully to", user.email);
 };
