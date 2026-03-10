@@ -52,7 +52,7 @@ const sendVerificationEmail = async (user) => {
   `;
     const msg = {
         to: user.email, // البريد الذي ستصله الرسالة
-        from: process.env.EMAIL_USER, // البريد المرسل
+        from: `"Enara" <${process.env.EMAIL_USER}>`, // البريد المرسل
         subject: "Verify Your Email",
         html: html,
     };
