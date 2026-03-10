@@ -51,7 +51,7 @@ const sendVerificationEmail = async (user) => {
   `;
     await resend.emails.send({
         from: `"Enara" <${process.env.EMAIL_USER}>`,
-        to: user.email,
+        to: "amirsy005@gmail.com",
         subject: "Verify Your Email",
         html: html,
     });
