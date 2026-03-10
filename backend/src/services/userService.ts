@@ -79,9 +79,14 @@ export const register = async ({
     await newUser.save();
     setImmediate(async () => {
       console.log("2. Starting Email Call...");
-      await sendVerificationEmail(newUser).catch((err) =>
-        console.error("Email error:", err),
-      );
+
+      try {
+        await sendVerificationEmail(newUser);
+        console.log("Email sent successfully");
+      } catch (err) {
+        console.error("Email error:", err);
+      }
+
       console.log("3. Email Call Finished");
     });
     return {

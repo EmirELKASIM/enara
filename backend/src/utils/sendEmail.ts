@@ -2,6 +2,8 @@
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 
+import { Resend } from "resend";
+
 export const sendEmail = async (to: string, subject: string, html: string) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -24,10 +26,31 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
   });
 };
 
+// export const sendVerificationEmail = async (user: any) => {
+//   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
+//     expiresIn: "1d",
+//   });
+
+//   const link = `${process.env.FRONTEND_URL}/user/verify-email/${token}`;
+
+//   const html = `
+//     <h2>Email Verification</h2>
+//     <p>Please click the link below to verify your email:</p>
+//     <a href="${link}">Verify Email</a>
+//   `;
+
+//   await sendEmail(user.email, "Verify Your Email", html);
+// };
+
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export const sendVerificationEmail = async (user: any) => {
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
-    expiresIn: "1d",
-  });
+  const token = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_SECRET!,
+    { expiresIn: "1d" }
+  );
 
   const link = `${process.env.FRONTEND_URL}/user/verify-email/${token}`;
 
@@ -37,5 +60,10 @@ export const sendVerificationEmail = async (user: any) => {
     <a href="${link}">Verify Email</a>
   `;
 
-  await sendEmail(user.email, "Verify Your Email", html);
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: user.email,
+    subject: "Verify Your Email",
+    html: html,
+  });
 };
