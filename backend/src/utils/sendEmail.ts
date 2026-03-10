@@ -64,7 +64,7 @@ export const sendVerificationEmail = async (user: any) => {
 
   const msg = {
     to: user.email, // البريد الذي ستصله الرسالة
-    from: process.env.EMAIL_FROM!, // البريد المرسل
+    from: process.env.EMAIL_USER!, // البريد المرسل
     subject: "Verify Your Email",
     html: html,
   };
