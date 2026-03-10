@@ -49,9 +49,11 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             codeNumber,
         });
         await newUser.save();
-        console.log("Before sendMail");
-        await (0, sendEmail_1.sendVerificationEmail)(newUser);
-        console.log("After sendMail");
+        setImmediate(async () => {
+            console.log("2. Starting Email Call...");
+            await (0, sendEmail_1.sendVerificationEmail)(newUser).catch((err) => console.error("Email error:", err));
+            console.log("3. Email Call Finished");
+        });
         return {
             data: (0, helperJWT_1.generateJWT)({
                 id: newUser._id,

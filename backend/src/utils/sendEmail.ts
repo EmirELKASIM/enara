@@ -3,31 +3,20 @@ import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 
 export const sendEmail = async (to: string, subject: string, html: string) => {
-
   const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false,
+    service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      pass: process.env.EMAIL_PASS, 
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
-    debug: true,
-    logger: true,
   });
 
-  const info = await transporter.sendMail({
-    from: '"Support" <support@test.com>',
+  await transporter.sendMail({
+    from: `"Support" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html,
   });
-
-  console.log("Message sent:", info.messageId);
-  console.log("Preview URL:", nodemailer.getTestMessageUrl(info));
 };
 
 // export const sendEmail = async (to: string, subject: string, html: string) => {
