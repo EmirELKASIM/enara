@@ -17,7 +17,7 @@ const sendEmail = async (to, subject, html) => {
         return; // توقف هنا لكي لا يعلق السيرفر في Timeout
     }
     const transporter = nodemailer_1.default.createTransport({
-        host: "smtp.gmail.com",
+        host: "smtp.ethereal.email",
         port: 587,
         secure: false, // يجب أن تكون false مع المنفذ 587
         auth: {

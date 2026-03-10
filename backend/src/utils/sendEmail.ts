@@ -13,7 +13,7 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
   }
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: "smtp.ethereal.email",
     port: 587,
     secure: false, // يجب أن تكون false مع المنفذ 587
     auth: {
