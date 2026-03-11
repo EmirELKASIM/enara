@@ -42,19 +42,22 @@ exports.sendEmail = sendEmail;
 // };
 const resend = new resend_1.Resend(process.env.RESEND_API_KEY);
 const sendVerificationEmail = async (user) => {
-    const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+    });
     const link = `${process.env.FRONTEND_URL}/user/verify-email/${token}`;
     const html = `
     <h2>Email Verification</h2>
     <p>Please click the link below to verify your email:</p>
     <a href="${link}">Verify Email</a>
   `;
-    await resend.emails.send({
+    const resault = await resend.emails.send({
         from: "support@enaraapp.com",
         to: user.email,
         subject: "Verify Your Email",
         html: html,
     });
+    console.log(resault);
     console.log(process.env.RESEND_API_KEY);
     console.log(process.env.FRONTEND_URL);
     console.log(link);
