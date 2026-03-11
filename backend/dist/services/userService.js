@@ -93,7 +93,7 @@ const login = async ({ email, password }) => {
         isEmailVerified: true,
     });
     if (!checkVerify) {
-        return { data: "should verify your email", statusCode: 404 };
+        return { data: "should verify your email (check spam)", statusCode: 404 };
     }
     const passwordMatch = await bcrypt_1.default.compare(password, findUser.password);
     if (!passwordMatch) {

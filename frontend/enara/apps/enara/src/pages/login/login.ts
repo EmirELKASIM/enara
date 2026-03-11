@@ -82,7 +82,7 @@ export default class Login {
         },
         error: (err) => {
           const message = err.error?.token;
-          this.toastr.error(message);
+          this.toastr.warning(message);
           this.isLoading = false;
         },
       });
