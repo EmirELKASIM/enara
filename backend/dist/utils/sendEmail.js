@@ -52,7 +52,7 @@ const sendVerificationEmail = async (user) => {
     <a href="${link}">Verify Email</a>
   `;
     const resault = await resend.emails.send({
-        from: "Enara <support@enaramind.com>",
+        from: "Enara <support@enaraapp.com>",
         to: user.email,
         subject: "Verify Your Email",
         html: html,
