@@ -81,10 +81,9 @@ export default class Login {
           this.isLoading = false;
         },
         error: (err) => {
+           this.isLoading = false;
           const message = err.error?.token;
           this.toastr.warning(message);
-          this.isLoading = false;
-          window.location.reload();
         },
       });
   }
