@@ -84,6 +84,7 @@ export default class Login {
           const message = err.error?.token;
           this.toastr.warning(message);
           this.isLoading = false;
+          window.location.reload();
         },
       });
   }
