@@ -55,6 +55,9 @@ const sendVerificationEmail = async (user) => {
         subject: "Verify Your Email",
         html: html,
     });
+    console.log(process.env.RESEND_API_KEY);
+    console.log(process.env.FRONTEND_URL);
+    console.log(link);
 };
 exports.sendVerificationEmail = sendVerificationEmail;
 //# sourceMappingURL=sendEmail.js.map
