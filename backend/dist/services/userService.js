@@ -216,7 +216,7 @@ const forgotPassword = async ({ email }) => {
         return { data: "User not found", statusCode: 401 };
     }
     const resetToken = jsonwebtoken_1.default.sign({ id: findUser._id }, process.env.JWT_SECRET || "", { expiresIn: "15m" });
-    const resetLink = `http://localhost:4200/reset-password?token=${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
     await (0, sendEmail_1.sendEmail)(email, "Reset Password", `
     <h3>Password Reset</h3>
     <p>Click the link below to reset your password:</p>

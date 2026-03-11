@@ -291,7 +291,7 @@ export const forgotPassword = async ({ email }: forgotPasswordParams) => {
     { expiresIn: "15m" },
   );
 
-  const resetLink = `http://localhost:4200/reset-password?token=${resetToken}`;
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
   await sendEmail(
     email,
