@@ -35,7 +35,7 @@ export default class DialogForgotPassword {
       })
       .subscribe({
         next: () => {
-          this.toastr.success(this.translate.t("toastr.link_set_to_email"));
+          this.toastr.success(this.translate.t("toastr.link_sent_to_email"));
           this.dialog.closeAll();
         },
         error: (err) => this.toastr.error(this.translate.t('toastr.something_went_wrong')),

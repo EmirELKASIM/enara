@@ -1455,7 +1455,7 @@
       "error_during_addition": "Ekleme sırasında bir hata oluştu.",
       "appointment_booked": "Randevu rezerve edildi.",
       "request_sent": "Talep gönderildi.",
-      "link_set_to_email": "Link e-posta adresine gönderildi.",
+      "link_sent_to_email": "Bağlantı e-postaya gönderildi. (Spam klasörünü kontrol edin)",
       "password_sent": "Şifre ayarlandı.",
       "welcome": "Hoş geldiniz!",
       "login_failed": "Giriş başarısız",

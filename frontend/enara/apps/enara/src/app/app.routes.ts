@@ -48,11 +48,7 @@ export const appRoutes: Route[] = [
         path: 'doctor-files',
         loadComponent: () => import('../pages/doktor-file/doktor-file'),
       },
-      {
-        path: 'reset-password',
-        loadComponent: () =>
-          import('../pages/login/reset-password/reset-password'),
-      },
+
       {
         path: 'profile/show-info',
         loadComponent: () => import('../pages/profile/show-info/show-info'),
@@ -85,5 +81,9 @@ export const appRoutes: Route[] = [
   {
     path: 'user/verify-email/:token',
     loadComponent: () => import('../pages/verify-email/verify-email'),
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () => import('../pages/login/reset-password/reset-password'),
   },
 ];

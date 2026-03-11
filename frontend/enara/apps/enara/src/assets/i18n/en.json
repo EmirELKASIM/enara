@@ -1484,7 +1484,7 @@
       "error_during_addition": "An error occurred during the addition.",
       "appointment_booked": "The appointment has been booked.",
       "request_sent": "The request has been sent.",
-      "link_set_to_email": "The link has been sent to the email.",
+      "link_sent_to_email": "link sent to email. (check spam)",
       "password_sent": "The password has been set.",
       "welcome": "Welcome!",
       "login_failed": "Login failed",
