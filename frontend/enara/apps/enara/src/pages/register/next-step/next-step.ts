@@ -42,16 +42,16 @@ export default class NextStep {
     this.consultation = value;
   }
   checkData() {
-    if (this.gender.length > 0) {
+    if (this.gender.trim().length > 0) {
       this.toastr.warning('check gender');
       return false;
-    } else if (this.accountType.length > 0) {
+    } else if (this.accountType.trim().length > 0) {
       this.toastr.warning('check accountType');
       return false;
-    } else if (this.maritalStatus.length > 0) {
+    } else if (this.maritalStatus.trim().length > 0) {
       this.toastr.warning('check Marital Status');
       return false;
-    } else if (this.consultation.length > 0) {
+    } else if (this.consultation.trim().length > 0) {
       this.toastr.warning('check Consultion');
       return false;
     } else {
