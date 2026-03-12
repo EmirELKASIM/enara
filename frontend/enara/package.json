@@ -34,6 +34,13 @@
     "ngx-toastr": "^19.1.0",
     "rxjs": "~7.8.0"
   },
+  "overrides": {
+    "ng-recaptcha": {
+      "@angular/core": "$@angular/core",
+      "@angular/common": "$@angular/common",
+      "@angular/forms": "$@angular/forms"
+    }
+  },
   "devDependencies": {
     "@angular-devkit/core": "~21.1.0",
     "@angular-devkit/schematics": "~21.1.0",
