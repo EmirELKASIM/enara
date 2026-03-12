@@ -27,14 +27,12 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(
       appRoutes,
-      withInMemoryScrolling({
-        scrollPositionRestoration: 'top',
-      }),
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
     provideHttpClient(),
     provideAnimations(),
     importProvidersFrom(
-      FormsModule, 
+      FormsModule,
       RecaptchaModule,
 
       ToastrModule.forRoot({

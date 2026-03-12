@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import {  Component, ElementRef, inject,  ViewChild } from '@angular/core';
 import NextStep from './next-step/next-step';
 import FirstStep from './first-step/first-step';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export default class Register implements OnInit {
+export default class Register {
   firstName = '';
   lastName = '';
   email = '';
@@ -52,10 +52,13 @@ export default class Register implements OnInit {
   }
   onBack() {
     this.next = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  ngOnInit() {
-    window.scrollTo(0, 0);
+  @ViewChild('mainContainer') mainContainer!: ElementRef;
+
+  scrollToTop() {
+    this.mainContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   onResToFirstData(value: firstData) {
@@ -67,6 +70,8 @@ export default class Register implements OnInit {
     this.phoneNumber = value.phoneNumber;
     this.codeNumber = value.codeNumber;
     this.next = value.next;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.scrollToTop();
   }
   onResToNextData(value: nextData) {
     this.gender = value.gender;
