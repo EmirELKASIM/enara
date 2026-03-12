@@ -1,5 +1,3 @@
-
-
 <div class="selection-container">
   <div class="selection-header">
     <div class="header-icon">
@@ -332,6 +330,11 @@
       </mat-radio-group>
     </div>
   </div>
+  <re-captcha
+    siteKey="6LehtocsAAAAAHWyF9YYCWOXLGA7J-_zv_KK1c06"
+    (resolved)="captchaResolved($event)"
+  >
+  </re-captcha>
 
   <div class="privacy-section">
     <div class="privacy-header">

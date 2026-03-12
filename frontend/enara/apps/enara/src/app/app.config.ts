@@ -12,6 +12,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { FormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new (TranslateHttpLoader as any)(http, {
@@ -27,6 +29,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideAnimations(),
     importProvidersFrom(
+      FormsModule,      // ← للسماح باستخدام [(ngModel)]
+      RecaptchaModule,
       ToastrModule.forRoot({
         timeOut: 3000,
         positionClass: 'toast-top-right',

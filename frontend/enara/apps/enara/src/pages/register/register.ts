@@ -43,6 +43,7 @@ export default class Register {
   next = false;
   acceptedFromChild = false;
   translate = inject(Translation);
+  captchaToken: string | null = null;
 
   private toastr = inject(ToastrService);
   private registerService = inject(RegisterService);
@@ -53,15 +54,7 @@ export default class Register {
     this.next = false;
   }
 
-  captchaToken: string | null = null;
-
-  captchaResolved(token: string | null) {
-  if (token) {
-    this.captchaToken = token;
-  } else {
-    this.captchaToken = null; 
-  }
-}
+  
 
   onResToFirstData(value: firstData) {
     this.firstName = value.firstName;
@@ -79,6 +72,7 @@ export default class Register {
     this.maritalStatus = value.maritalStatus;
     this.consultation = value.consultation;
     this.privacyPolicy = value.privacyPolicy;
+    this.captchaToken = value.captchaToken;
   }
 
   checkData() {

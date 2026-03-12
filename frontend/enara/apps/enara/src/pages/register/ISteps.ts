@@ -14,4 +14,5 @@ export interface nextData {
   maritalStatus: string;
   consultation: string;
   privacyPolicy: boolean;
+  captchaToken:string;
 }

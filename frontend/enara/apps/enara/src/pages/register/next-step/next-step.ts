@@ -6,9 +6,11 @@ import { MatDialog } from '@angular/material/dialog';
 import DialogPrivacyPolicy from './dialog-privacy-policy/dialog-privacy-policy';
 import { Translation } from '../../../../src/sevices/translation';
 import { ToastrService } from 'ngx-toastr';
+import { RecaptchaModule } from 'ng-recaptcha';
+
 @Component({
   selector: 'app-next-step',
-  imports: [MatRadioModule, MatCheckboxModule, FormsModule],
+  imports: [MatRadioModule, MatCheckboxModule, FormsModule, RecaptchaModule,],
   templateUrl: './next-step.html',
   styleUrl: './next-step.css',
 })
@@ -27,8 +29,17 @@ export default class NextStep {
     maritalStatus: string;
     consultation: string;
     privacyPolicy: boolean;
+    captchaToken:string;
   }>();
+  captchaToken: string | null = null;
 
+  captchaResolved(token: string | null) {
+    if (token) {
+      this.captchaToken = token;
+    } else {
+      this.captchaToken = null;
+    }
+  }
   onGenderChanged(value: string) {
     this.gender = value;
   }
@@ -44,12 +55,17 @@ export default class NextStep {
 
   onPrivacyPolicyChange(value: boolean) {
     this.privacyPolicy = value;
+    if (!this.captchaToken) {
+      this.toastr.warning(this.translate.t('toastr.captcha_required'));
+      return;
+    }
     const data = {
       gender: this.gender,
       accountType: this.accountType,
       maritalStatus: this.maritalStatus,
       consultation: this.consultation,
       privacyPolicy: this.privacyPolicy,
+      captchaToken: this.captchaToken
     };
     this.sendNextData.emit(data);
   }
