@@ -5,6 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import DialogPrivacyPolicy from './dialog-privacy-policy/dialog-privacy-policy';
 import { Translation } from '../../../../src/sevices/translation';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-next-step',
   imports: [MatRadioModule, MatCheckboxModule, FormsModule],
@@ -18,6 +19,7 @@ export default class NextStep {
   consultation = '';
   privacyPolicy = false;
   readonly dialog = inject(MatDialog);
+  private toastr = inject(ToastrService);
   translate = inject(Translation);
   @Output() sendNextData = new EventEmitter<{
     gender: string;
@@ -26,7 +28,7 @@ export default class NextStep {
     consultation: string;
     privacyPolicy: boolean;
   }>();
-  
+
   onGenderChanged(value: string) {
     this.gender = value;
   }
@@ -39,6 +41,23 @@ export default class NextStep {
   onConsultationChanged(value: string) {
     this.consultation = value;
   }
+  checkData() {
+    if (this.gender.length > 0) {
+      this.toastr.warning('check gender');
+      return false;
+    } else if (this.accountType.length > 0) {
+      this.toastr.warning('check accountType');
+      return false;
+    } else if (this.maritalStatus.length > 0) {
+      this.toastr.warning('check Marital Status');
+      return false;
+    } else if (this.consultation.length > 0) {
+      this.toastr.warning('check Consultion');
+      return false;
+    } else {
+      return true;
+    }
+  }
   onPrivacyPolicyChange(value: boolean) {
     this.privacyPolicy = value;
     const data = {
@@ -48,8 +67,11 @@ export default class NextStep {
       consultation: this.consultation,
       privacyPolicy: this.privacyPolicy,
     };
-
-    this.sendNextData.emit(data);
+    if (this.checkData()) {
+      this.sendNextData.emit(data);
+    } else {
+      return;
+    }
   }
 
   onPrivacyPolicy() {
