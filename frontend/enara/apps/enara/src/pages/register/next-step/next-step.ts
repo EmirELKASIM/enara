@@ -70,6 +70,7 @@ export default class NextStep {
     if (this.checkData()) {
       this.sendNextData.emit(data);
     } else {
+      this.privacyPolicy = false;
       return;
     }
   }
