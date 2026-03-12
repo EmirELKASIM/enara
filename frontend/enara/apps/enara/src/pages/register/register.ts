@@ -27,7 +27,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export default class Register {
+export default class Register implements OnInit {
   firstName = '';
   lastName = '';
   email = '';
@@ -54,7 +54,9 @@ export default class Register {
     this.next = false;
   }
 
-  
+  ngOnInit() {
+    window.scrollTo(0, 0);
+  }
 
   onResToFirstData(value: firstData) {
     this.firstName = value.firstName;
