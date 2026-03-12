@@ -157,7 +157,7 @@
     </div>
 
     <div class="input-group">
-      <div class="input-field password-field">
+      <div class="input-field password-field" >
         <label for="password" class="input-label">
           <i class="fas fa-lock"></i>
           <span>{{ translate.t('first-step.password_label') }}</span>
@@ -177,7 +177,7 @@
           />
           <div class="input-icons">
             <i class="fas fa-lock input-icon"></i>
-            <button
+            <!-- <button
               type="button"
               class="toggle-password"
               (click)="togglePasswordVisibility()"
@@ -188,7 +188,7 @@
               } @else {
               <i class="fas fa-eye"></i>
               }
-            </button>
+            </button> -->
             @if(password && !passwordError){
             <i class="fas fa-check-circle valid-icon"></i>
             } @if(passwordError){
@@ -267,7 +267,7 @@
           />
           <div class="input-icons">
             <i class="fas fa-lock input-icon"></i>
-            <button
+            <!-- <button
               type="button"
               class="toggle-password"
               (click)="toggleConfirmPasswordVisibility()"
@@ -278,7 +278,7 @@
               } @else {
               <i class="fas fa-eye"></i>
               }
-            </button>
+            </button> -->
             @if(confirmPassword && !confirmPasswordError && passwordsMatch){
             <i class="fas fa-check-circle valid-icon"></i>
             } @if(confirmPasswordError){
