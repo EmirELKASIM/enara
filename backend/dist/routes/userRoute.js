@@ -10,11 +10,11 @@ const router = express_1.default.Router();
 router.post("/register", async (request, response) => {
     const { firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, codeNumber, captcha } = request.body;
     const isHuman = await (0, verifyCaptcha_1.verifyCaptcha)(captcha);
-    // if (!isHuman) {
-    //   return response.status(400).json({
-    //     message: "Captcha verification failed"
-    //   });
-    // }
+    if (!isHuman) {
+        return response.status(400).json({
+            message: "Captcha verification failed"
+        });
+    }
     const { statusCode, data } = await (0, userService_1.register)({
         firstName,
         lastName,
