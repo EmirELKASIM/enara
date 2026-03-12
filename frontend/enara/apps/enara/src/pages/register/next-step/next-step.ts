@@ -41,23 +41,7 @@ export default class NextStep {
   onConsultationChanged(value: string) {
     this.consultation = value;
   }
-  checkData() {
-    if (!this.gender) {
-      this.toastr.warning('check gender');
-      return false;
-    } else if (!this.accountType) {
-      this.toastr.warning('check accountType');
-      return false;
-    } else if (!this.maritalStatus) {
-      this.toastr.warning('check Marital Status');
-      return false;
-    } else if (!this.consultation) {
-      this.toastr.warning('check Consultion');
-      return false;
-    } else {
-      return true;
-    }
-  }
+
   onPrivacyPolicyChange(value: boolean) {
     this.privacyPolicy = value;
     const data = {
@@ -67,12 +51,7 @@ export default class NextStep {
       consultation: this.consultation,
       privacyPolicy: this.privacyPolicy,
     };
-    if (this.checkData()) {
-      this.sendNextData.emit(data);
-    } else {
-      this.privacyPolicy = false;
-      return;
-    }
+    this.sendNextData.emit(data);
   }
 
   onPrivacyPolicy() {
