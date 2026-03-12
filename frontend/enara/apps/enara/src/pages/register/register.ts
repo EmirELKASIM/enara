@@ -10,10 +10,20 @@ import { Translation } from '../../sevices/translation';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { RecaptchaModule } from 'ng-recaptcha';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FirstStep, NextStep, FormsModule, HttpClientModule,MatToolbarModule,MatButtonModule, MatMenuModule],
+  imports: [
+    FirstStep,
+    NextStep,
+    FormsModule,
+    RecaptchaModule,
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule,
+  ],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -43,7 +53,15 @@ export default class Register {
     this.next = false;
   }
 
-  
+  captchaToken: string | null = null;
+
+  captchaResolved(token: string | null) {
+  if (token) {
+    this.captchaToken = token;
+  } else {
+    this.captchaToken = null; 
+  }
+}
 
   onResToFirstData(value: firstData) {
     this.firstName = value.firstName;
@@ -79,7 +97,10 @@ export default class Register {
   }
   submitForm() {
     const isTrue = this.checkData();
-
+    if (!this.captchaToken) {
+      this.toastr.warning(this.translate.t('toastr.captcha_required'));
+      return;
+    }
     if (!isTrue) {
       return;
     } else {
@@ -96,6 +117,7 @@ export default class Register {
         this.privacyPolicy,
         this.phoneNumber,
         this.codeNumber,
+        this.captchaToken,
       );
     }
   }

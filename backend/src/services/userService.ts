@@ -21,6 +21,7 @@ interface RegisterParams {
   privacyPolicy: boolean;
   phoneNumber: string;
   codeNumber: string;
+
 }
 export const register = async ({
   firstName,
@@ -35,6 +36,7 @@ export const register = async ({
   privacyPolicy,
   phoneNumber,
   codeNumber,
+
 }: RegisterParams) => {
   try {
     const findUser = await userModel.findOne({ email });

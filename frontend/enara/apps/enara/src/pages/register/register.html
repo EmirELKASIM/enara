@@ -1,24 +1,23 @@
 <mat-toolbar class="main-navbar">
   <div class="nav-brand">
     <div class="logo-container">
-     <i class="fa-regular fa-lightbulb logo-icon"></i>
+      <i class="fa-regular fa-lightbulb logo-icon"></i>
       <span class="logo-text">{{translate.t('main_titles.enara')}}</span>
     </div>
   </div>
 
-  <div class="nav-spacer"></div> 
+  <div class="nav-spacer"></div>
   <div class="user-section">
-     <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
-    <i class="fas fa-globe"></i>
-    <span>{{translate.t('main_titles.language')}}</span>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="changeLang('en')">English</button>
-    <button mat-menu-item (click)="changeLang('ar')">العربية</button>
-    <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
-  </mat-menu>
+    <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
+      <i class="fas fa-globe"></i>
+      <span>{{translate.t('main_titles.language')}}</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changeLang('en')">English</button>
+      <button mat-menu-item (click)="changeLang('ar')">العربية</button>
+      <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
+    </mat-menu>
   </div>
- 
 </mat-toolbar>
 
 <div class="container">
@@ -64,7 +63,9 @@
               <span class="step-number">1</span>
               <i class="fas fa-check step-check"></i>
             </div>
-            <span class="step-label">{{translate.t('register_page.step1_label')}}</span>
+            <span class="step-label"
+              >{{translate.t('register_page.step1_label')}}</span
+            >
           </div>
 
           <div class="step-line" [class.active]="next"></div>
@@ -74,7 +75,9 @@
               <span class="step-number">2</span>
               <i class="fas fa-check step-check"></i>
             </div>
-            <span class="step-label">{{translate.t('register_page.step2_label')}}</span>
+            <span class="step-label"
+              >{{translate.t('register_page.step2_label')}}</span
+            >
           </div>
         </div>
       </div>
@@ -83,7 +86,9 @@
         <div class="form-header">
           <div class="title-container">
             <h1 class="title">{{translate.t('register_page.form_title')}}</h1>
-            <p class="subtitle">{{translate.t('register_page.form_subtitle')}}</p>
+            <p class="subtitle">
+              {{translate.t('register_page.form_subtitle')}}
+            </p>
           </div>
           <div class="form-icon">
             <i class="fas fa-user-plus"></i>
@@ -92,20 +97,24 @@
 
         <div class="form-content">
           @if(!next){
-          <div class="step-content" >
+          <div class="step-content">
             <app-first-step
               (sendFirstData)="onResToFirstData($event)"
             ></app-first-step>
           </div>
           } @if(next){
-          <div class="step-content" >
+          <div class="step-content">
             <app-next-step
               (sendNextData)="onResToNextData($event)"
             ></app-next-step>
           </div>
           }
         </div>
-
+        <re-captcha
+          siteKey="SITE_KEY_HERE"
+          (resolved)="captchaResolved($event)"
+        >
+        </re-captcha>
         <div class="register-btn-box">
           @if(next){
           <div class="second-step-box">

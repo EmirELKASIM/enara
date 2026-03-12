@@ -1493,7 +1493,8 @@
       "registration_successful": "Kayıt başarılı!",
       "must_greater_than": "6'dan büyük olmalı.",
       "error_confirming_password": "Şifre doğrulamasında hata oluştu.",
-      "password_changed": "Şifre değiştirildi."
+      "password_changed": "Şifre değiştirildi.",
+      "captcha_required": "Lütfen CAPTCHA’yı tamamlayın."
     },
     "verify-email-page": {
       "go_login": "Giriş sayfasına git"

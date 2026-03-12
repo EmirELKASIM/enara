@@ -1522,7 +1522,8 @@
       "registration_successful": "Registration successful!",
       "must_greater_than": "It must be greater than 6.",
       "error_confirming_password": "Error in confirming the password.",
-      "password_changed": "Password has been changed."
+      "password_changed": "Password has been changed.",
+      "captcha_required": "Please complete the CAPTCHA."
     },
     "verify-email-page": {
       "go_login": "Go to Login"

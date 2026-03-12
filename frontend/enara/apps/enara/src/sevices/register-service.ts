@@ -78,6 +78,7 @@ export class RegisterService {
     privacyPolicy: boolean,
     phoneNumber: string,
     codeNumber: string,
+    captcha:string,
   ) {
     const data = {
       firstName: firstName,
@@ -92,6 +93,7 @@ export class RegisterService {
       privacyPolicy: privacyPolicy,
       phoneNumber: phoneNumber,
       codeNumber: codeNumber,
+      captcha:captcha
     };
     this.http
       .post(this.registerApi, data, {

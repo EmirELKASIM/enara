@@ -1486,7 +1486,8 @@
       "registration_successful": "تم التسجيل بنجاح!",
       "must_greater_than": "يجب أن يكون أكبر من 6.",
       "error_confirming_password": "خطأ في تأكيد كلمة المرور.",
-      "password_changed": "تم تغيير كلمة المرور."
+      "password_changed": "تم تغيير كلمة المرور.",
+      "captcha_required": "يرجى إكمال CAPTCHA."
     },
     "verify-email-page": {
       "go_login": "تصجيل الدخول"
