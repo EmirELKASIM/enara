@@ -133,6 +133,7 @@
             [(ngModel)]="birthday"
             name="birthday"
             class="form-input date-input"
+            (mouseenter)="openDatePicker($event)"
             (focus)="onInputFocus('birthday')"
             [class.focused]="focusedField === 'birthday'"
             [class.invalid]="birthdayError"

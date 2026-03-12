@@ -95,6 +95,8 @@ export class RegisterService {
       codeNumber: codeNumber,
       captcha:captcha
     };
+    console.log(data);
+    
     this.http
       .post(this.registerApi, data, {
         headers: {
@@ -109,6 +111,8 @@ export class RegisterService {
           this.router.navigate(['login']);
         },
         error: (err) => {
+          console.log(err.error);
+          
           this.toastr.error(this.translate.t('toastr.something_went_wrong'));
         },
       });

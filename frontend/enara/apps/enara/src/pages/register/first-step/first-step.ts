@@ -65,7 +65,10 @@ export default class FirstStep {
   private router = inject(Router);
   private registerService = inject(RegisterService);
   translate = inject(Translation);
- 
+ openDatePicker(event: any) {
+  const input: HTMLInputElement = event.target;
+  input.showPicker?.(); // showPicker متاحة في بعض المتصفحات الحديثة
+}
   goLogin() {
     this.router.navigate(['login']);
   }

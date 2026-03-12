@@ -23,9 +23,17 @@ const app = (0, express_1.default)();
 const port = Number(process.env.PORT) || 3001;
 const cors = require("cors");
 app.use(cors({
-    origin: "https://enaramind.com", // Angular
+    origin: [
+        "https://enaramind.com",
+        "http://localhost:4200",
+        "http://localhost:4000",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "ngrok-skip-browser-warning"],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "ngrok-skip-browser-warning",
+    ],
 }));
 app.use(express_1.default.json());
 mongoose_1.default

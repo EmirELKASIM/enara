@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendVerificationEmail = exports.sendEmail = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const resend_1 = require("resend");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const resend = new resend_1.Resend(process.env.RESEND_API_KEY);
 const sendEmail = async (to, subject, html) => {
     try {

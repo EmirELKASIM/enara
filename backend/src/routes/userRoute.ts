@@ -35,11 +35,11 @@ router.post("/register", async (request, response) => {
   } = request.body;
   const isHuman = await verifyCaptcha(captcha);
 
-  if (!isHuman) {
-    return response.status(400).json({
-      message: "Captcha verification failed"
-    });
-  }
+  // if (!isHuman) {
+  //   return response.status(400).json({
+  //     message: "Captcha verification failed"
+  //   });
+  // }
   const { statusCode, data } = await register({
     firstName,
     lastName,
@@ -53,7 +53,6 @@ router.post("/register", async (request, response) => {
     privacyPolicy,
     phoneNumber,
     codeNumber,
-
   });
   response.status(statusCode).json({
     success: true,
