@@ -22,15 +22,40 @@ const transporter = nodemailer_1.default.createTransport({
         rejectUnauthorized: false,
     },
 });
+// export const sendEmail = async (to: string, subject: string, html: string) => {
+//   try {
+//     const info = await transporter.sendMail({
+//       from: `"Support" <${process.env.EMAIL_USER}>`,
+//       to,
+//       subject,
+//       html,
+//     });
+//     console.log("Email sent:", info.response);
+//     return info;
+//   } catch (error) {
+//     console.error("Error sending email:", error);
+//     throw error;
+//   }
+// };
 const sendEmail = async (to, subject, html) => {
     try {
-        const info = await transporter.sendMail({
+        const mailData = {
             from: `"Support" <${process.env.EMAIL_USER}>`,
             to,
             subject,
             html,
+        };
+        const info = await new Promise((resolve, reject) => {
+            transporter.sendMail(mailData, (err, info) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(info);
+                }
+            });
         });
-        console.log("Email sent:", info.response);
+        console.log("Email sent:", info);
         return info;
     }
     catch (error) {
