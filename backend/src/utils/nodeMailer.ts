@@ -4,20 +4,23 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-/**
- * إنشاء transporter
- */
 const transporter = nodemailer.createTransport({
-  service: "gmail", // يمكن تغييره لأي SMTP آخر
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, 
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // إذا Gmail، استخدم App Password
+    pass: process.env.EMAIL_PASS,
+  },
+  connectionTimeout: 10000, 
+  greetingTimeout: 10000,
+  socketTimeout: 15000,
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
-/**
- * دالة عامة لإرسال أي بريد
- */
+
 export const sendEmail = async (to: string, subject: string, html: string) => {
   try {
     const info = await transporter.sendMail({
@@ -34,11 +37,9 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
   }
 };
 
-/**
- * دالة لإرسال بريد التحقق للمستخدم
- */
+
 export const sendVerificationEmail = async (user:any) => {
-  // إنشاء توكن JWT
+ 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
     expiresIn: "1d",
   });
@@ -51,6 +52,5 @@ export const sendVerificationEmail = async (user:any) => {
     <a href="${link}">Verify Email</a>
   `;
 
-  // إرسال البريد باستخدام sendEmail
   return sendEmail(user.email, "Verify Your Email", html);
 };
