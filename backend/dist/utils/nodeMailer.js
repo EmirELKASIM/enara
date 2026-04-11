@@ -10,11 +10,12 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const transporter = nodemailer_1.default.createTransport({
     host: "smtp.gmail.com",
-    secure: true,
+    port: 465,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
+    secure: true,
     connectionTimeout: 20000,
     greetingTimeout: 10000,
     socketTimeout: 15000,

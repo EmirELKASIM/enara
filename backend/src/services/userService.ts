@@ -7,8 +7,9 @@ import experienceModel from "../models/experienceModel";
 import requestModel from "../models/requestModel";
 import appointmentModel from "../models/appointmentModul";
 import bookingModel from "../models/bookingModel";
+import { sendEmail, sendVerificationEmail } from "../utils/brevo";
 
-import { sendVerificationEmail,sendEmail } from "../utils/nodeMailer";
+// import { sendVerificationEmail,sendEmail } from "../utils/nodeMailer";
 interface RegisterParams {
   firstName: string;
   lastName: string;

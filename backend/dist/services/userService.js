@@ -13,7 +13,7 @@ const experienceModel_1 = __importDefault(require("../models/experienceModel"));
 const requestModel_1 = __importDefault(require("../models/requestModel"));
 const appointmentModul_1 = __importDefault(require("../models/appointmentModul"));
 const bookingModel_1 = __importDefault(require("../models/bookingModel"));
-const nodeMailer_1 = require("../utils/nodeMailer");
+const brevo_1 = require("../utils/brevo");
 const register = async ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, }) => {
     try {
         const findUser = await userModel_1.default.findOne({ email });
@@ -53,7 +53,7 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
         setImmediate(async () => {
             console.log("2. Starting Email Call...");
             try {
-                await (0, nodeMailer_1.sendVerificationEmail)(newUser);
+                await (0, brevo_1.sendVerificationEmail)(newUser);
                 console.log("Email sent successfully");
             }
             catch (err) {
@@ -215,7 +215,7 @@ const forgotPassword = async ({ email }) => {
     }
     const resetToken = jsonwebtoken_1.default.sign({ id: findUser._id }, process.env.JWT_SECRET || "", { expiresIn: "15m" });
     const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    await (0, nodeMailer_1.sendEmail)(email, "Reset Password", `
+    await (0, brevo_1.sendEmail)(email, "Reset Password", `
     <h3>Password Reset</h3>
     <p>Click the link below to reset your password:</p>
     <a href="${resetLink}">${resetLink}</a>
