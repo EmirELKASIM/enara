@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import Users from './users/users';
 import ExaminationRequests from './examination-requests/examination-requests';
 import Examinations from './examinations/examinations';
@@ -31,7 +31,7 @@ export default class Dashboard implements OnInit {
   public isMobile: boolean = this.screenWidth <= 600;
   private http = inject(HttpClient);
   sideMenuOpen = false;
-  
+  private cdr = inject(ChangeDetectorRef);
   currentView:
     | 'users'
     | 'doctorsAccounts'
@@ -91,6 +91,7 @@ export default class Dashboard implements OnInit {
         if (res.success) {
           localStorage.setItem('isAuth', 'true');
           this.isAuth = true;
+          this.cdr.detectChanges();
         } else {
           alert('Wrong code ❌');
         }
