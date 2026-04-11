@@ -5,16 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userService_1 = require("../services/userService");
-const verifyCaptcha_1 = require("../utils/verifyCaptcha");
 const router = express_1.default.Router();
 router.post("/register", async (request, response) => {
     const { firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, captcha } = request.body;
-    const isHuman = await (0, verifyCaptcha_1.verifyCaptcha)(captcha);
-    if (!isHuman) {
-        return response.status(400).json({
-            message: "Captcha verification failed"
-        });
-    }
+    // const isHuman = await verifyCaptcha(captcha);
+    // if (!isHuman) {
+    //   return response.status(400).json({
+    //     message: "Captcha verification failed"
+    //   });
+    // }
     const { statusCode, data } = await (0, userService_1.register)({
         firstName,
         lastName,

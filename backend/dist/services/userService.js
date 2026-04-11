@@ -50,17 +50,25 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             permissible: permissible,
         });
         await newUser.save();
-        setImmediate(async () => {
-            console.log("2. Starting Email Call...");
-            try {
-                await (0, brevo_1.sendVerificationEmail)(newUser);
-                console.log("Email sent successfully");
-            }
-            catch (err) {
-                console.error("Email error:", err);
-            }
-            console.log("3. Email Call Finished");
-        });
+        // setImmediate(async () => {
+        //   console.log("2. Starting Email Call...");
+        //   try {
+        //     await sendVerificationEmail(newUser);
+        //     console.log("Email sent successfully");
+        //   } catch (err) {
+        //     console.error("Email error:", err);
+        //   }
+        //   console.log("3. Email Call Finished");
+        // });
+        try {
+            console.log("Attempting to send verification email to:", email);
+            const emailResult = await (0, brevo_1.sendVerificationEmail)(newUser);
+            console.log("Email sent successfully:", emailResult);
+        }
+        catch (emailError) {
+            console.error("Detailed email error:", emailError);
+            // لا نمنع تسجيل المستخدم إذا فشل الإيميل
+        }
         return {
             data: (0, helperJWT_1.generateJWT)({
                 id: newUser._id,

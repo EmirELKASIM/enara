@@ -77,18 +77,26 @@ export const register = async ({
       permissible: permissible,
     });
     await newUser.save();
-    setImmediate(async () => {
-      console.log("2. Starting Email Call...");
+    // setImmediate(async () => {
+    //   console.log("2. Starting Email Call...");
 
-      try {
-        await sendVerificationEmail(newUser);
-        console.log("Email sent successfully");
-      } catch (err) {
-        console.error("Email error:", err);
-      }
+    //   try {
+    //     await sendVerificationEmail(newUser);
+    //     console.log("Email sent successfully");
+    //   } catch (err) {
+    //     console.error("Email error:", err);
+    //   }
 
-      console.log("3. Email Call Finished");
-    });
+    //   console.log("3. Email Call Finished");
+    // });
+    try {
+      console.log("Attempting to send verification email to:", email);
+      const emailResult = await sendVerificationEmail(newUser);
+      console.log("Email sent successfully:", emailResult);
+    } catch (emailError) {
+      console.error("Detailed email error:", emailError);
+      // لا نمنع تسجيل المستخدم إذا فشل الإيميل
+    }
     return {
       data: generateJWT({
         id: newUser._id,
