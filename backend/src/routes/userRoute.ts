@@ -191,4 +191,5 @@ router.put("/dashboard/unpermissible-doctors/approving", async (req, res) => {
   const { statusCode, data } = await onApproving({doctorId});
   return res.status(statusCode).json({ success: true, token: data });
 });
+
 export default router;

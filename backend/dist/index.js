@@ -52,6 +52,13 @@ app.use("/diagnosis", diagnosisRoute_1.default);
 app.use("/request", requestRoute_1.default);
 app.use("/examination", examinationRoute_1.default);
 app.use('/payment', paymentRoute_1.default);
+app.post('/check-pass', (req, res) => {
+    const { pass } = req.body;
+    if (pass === process.env.DASHBOARD_SECRET_PASS) {
+        return res.json({ success: true });
+    }
+    res.json({ success: false });
+});
 app.use(express_1.default.static(path_1.default.join(__dirname, "../frontend/enara/dist/enara")));
 app.get(/^(?!\/api).*$/, (req, res) => {
     res.sendFile(path_1.default.join(__dirname, "../frontend/enara/dist/enara/index.html"));

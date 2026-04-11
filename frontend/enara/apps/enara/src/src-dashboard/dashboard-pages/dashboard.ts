@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import Users from './users/users';
 import ExaminationRequests from './examination-requests/examination-requests';
 import Examinations from './examinations/examinations';
@@ -6,8 +6,10 @@ import Appointments from './appointments/appointments';
 import Bookings from './bookings/bookings';
 import Earnings from './earnings/earnings';
 import { FormsModule } from '@angular/forms';
-import { secretPass } from '../../../secretPass';
+
 import DoctorsAccounts from './doctors-accounts/doctors-accounts';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.prod';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -27,6 +29,7 @@ export default class Dashboard {
   isAuth = false;
   screenWidth: number = window.innerWidth;
   public isMobile: boolean = this.screenWidth <= 600;
+  private http = inject(HttpClient);
   sideMenuOpen = false;
   currentView:
     | 'users'
@@ -71,16 +74,22 @@ export default class Dashboard {
 
   accessCode = '';
   checkCode() {
-    if (this.accessCode === secretPass) {
-      return true;
-    } else {
-      return false;
-    }
+    this.http
+      .post(`${environment.apiUrl}/check-pass`, {
+        pass: this.accessCode,
+      })
+      .subscribe((res: any) => {
+        console.log(res);
+
+        if (res.success) {
+          this.isAuth = true;
+        } else {
+          alert('Wrong code ❌');
+        }
+      });
   }
+
   onSubmit() {
-    const isTrue = this.checkCode();
-    if (isTrue) {
-      this.isAuth = true;
-    }
+    this.checkCode();
   }
 }
