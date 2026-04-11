@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import Users from './users/users';
 import ExaminationRequests from './examination-requests/examination-requests';
 import Examinations from './examinations/examinations';
@@ -25,12 +25,13 @@ import { environment } from '../../environments/environment.prod';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export default class Dashboard {
+export default class Dashboard implements OnInit {
   isAuth = false;
   screenWidth: number = window.innerWidth;
   public isMobile: boolean = this.screenWidth <= 600;
   private http = inject(HttpClient);
   sideMenuOpen = false;
+  
   currentView:
     | 'users'
     | 'doctorsAccounts'
@@ -40,6 +41,9 @@ export default class Dashboard {
     | 'bookings'
     | 'earnings'
     | null = null;
+  ngOnInit() {
+    this.isAuth = localStorage.getItem('isAuth') === 'true';
+  }
   openSideMenu() {
     this.sideMenuOpen = !this.sideMenuOpen;
   }
@@ -73,15 +77,19 @@ export default class Dashboard {
   }
 
   accessCode = '';
+  isLoading = false;
   checkCode() {
+    this.isLoading = true;
     this.http
       .post(`${environment.apiUrl}/check-pass`, {
         pass: this.accessCode,
       })
       .subscribe((res: any) => {
         console.log(res);
+        this.isLoading = false;
 
         if (res.success) {
+          localStorage.setItem('isAuth', 'true');
           this.isAuth = true;
         } else {
           alert('Wrong code ❌');

@@ -8,7 +8,7 @@
         <input type="password" name="accessCode" [(ngModel)]="accessCode" placeholder="********" required />
       </div>
 
-      <button type="submit" class="login-btn" [disabled]="!checkCode()">ادخل</button>
+      <button type="submit" class="login-btn" [disabled]="!accessCode || isLoading">ادخل</button>
     </form>
   </div>
 </div>
