@@ -67,7 +67,6 @@ const bookingSchema = new mongoose_1.Schema({
     meetingUrl: { type: String, default: "" },
     changeDetails: { type: String, default: "" },
     onChange: { type: Boolean, default: false },
-    paymentStatus: { type: Boolean, default: false },
     dekontCode: { type: String, default: "" },
     dekontNotes: { type: String, default: "" },
     status: {
@@ -81,8 +80,38 @@ const bookingSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.Mixed,
         default: {},
     },
+    paymentMethod: {
+        type: String,
+        enum: ["card", "byDekont", "none"],
+        default: "none",
+        required: true
+    },
     appointmentPrice: { type: String, required: true },
     appointmentCoinType: { type: String, required: true },
+    appointmentDuration: { type: String, required: true },
+    notifications: [
+        {
+            type: {
+                type: String,
+                enum: [
+                    "booked",
+                    "canceled",
+                    "toChange",
+                    "changed",
+                    "paid",
+                    "acceptedPaid",
+                    "upcoming",
+                ],
+                required: true,
+            },
+            message: { type: String, required: true },
+            sent: { type: Boolean, default: false },
+            sentAt: { type: Date },
+            readByDoctor: { type: Boolean, default: false },
+            readByPatient: { type: Boolean, default: false },
+            createdAt: { type: Date, default: Date.now },
+        },
+    ],
 }, { timestamps: true });
 const bookingModel = mongoose_1.default.model("Booking", bookingSchema);
 exports.default = bookingModel;

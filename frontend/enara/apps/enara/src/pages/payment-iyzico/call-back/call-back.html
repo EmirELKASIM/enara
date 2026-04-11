@@ -1,0 +1,16 @@
+<div class="callback-container">
+  @if(status === 'processing'){
+  <h2 class="card loading">⏳ جاري التحقق من الدفع...</h2>
+
+  }@else if(status === 'success'){
+  <div class="box">
+    <h2 class="card success">✅ تم الدفع بنجاح</h2>
+    <button type="button" (click)="goHome()">Go Home</button>
+  </div>
+  }@else if(status === 'failed'){
+  <div class="box">
+    <h2 class="card error">❌ فشل الدفع</h2>
+    <button type="button" (click)="goHome()">Go Home</button>
+  </div>
+  }
+</div>

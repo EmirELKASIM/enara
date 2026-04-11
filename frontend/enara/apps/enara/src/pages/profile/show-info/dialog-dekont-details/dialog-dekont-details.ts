@@ -24,6 +24,7 @@ export default class DialogDekontDetails {
   data = inject(MAT_DIALOG_DATA);
   appointmentId = this.data.appointmentId;
   patientId = this.data.patientId;
+  paymentMethod = this.data.paymentMethod;
   private getDekontLink = `${apiUrl}/booking/dekont-details/${this.appointmentId}/${this.patientId}`;
   private acceptedDekontLink = `${apiUrl}/booking/accept-dekont`;
   private http = inject(HttpClient);
@@ -33,9 +34,16 @@ export default class DialogDekontDetails {
 
   dekontCode = computed(() => this.bookingInfo()?.dekontCode ?? null);
   dekontNotes = computed(() => this.bookingInfo()?.dekontNotes ?? null);
-  paymentStatus = computed(() => this.bookingInfo()?.paymentStatus ?? false);
+  paymentStatus = computed(
+    () => this.bookingInfo()?.paymentMethod === 'byDekont',
+  );
+  isPaid = computed(
+    () =>
+      this.bookingInfo()?.paymentMethod === 'byDekont' ||
+      this.bookingInfo()?.paymentMethod === 'dard',
+  );
   private dialogRef = inject(MatDialogRef<DialogDekontDetails>);
-  inValidDekontCode = computed(() => this.dekontCode() === "");
+  inValidDekontCode = computed(() => this.dekontCode() === '');
   constructor() {
     effect(async () => {
       const token = await this.auth.getToken();
@@ -74,12 +82,13 @@ export default class DialogDekontDetails {
       })
       .subscribe({
         next: () => {
-          this.toastr.success(this.translate.t("toastr.appointment_confirmed"));
+          this.toastr.success(this.translate.t('toastr.appointment_confirmed'));
           this.dialogRef.close({
-            paymentStatus: this.paymentStatus(),
+            isPaid: this.isPaid(),
           });
         },
-        error: () => this.toastr.error(this.translate.t('toastr.something_went_wrong')),
+        error: () =>
+          this.toastr.error(this.translate.t('toastr.something_went_wrong')),
       });
   }
 }

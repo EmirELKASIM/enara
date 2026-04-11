@@ -1,12 +1,10 @@
 @use '@angular/material' as mat;
 
-@import 'ngx-toastr/toastr';
+@use 'ngx-toastr/toastr';
 
+@use "bootstrap/dist/css/bootstrap.min.css";
+@use "intl-tel-input/build/css/intlTelInput.css";
 
-* {
-  padding: 0;
-  margin: 0;
-}
 
 :root {
   --primary-color: mediumvioletred;
@@ -38,6 +36,7 @@
   border-radius: 16px;
 }
 
+
 .booking-appointment-dialog,
 .delete-account-dialog,
 .info-dialog,
@@ -46,9 +45,15 @@
   height: 1000px;
 }
 
-.request-send-dialog,
-.logout-dialog {
+.request-send-dialog
+ {
   height: 1000px;
+}
+.logout-dialog{
+  height: 450px;
+}
+.delete-account-dialog{
+  height: 1050px;
 }
 
 .user-start-meeting-dialog,
@@ -66,6 +71,7 @@
 .user-start-meeting-dialog,
 .request-send-dialog,
 .requests-dialog,
+
 .mat-mdc-dialog-surface {
   border-radius: 16px;
 }
@@ -96,7 +102,6 @@
   background-color: #ffffff !important;
   color: #000000 !important;
 }
-
 
 
 

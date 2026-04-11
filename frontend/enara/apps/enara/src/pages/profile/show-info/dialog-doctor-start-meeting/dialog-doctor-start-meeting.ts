@@ -44,6 +44,7 @@ export default class DialogDoctorStartMeeting {
   patientLastName = this.data.patientLastName;
   appointmentDate = this.data.appointmentDate;
   appointmentTime = this.data.appointmentTime;
+  appointmentDuration = this.data.appointmentDuration;
   isSubmitting = false;
   onSetActiveChange(value: string) {
     this.setActive = value;

@@ -9,7 +9,21 @@
       "home": "Ana Sayfa",
       "about_us": "Hakkımızda",
       "sessions": "Seanslar",
-      "profile": "Profil"
+      "profile": "Profil",
+      "notifications": "Bildirimler",
+      "logout": "Çıkış yap"
+    },
+
+    "notifications": {
+      "title": "Bildirimler",
+      "no_notifications_yet": "Henüz bildirim yok",
+      "read": "Okundu",
+      "unread": "Okunmadı",
+      "appointment": "Randevu",
+      "time": "Saat",
+      "doctor": "Doktor",
+      "patient": "Hasta",
+      "notified_at": "Bildirim zamanı"
     },
     "about_us_page": {
       "platform": "Platform",
@@ -137,7 +151,8 @@
       "friday": "Cuma",
       "saturday": "Cumartesi",
       "sunday": "Pazar",
-      "notSpecified": "Belirtilmemiş"
+      "notSpecified": "Belirtilmemiş",
+      "session_duration" : "Oturum süresi"
     },
     "dialog_book_it": {
       "appointment_booking_confirmation": "Randevu Rezervasyon Onayı",
@@ -193,7 +208,7 @@
       "send_preview_request": "Ön İzleme Talebi Gönder",
       "confirm_send_request": "Talebi uzmana göndermek için tıklayın",
       "after_send_hint": "Gönderdikten sonra, talep durumunu Ön İzlemeler sayfasından takip edebilirsiniz",
-      "friendship_notice": "Aranızda bir arkadaşlık var; şu anda ön izleme talebi gönderemezsiniz",
+      "friendship_notice": "Aranızda bir arkadaşlık var",
       "back": "Geri",
       "go_profile": "profile git",
       "all_requests_confidential": "Tüm ön izleme talepleri tamamen gizlidir"
@@ -925,7 +940,8 @@
       "session_minutes_label": "Süre",
       "session_type_label": "Seans Türü",
       "session_price_label": "Seans Ücreti",
-      "start_session_button": "Seansı Başlat",
+      "start_session_button": "Oturum bağlantısını ekleyin",
+      "start_session_button_for_user": "Oturum Bağlantısını Aç",
       "cancel_appointment_button": "Randevuyu İptal Et",
       "send_edit_request_button": "Düzenleme Talebi Gönder",
       "edit_appointment_button": "Randevuyu Düzenle",
@@ -940,7 +956,15 @@
       "couplesSession": "Çift Seansı",
       "childrensSession": "Çocuk Seansı",
       "teenagersSession": "Ergen Seansı",
-      "notSpecified": "Belirtilmemiş"
+      "notSpecified": "Belirtilmemiş",
+      "doctor_account_approved": "Doktor hesabınız onaylandı",
+      "doctor_account_not_approved": "Hesabınız onaylanmadı",
+      "male": "Erkek",
+      "female": "Kadın",
+      "other": "Diğer",
+      "account_type_psychotherapist_label": "Psikoterapist",
+      "account_type_psychiatrist_label": "Dr. Psikiyatrist",
+      "account_type_personal_label": "Bireysel"
     },
     "profile_page": {
       "account_management_title": "Hesap Yönetimi",
@@ -1004,6 +1028,7 @@
       "passwords_match": "Şifreler eşleşiyor",
       "phone_number_label": "Telefon Numarası",
       "login_button": "Giriş Yap",
+      "back_button": "Geri",
       "next_button": "İleri",
       "required_fields_note": "Devam etmek için tüm alanlar zorunludur",
       "privacy_protection_note": "Verileriniz gizlilik politikası kapsamında korunmaktadır"

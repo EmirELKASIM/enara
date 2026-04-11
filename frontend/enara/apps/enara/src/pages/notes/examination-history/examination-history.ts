@@ -38,7 +38,7 @@ export default class ExaminationHistory implements OnInit {
   private http = inject(HttpClient);
   private auth = inject(AuthService);
   formatDate(createdAt: string): string {
-    const lang = this.translate.currentLang(); // أو lang() حسب خدمتك
+    const lang = this.translate.currentLang(); 
     return new Date(createdAt).toLocaleDateString(lang);
   }
 
@@ -84,7 +84,7 @@ export default class ExaminationHistory implements OnInit {
 
   onDeletePanel(examinationId: string, patientId: string, doctorId: string) {
     const dialogRef = this.dialog.open(DialogDeletePanel, {
-      panelClass: 'delete-meeting-dialog',
+      panelClass: 'delete-panel-dialog',
       data: {
         examinationId: examinationId,
         patientId: patientId,
@@ -139,7 +139,7 @@ export default class ExaminationHistory implements OnInit {
       : null;
   }
 
-  // Replace the Arabic strings in your methods with these:
+  
 
   getSupportLabel(value?: string): string {
     const map: Record<string, string> = {
@@ -320,13 +320,13 @@ export default class ExaminationHistory implements OnInit {
 
   getChildAgeLabel(value?: string): string {
     const map: Record<string, string> = {
-      '4between8': this.translate.t('examination-history-details.childAge4to8'), // Note: Key in JSON is 'childAge4to8'
+      '4between8': this.translate.t('examination-history-details.childAge4to8'), 
       '9between14': this.translate.t(
         'examination-history-details.childAge9to14',
-      ), // Note: Key in JSON is 'childAge9to14'
+      ), 
       '15between18': this.translate.t(
         'examination-history-details.childAge15to18',
-      ), // Note: Key in JSON is 'childAge15to18'
+      ), 
     };
     return (
       map[value || ''] ||
@@ -361,7 +361,7 @@ export default class ExaminationHistory implements OnInit {
 
   getBehaviorLabels(values?: string[]): string[] {
     const map: Record<string, string> = {
-      moodSwings: this.translate.t('examination-history-details.moodSwings'), // 'moodSwings' key exists
+      moodSwings: this.translate.t('examination-history-details.moodSwings'), 
       frequentCrying: this.translate.t(
         'examination-history-details.frequentCrying',
       ),
@@ -399,7 +399,7 @@ export default class ExaminationHistory implements OnInit {
     const map: Record<string, string> = {
       PsychologicalDistress: this.translate.t(
         'examination-history-details.psychologicalDistress',
-      ), // Note: JSON key is lowercase 'psychologicalDistress'
+      ), 
       selfHarmfulThoughts: this.translate.t(
         'examination-history-details.selfHarmfulThoughts',
       ),
@@ -413,7 +413,7 @@ export default class ExaminationHistory implements OnInit {
     );
   }
 
-  //---------------------------------------------------------------------------
+  
   getComplaintDurationLabel(value?: string): string {
     const map: Record<string, string> = {
       days: this.translate.t('examination-history-details.days'),
@@ -438,10 +438,10 @@ export default class ExaminationHistory implements OnInit {
       this.translate.t('examination-history-details.notSpecified')
     );
   }
-  //---------------------------------------------------------------------
+  
   getModLabel(value?: string): string {
     const map: Record<string, string> = {
-      anxiety: this.translate.t('examination-history-details.anxiety'), // 'anxiety' key exists
+      anxiety: this.translate.t('examination-history-details.anxiety'), 
       volatile: this.translate.t('examination-history-details.volatile'),
       stable: this.translate.t('examination-history-details.stable'),
       depressed: this.translate.t('examination-history-details.depressed'),
@@ -455,7 +455,7 @@ export default class ExaminationHistory implements OnInit {
   getSleepLabel(value?: string): string {
     const map: Record<string, string> = {
       bad: this.translate.t('examination-history-details.bad'),
-      middle: this.translate.t('examination-history-details.moderate'), // Using 'moderate' key as it's the closest match
+      middle: this.translate.t('examination-history-details.moderate'), 
       good: this.translate.t('examination-history-details.good'),
     };
     return (

@@ -21,6 +21,8 @@ import {
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { Translation } from '../../../../src/sevices/translation';
+import { Appointment } from './IAppointments-dates';
+import { BookingSearchPipe } from '../../../../src/pipes/booking-search-pipe';
 @Component({
   selector: 'app-booking',
   imports: [
@@ -40,6 +42,7 @@ import { Translation } from '../../../../src/sevices/translation';
     MatIcon,
     MatCardTitle,
     HttpClientModule,
+    BookingSearchPipe,
   ],
   templateUrl: './booking.html',
   providers: [provideNativeDateAdapter()],
@@ -51,12 +54,16 @@ export default class Booking implements OnInit {
   searchQuery = '';
   readonly dialog = inject(MatDialog);
   translate = inject(Translation);
-
+  hours: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
+  minutes: number[] = Array.from({ length: 60 }, (_, i) => i);
+  selectedHour = 1;
+  selectedMinute = 0;
+  period = 'AM';
   filteredDoctors: any[] = [];
   filteredDates: any[] = [];
-  dates = signal<any[]>([]);
+  dates = signal<Appointment[]>([]);
   private allAppointmentsApi = `${apiUrl}/appointment/all-info`;
-
+  timeSelected = false;
   screenWidth: number = window.innerWidth;
   public isMobile: boolean = this.screenWidth <= 600;
 
@@ -145,6 +152,7 @@ export default class Booking implements OnInit {
     doctorId: string,
     price: string,
     coinType: string,
+    duration:string
   ) {
     const dialogRef = this.dialog.open(DialogBookIt, {
       panelClass: 'booking-appointment-dialog',
@@ -159,6 +167,7 @@ export default class Booking implements OnInit {
         doctorId: doctorId,
         price: price,
         coinType: coinType,
+        duration:duration
       },
     });
 

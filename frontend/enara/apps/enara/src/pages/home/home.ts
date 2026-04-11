@@ -28,15 +28,11 @@ export default class Home {
   computeduserId = computed(() => this.info()?.id ?? '-');
   goBooking() {
     this.router.navigate(['booking']);
-    if (this.isMobile) {
-      this.backButton.show();
-    }
+    
   }
   goAddDate() {
     this.router.navigate(['add-date']);
-    if (this.isMobile) {
-      this.backButton.show();
-    }
+    
   }
   goDoctorFiles() {
     this.router.navigate(['doctor-files']);

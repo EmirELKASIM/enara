@@ -30,7 +30,7 @@
   line-height: 1.6;
   color: #333;
   overflow-wrap: anywhere;
-  word-break: break-all;/* يحافظ على الأسطر الجديدة */
+  word-break: break-all;
 }
 
 

@@ -1,0 +1,52 @@
+<div class="notifications-container">
+  <h2 class="title">🔔 {{translate.t('notifications.title')}}</h2>
+
+  @for (not of getAllNotifications(); track not._id) {
+  <div
+    class="notification-card"
+    [ngClass]="{'read': not.read, 'unread': !not.read}"
+    role="button"
+    tabindex="0"
+    (click)="not.source === 'booking' ? onBookingClicked(not.itemId,not._id) : onRequestClicked(not.itemId,not._id, not.accountType,not.doctorId)"
+  >
+    @if(!not.read){
+    <span class="unread-dot"></span>
+    }
+
+    <div class="header">
+      <span class="type" [ngClass]="not.type">{{ not.message }}</span>
+      <span class="status" [class.sent]="not.sent">
+        {{ not.read ? translate.t('notifications.read') :
+        translate.t('notifications.unread') }}
+      </span>
+    </div>
+
+    <div class="body">
+      @if(not.source==='booking'){
+      <p class="info">
+        📅 {{translate.t('notifications.appointment')}}: {{ not.appointmentDate
+        }}
+      </p>
+      <p class="info">
+        ⏰ {{translate.t('notifications.time')}}: {{ not.appointmentTime }}
+      </p>
+      } @if(not.source==='request'){
+      <p class="info">
+        👨‍⚕️ {{translate.t('notifications.doctor')}}: {{ not.doctorName }}
+      </p>
+      <p class="info">
+        👤 {{translate.t('notifications.patient')}}: {{ not.patientName }}
+      </p>
+      }
+      <p class="info">
+        🕒 {{translate.t('notifications.notified_at')}}: {{ not.sentAt |
+        date:'short' }}
+      </p>
+    </div>
+  </div>
+  } @if (bookingNot().length === 0 && friendRequests().length === 0) {
+  <div class="empty">
+    🚫 {{translate.t('notifications.no_notifications_yet')}}
+  </div>
+  }
+</div>

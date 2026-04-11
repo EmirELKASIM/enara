@@ -7,7 +7,7 @@ export interface UserInfo {
   maritalStatus: string;
   age: string;
   phoneNumber: string;
-  codeNumber: string;
+  permissible:boolean;
 }
 
 export interface SummaryInfo {
@@ -42,6 +42,7 @@ export interface bookedAppointmentsInfo {
   changeDetails: string;
   appointmentPrice: string;
   appointmentCoinType: string;
-  paymentStatus:string;
+  appointmentDuration:string;
   dekontCode:string;
+  paymentMethod:string;
 }

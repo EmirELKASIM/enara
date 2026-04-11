@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -30,7 +30,7 @@ import { Translation } from '../../../../src/sevices/translation';
   templateUrl: './dialog-delete-account.html',
   styleUrl: './dialog-delete-account.css',
 })
-export default class DialogDeleteAccount {
+export default class DialogDeleteAccount  {
   public auth = inject(AuthService);
   private router = inject(Router);
   private toastr = inject(ToastrService);
@@ -39,6 +39,7 @@ export default class DialogDeleteAccount {
   translate = inject(Translation);
 
   confirmDelete = false;
+
 
   async onDelete() {
     const token = await this.auth.getToken();
@@ -53,11 +54,11 @@ export default class DialogDeleteAccount {
       .subscribe({
         next: () => {
           this.auth.logout(); // 🔥 مهم جدًا
-          this.toastr.success(this.translate.t("toastr.deleted_successfully"));
+          this.toastr.success(this.translate.t('toastr.deleted_successfully'));
           this.router.navigate(['/']);
         },
         error: () => {
-          this.toastr.error(this.translate.t("toastr.failed_delete_account"));
+          this.toastr.error(this.translate.t('toastr.failed_delete_account'));
         },
       });
   }

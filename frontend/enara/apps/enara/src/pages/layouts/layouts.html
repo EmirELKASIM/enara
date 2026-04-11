@@ -4,21 +4,27 @@
     class="nav-back-btn"
     mat-icon-button
     (click)="goBack()"
-    aria-label="رجوع"
+    aria-label="back"
   >
-  @if(translate.currentLang()=== 'ar'){
+    @if(translate.currentLang()=== 'ar'){
     <i class="fas fa-arrow-right"></i>
 
-  }@else{
+    }@else{
     <i class="fas fa-arrow-left"></i>
 
-  }
+    }
   </button>
   }
 
-  <div class="nav-brand" [ngClass]="translate.currentLang() === 'ar' ? 'nav-brand-rtl' : 'nav-brand-ltr' " role="button" tabindex="0" (click)="goHome()">
+  <div
+    class="nav-brand"
+    [ngClass]="translate.currentLang() === 'ar' ? 'nav-brand-rtl' : 'nav-brand-ltr' "
+    role="button"
+    tabindex="0"
+    (click)="goHome()"
+  >
     <div class="logo-container">
-     <i class="fa-regular fa-lightbulb logo-icon"></i>
+      <i class="fa-regular fa-lightbulb logo-icon"></i>
       <span class="logo-text">{{translate.t('main_titles.enara')}}</span>
     </div>
   </div>
@@ -76,6 +82,8 @@
 
   <div class="nav-spacer"></div>
 
+  @if(!isMobile && !isTablet){
+
   <div class="user-section">
     @if ((auth.isLoggedIn$ | async) === false) {
     <button class="login-btn" mat-raised-button (click)="goLogin()">
@@ -83,17 +91,33 @@
       <span>{{translate.t('main_titles.sign_in')}}</span>
     </button>
     }
-     <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
-    <i class="fas fa-globe"></i>
-    <span>{{translate.t('main_titles.language')}}</span>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="changeLang('en')">English</button>
-    <button mat-menu-item (click)="changeLang('ar')">العربية</button>
-    <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
-  </mat-menu>
+    <button class="notifications-btn" (click)="goNotifications()">
+      <div class="icon-wrapper">
+        <i class="fas fa-bell"></i>
+        @if(notificationsTotal() > 0){
+        <span class="badge"> {{ notificationsTotal() }} </span>
+        }
+      </div>
+      <span>{{translate.t('layout.notifications')}}</span>
+    </button>
+    <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
+      <i class="fas fa-globe"></i>
+      <span>{{translate.t('main_titles.language')}}</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changeLang('en')">English</button>
+      <button mat-menu-item (click)="changeLang('ar')">العربية</button>
+      <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
+    </mat-menu>
+    <button class="logout-btn" (click)="onLogout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>{{translate.t('layout.logout')}}</span>
+    </button>
   </div>
- 
+  }@else{
+  <app-menu-button></app-menu-button>
+
+  }
 </mat-toolbar>
 
 <div class="tab-indicator-container">

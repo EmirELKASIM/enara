@@ -6,7 +6,6 @@ export interface IUser extends Document {
   email: string;
   password: string;
   phoneNumber: string;
-  codeNumber: string;
   accountType: string;
   gender: string;
   birthday: string;
@@ -15,6 +14,7 @@ export interface IUser extends Document {
   consultation: string;
   privacyPolicy: boolean;
   isEmailVerified: boolean;
+  permissible: boolean;
 }
 
 const userSchema = new Schema<IUser>(
@@ -24,7 +24,6 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true },
     password: { type: String, required: true },
     phoneNumber: { type: String, required: true },
-    codeNumber: { type: String, required: true },
     accountType: { type: String, required: true },
     gender: { type: String, required: true },
     birthday: { type: String, required: true },
@@ -36,6 +35,7 @@ const userSchema = new Schema<IUser>(
       type: Boolean,
       default: false,
     },
+    permissible: { type: Boolean, required: true },
   },
   { timestamps: true },
 );

@@ -5,7 +5,7 @@
         <i class="fas fa-sign-out-alt"></i>
       </div>
       <div class="header-text">
-        <h2 class="dialog-title">{{ translate.t('dialog-logout.logout_title') || 'تسجيل الخروج' }}</h2>
+        <h2 class="dialog-title">{{ translate.t('dialog-logout.logout_title') }}</h2>
         <p class="dialog-subtitle">{{ translate.t('dialog-logout.logout_warning_message') }}</p>
       </div>
     </div>
@@ -16,10 +16,10 @@
 
   <mat-dialog-content class="dialog-content">
    
-    <div class="logout-notes">
+    <!-- <div class="logout-notes">
       <div class="notes-header">
         <i class="fas fa-info-circle"></i>
-        <h3>{{ translate.t('dialog-logout.notes_header') || 'ملاحظات قبل الخروج' }}</h3>
+        <h3>{{ translate.t('dialog-logout.notes_header') }}</h3>
       </div>
       
       <div class="notes-list">
@@ -28,7 +28,7 @@
             <i class="fas fa-save"></i>
           </div>
           <div class="note-content">
-            <h4>{{ translate.t('dialog-logout.save_changes_note_title') || 'حفظ التغييرات' }}</h4>
+            <h4>{{ translate.t('dialog-logout.save_changes_note_title')  }}</h4>
             <p>{{ translate.t('dialog-logout.save_changes_note') }}</p>
           </div>
         </div>
@@ -38,7 +38,7 @@
             <i class="fas fa-shield-alt"></i>
           </div>
           <div class="note-content">
-            <h4>{{ translate.t('dialog-logout.protect_session_note_title') || 'حماية الجلسة' }}</h4>
+            <h4>{{ translate.t('dialog-logout.protect_session_note_title')  }}</h4>
             <p>{{ translate.t('dialog-logout.protect_session_note') }}</p>
           </div>
         </div>
@@ -48,33 +48,28 @@
             <i class="fas fa-redo"></i>
           </div>
           <div class="note-content">
-            <h4>{{ translate.t('dialog-logout.relogin_note_title') || 'إعادة الدخول' }}</h4>
+            <h4>{{ translate.t('dialog-logout.relogin_note_title')  }}</h4>
             <p>{{ translate.t('dialog-logout.relogin_note') }}</p>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="security-notice">
+    <!-- <div class="security-notice">
       <div class="security-icon">
         <i class="fas fa-lock"></i>
       </div>
       <div class="security-content">
         <p>
-          <strong>{{ translate.t('dialog-logout.security_notice_label') || 'ملاحظة أمنية:' }}</strong> 
+          <strong>{{ translate.t('dialog-logout.security_notice_label')  }}</strong> 
           {{ translate.t('dialog-logout.security_notice') }}
         </p>
       </div>
-    </div>
+    </div> -->
   </mat-dialog-content>
 
   <mat-dialog-actions class="dialog-actions">
     <div class="action-buttons">
-      <button class="cancel-btn" mat-button mat-dialog-close>
-        <i class="fas fa-times"></i>
-        {{ translate.t('dialog-logout.cancel_button') }}
-      </button>
-      
       <button
         class="logout-btn"
         mat-raised-button
@@ -87,6 +82,13 @@
           <span>{{ translate.t('dialog-logout.logout_button') }}</span>
         </div>
       </button>
+      
+      <button class="cancel-btn" mat-button mat-dialog-close>
+        <i class="fas fa-times"></i>
+        {{ translate.t('dialog-logout.cancel_button') }}
+      </button>
+      
+      
     </div>
     
     <div class="quick-return">

@@ -17,7 +17,9 @@ const examinationRoute_1 = __importDefault(require("./routes/examinationRoute"))
 require("./utils/bookingAutoCancel");
 require("./utils/bookingCompleteJob");
 require("./utils/appointmentCleanup");
+require("./utils/sendUpcomingNotifications");
 const path_1 = __importDefault(require("path"));
+const paymentRoute_1 = __importDefault(require("./routes/paymentRoute"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = Number(process.env.PORT) || 3001;
@@ -36,6 +38,7 @@ app.use(cors({
     ],
 }));
 app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 mongoose_1.default
     .connect(process.env.DATABASE_URL || "")
     .then(() => console.log("Mongo Connected!"))
@@ -48,6 +51,7 @@ app.use("/booking", bookingRoute_1.default);
 app.use("/diagnosis", diagnosisRoute_1.default);
 app.use("/request", requestRoute_1.default);
 app.use("/examination", examinationRoute_1.default);
+app.use('/payment', paymentRoute_1.default);
 app.use(express_1.default.static(path_1.default.join(__dirname, "../frontend/enara/dist/enara")));
 app.get(/^(?!\/api).*$/, (req, res) => {
     res.sendFile(path_1.default.join(__dirname, "../frontend/enara/dist/enara/index.html"));

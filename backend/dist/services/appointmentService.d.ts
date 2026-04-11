@@ -4,8 +4,9 @@ interface addAppointmentParams {
     date: string;
     price: string;
     coinType: string;
+    duration: string;
 }
-export declare const addAppointment: ({ token, date, time, price, coinType, }: addAppointmentParams) => Promise<{
+export declare const addAppointment: ({ token, date, time, price, coinType, duration }: addAppointmentParams) => Promise<{
     data: string;
     statusCode: number;
 } | {

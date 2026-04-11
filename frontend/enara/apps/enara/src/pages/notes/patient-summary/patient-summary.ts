@@ -33,9 +33,10 @@ export default class PatientSummary implements OnInit{
       }).subscribe({
         next:(res : any)=>{
           this.patientSummary.set(res.token);
+          
         },
-        error:()=>{
-          this.toastr.error(this.translate.t('toastr.something_went_wrong'));
+        error:(err)=>{
+          this.toastr.warning(err.error?.token);
         }
       })
   }

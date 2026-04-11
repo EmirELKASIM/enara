@@ -56,6 +56,7 @@ const appointmentSchema = new mongoose_1.Schema({
             },
             price: { type: String, required: true },
             coinType: { type: String, required: true },
+            duration: { type: String, required: true },
         },
     ],
     status: {

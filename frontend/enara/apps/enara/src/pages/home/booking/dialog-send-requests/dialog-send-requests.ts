@@ -50,12 +50,7 @@ export default class DialogSendRequests {
   computedDoctorPhoneNumber = computed(
     () => this.userInfo()?.phoneNumber ?? '-',
   );
-  computedDoctorCodeNumber = computed(() => this.userInfo()?.codeNumber ?? '-');
-  computedPatientPhoneNumber = () =>
-    this.requestData()?.patientPhoneNumber ?? '-';
-  doctorPhoneNumber = computed(
-    () => this.computedDoctorCodeNumber() + this.computedDoctorPhoneNumber(),
-  );
+ 
   authIsTrue = computed(
     () => this.computedAcceptedForDoctor() || this.computedAcceptedForPatient(),
   );

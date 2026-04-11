@@ -1,18 +1,29 @@
+.main-box{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+  }
+.main-box-rtl{
+   margin-right: 450px;
+}
+ .main-box-ltr{
+ margin-left: 450px;
+ }
 .appointments-history-section {
   font-family: 'Segoe UI', 'Cairo', sans-serif;
   background: linear-gradient(180deg, #f9f0fa 0%, #ffffff 100%);
   min-height: 100vh;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(199, 21, 133, 0.08);
-  max-width: 1475px;
+  max-width: 1300px;
   margin-top: 50px;
 }
-.appointments-history-section-rtl{
-  margin-right: 350px;
+.update-profile-page-rtl, .update-profile-page-ltr{
+  margin-right: auto;
+  margin-left: auto;
 }
-.appointments-history-section-ltr{
-  margin-left: 350px;
-}
+
+
 .history-header {
   display: flex;
   justify-content: space-between;
@@ -81,7 +92,7 @@
   align-items: center;
   flex-direction: row-reverse;
   gap: 8px;
-  font-size: 0.95rem;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -534,8 +545,20 @@
   color: var(--primary-color) !important;
   background: var(--primary-light) !important;
 }
-
+@media screen and (min-width: 770px) and (max-width: 1200px) {
+  .main-box{
+    width: 100%;
+    max-width: 100%;
+    margin-right: 25px;
+  }
+}
 @media (max-width: 768px) {
+  .main-box-rtl{
+   margin-right: 0;
+}
+ .main-box-ltr{
+ margin-left: 0;
+ }
   .list-header {
     display: none;
   }

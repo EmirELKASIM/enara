@@ -12,7 +12,7 @@ router.post("/add", async (req, res) => {
         return res.status(401).json({ message: "No token provided" });
     }
     const token = authHeader.split(" ")[1];
-    const { appointmentId, appointmentDate, appointmentTime, appointmentDay, doctorFirstName, doctorLastName, doctorAccountType, meetingType, doctorId, reportInfo, appointmentPrice, appointmentCoinType, } = req.body;
+    const { appointmentId, appointmentDate, appointmentTime, appointmentDay, doctorFirstName, doctorLastName, doctorAccountType, meetingType, doctorId, reportInfo, appointmentPrice, appointmentCoinType, appointmentDuration } = req.body;
     const { statusCode, data } = await (0, bookingService_1.addBooking)({
         appointmentId,
         appointmentDate,
@@ -27,6 +27,7 @@ router.post("/add", async (req, res) => {
         reportInfo,
         appointmentPrice,
         appointmentCoinType,
+        appointmentDuration
     });
     return res.status(statusCode).json({
         success: true,
@@ -107,6 +108,34 @@ router.get("/dekont-details/:appointmentId/:patientId", async (req, res) => {
         appointmentId,
         patientId,
     });
+    return res.status(statusCode).json({
+        success: true,
+        token: data,
+    });
+});
+router.get("/notifications", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+    const token = authHeader.split(" ")[1];
+    const { statusCode, data } = await (0, bookingService_1.getNotifications)({
+        token,
+    });
+    return res.status(statusCode).json({
+        success: true,
+        token: data,
+    });
+});
+router.put("/read-notifications/:bookingId/:notificationId", async (req, res) => {
+    const bookingId = req.params.bookingId;
+    const notificationId = req.params.notificationId;
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+    const token = authHeader.split(" ")[1];
+    const { statusCode, data } = await (0, bookingService_1.readNotifications)({ bookingId, notificationId, token });
     return res.status(statusCode).json({
         success: true,
         token: data,
@@ -202,13 +231,14 @@ router.put("/update", async (req, res) => {
         return res.status(401).json({ message: "No token provided" });
     }
     const token = authHeader.split(" ")[1];
-    const { newAppointmentId, bookingId, newTime, newDay, newDate } = req.body;
+    const { newAppointmentId, bookingId, newTime, newDay, newDate, newDuration } = req.body;
     const { statusCode, data } = await (0, bookingService_1.updateBooking)({
         newAppointmentId,
         bookingId,
         newTime,
         newDay,
         newDate,
+        newDuration,
         token,
     });
     return res.status(statusCode).json({
@@ -261,6 +291,23 @@ router.put("/accept-dekont", async (req, res) => {
     const { statusCode, data } = await (0, bookingService_1.acceptedDekont)({
         appointmentId,
         patientId,
+        token,
+    });
+    return res.status(statusCode).json({
+        success: true,
+        token: data,
+    });
+});
+router.put("/paid-card", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+    const token = authHeader.split(" ")[1];
+    const { appointmentId, doctorId } = req.body;
+    const { statusCode, data } = await (0, bookingService_1.paidByCard)({
+        appointmentId,
+        doctorId,
         token,
     });
     return res.status(statusCode).json({

@@ -1,4 +1,4 @@
-// src/app/services/auth.service.ts
+
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { openDB, DBSchema, IDBPDatabase } from 'idb';

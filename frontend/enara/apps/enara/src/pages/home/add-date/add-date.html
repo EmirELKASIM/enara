@@ -49,7 +49,28 @@
             </div>
           </div>
 
-          <div class="input-group" [class.focused]="timeFocused">
+          <div class="time-picker">
+            
+            <select [(ngModel)]="selectedHour">
+              @for(hour of hours; track hour){
+              <option [value]="hour">{{ hour }}</option>
+              }
+            </select>
+            <span class="hour-points"> : </span>
+            <select [(ngModel)]="selectedMinute">
+              @for(minute of minutes;track minute){
+              <option [value]="minute">
+                {{ minute < 10 ? '0' + minute : minute }}
+              </option>
+              }
+            </select>
+            
+            <select [(ngModel)]="period">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+          <!-- <div class="input-group" [class.focused]="timeFocused">
             <label for="time" class="input-label">
               <i class="fas fa-clock"></i>
               <span>{{translate.t("add_date_page.session_time")}}</span>
@@ -78,7 +99,7 @@
               <i class="fas fa-info-circle"></i>
               <span>{{translate.t("add_date_page.duration_60")}}</span>
             </div>
-          </div>
+          </div> -->
 
           <div class="price">
             <label for="time" class="input-label">
@@ -92,7 +113,7 @@
               [(ngModel)]="price"
               class="number-input"
             />
-            <div class="radio-group">
+            <!-- <div class="radio-group">
               <mat-radio-group
                 name="coinType"
                 [(ngModel)]="coinType"
@@ -114,6 +135,35 @@
                   {{translate.t("add_date_page.jod")}}
                 </mat-radio-button>
               </mat-radio-group>
+            </div> -->
+            <div class="custom-select-wrapper">
+            <select [(ngModel)]="coinType" class="custom-select">
+              <option value="USD">{{translate.t("add_date_page.usd")}}</option>
+              <option value="TRY">{{translate.t("add_date_page.try")}}</option>
+              <option value="EUR">{{translate.t("add_date_page.eur")}}</option>
+              <option value="SYP">{{translate.t("add_date_page.syp")}}</option>
+              <option value="JOD">{{translate.t("add_date_page.jod")}}</option>
+            </select>
+            </div>
+
+            <div class="custom-duration">
+              <label for="duration" class="input-label">
+              <i class="fas fa-stopwatch"></i>
+              <span>{{ translate.t("add_date_page.session_duration")}} </span>
+            </label>
+            <select [(ngModel)]="durationAsHours">
+              @for(hour of hours; track hour){
+              <option [value]="hour">{{ hour }}</option>
+              }
+            </select>
+             <span class="hour-points"> : </span>
+              <select [(ngModel)]="durationAsMinutes">
+              @for(minute of minutes;track minute){
+              <option [value]="minute">
+                {{ minute < 10 ? '0' + minute : minute }}
+              </option>
+              }
+            </select>
             </div>
           </div>
         </div>
@@ -123,7 +173,7 @@
             type="button"
             class="add-date-btn"
             (click)="onAddDate()"
-            [disabled]="!dateValue || !timeValue"
+            [disabled]="!dateValue "
             [class.loading]="isAdding"
           >
             <div class="btn-content">
@@ -214,7 +264,7 @@
           <div class="date-info">
             <div class="day-display">
               <span class="day-name">{{ getDaysLabel(data.day) }}</span>
-              <span class="date-number"> {{ formatDate(data.date) }} </span>
+              
             </div>
 
             <div class="date-full">
@@ -268,7 +318,7 @@
               [class.booked]="item.status === 'booked'"
               [class.available]="item.status === 'available'"
               [disabled]="item.status === 'booked'"
-              (click)="onDeleteDialog(item.time, data.date)"
+              (click)="onDeleteDialog(item.time, data.date,item.duration)"
               matTooltip="
                     {{ item.status === 'booked'
                       ? translate.t('add_date_page.cannot_delete_booked')
@@ -292,7 +342,12 @@
                   }
                 </div>
                 <div class="slot-price">
+                  <i class="fas fa-coins"></i>
                   <span>{{item.price}} {{item.coinType}}</span>
+                </div>
+                <div class="slot-duration">
+                  <i class="fas fa-hourglass-half"></i>
+                  <span> {{item.duration}}</span>
                 </div>
               </div>
 

@@ -74,6 +74,22 @@ export declare const getInfoWithId: ({ requestId }: getInfoWithId) => Promise<{
     };
     statusCode: number;
 }>;
+export declare const getNotifications: ({ token }: any) => Promise<{
+    data: string;
+    statusCode: number;
+} | {
+    data: any[];
+    statusCode: number;
+}>;
+interface ReadNotParams {
+    token: any;
+    requestId: string;
+    notificationId: string;
+}
+export declare const readNotifications: ({ token, requestId, notificationId, }: ReadNotParams) => Promise<{
+    data: string;
+    statusCode: number;
+}>;
 interface UpdateRequest {
     acceptedFromDoctor: boolean;
     requestId: string;

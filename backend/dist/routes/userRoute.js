@@ -8,7 +8,7 @@ const userService_1 = require("../services/userService");
 const verifyCaptcha_1 = require("../utils/verifyCaptcha");
 const router = express_1.default.Router();
 router.post("/register", async (request, response) => {
-    const { firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, codeNumber, captcha } = request.body;
+    const { firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, captcha } = request.body;
     const isHuman = await (0, verifyCaptcha_1.verifyCaptcha)(captcha);
     if (!isHuman) {
         return response.status(400).json({
@@ -27,7 +27,6 @@ router.post("/register", async (request, response) => {
         consultation,
         privacyPolicy,
         phoneNumber,
-        codeNumber,
     });
     response.status(statusCode).json({
         success: true,
@@ -63,7 +62,7 @@ router.get("/info/:id", async (req, res) => {
     });
 });
 router.put("/update", async (req, res) => {
-    const { id, firstName, lastName, gender, birthday, maritalStatus, phoneNumber, codeNumber, } = req.body;
+    const { id, firstName, lastName, gender, birthday, maritalStatus, phoneNumber, } = req.body;
     const { statusCode, data } = await (0, userService_1.updateInfo)({
         id,
         firstName,
@@ -72,7 +71,6 @@ router.put("/update", async (req, res) => {
         birthday,
         maritalStatus,
         phoneNumber,
-        codeNumber,
     });
     return res.status(statusCode).json({
         success: true,
@@ -128,6 +126,15 @@ router.get("/dashboard/personal-users", async (req, res) => {
 });
 router.get("/dashboard/impersonal-users", async (req, res) => {
     const { statusCode, data } = await (0, userService_1.getImpersonalUsers)();
+    return res.status(statusCode).json({ success: true, token: data });
+});
+router.get("/dashboard/unpermissible-doctors", async (req, res) => {
+    const { statusCode, data } = await (0, userService_1.getUnpermissibleDoctors)();
+    return res.status(statusCode).json({ success: true, token: data });
+});
+router.put("/dashboard/unpermissible-doctors/approving", async (req, res) => {
+    const { doctorId } = req.body;
+    const { statusCode, data } = await (0, userService_1.onApproving)({ doctorId });
     return res.status(statusCode).json({ success: true, token: data });
 });
 exports.default = router;

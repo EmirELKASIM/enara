@@ -12,6 +12,7 @@ import { AuthService } from '../../../../sevices/auth-db';
 import { apiUrl } from '../../../../constants/constants';
 import GeneralInfo from '../general-info/general-info';
 import { Translation } from '../../../../../src/sevices/translation';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-dialog-book-it',
   imports: [
@@ -20,6 +21,7 @@ import { Translation } from '../../../../../src/sevices/translation';
     MatDialogModule,
     MatRadioModule,
     GeneralInfo,
+    MatIconModule
   ],
   templateUrl: './dialog-book-it.html',
   styleUrl: './dialog-book-it.css',
@@ -37,6 +39,9 @@ export default class DialogBookIt {
   doctorId = this.data.doctorId;
   appointmentPrice = this.data.price;
   appointmentCoinType = this.data.coinType;
+  appointmentDuration = this.data.duration;
+  private router = inject(Router);
+
   translate = inject(Translation);
 
   private auth = inject(AuthService);
@@ -58,37 +63,63 @@ export default class DialogBookIt {
     this.isTrue = val;
   }
 
-  async onBookingIt() {
-    const data = {
-      appointmentId: this.appointmentId,
-      appointmentTime: this.appointmentTime,
-      appointmentDate: this.appointmentDate,
-      appointmentDay: this.appointmentDay,
-      doctorFirstName: this.doctorFirstName,
-      doctorLastName: this.doctorLastName,
-      doctorAccountType: this.doctorAccountType,
-      doctorId: this.doctorId,
-      meetingType: this.meetingType,
-      reportInfo: this.reportInfo,
-      appointmentPrice:this.appointmentPrice,
-      appointmentCoinType:this.appointmentCoinType
-    };
-    const token = await this.auth.getToken();
-    if (!token) throw new Error('Token not found');
-    this.http
-      .post(this.bookingAddLink, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'ngrok-skip-browser-warning': 'true',
-        },
-      })
-      .subscribe({
-        next: () => {
-          this.toastr.success(this.translate.t("toastr.appointment_booked"));
-        },
-        error: (err) => {
-          this.toastr.error(this.translate.t('toastr.something_went_wrong'));
-        },
-      });
+  paymentMethod = '';
+
+  async onPayment() {
+    if (this.paymentMethod === 'creditCard') {
+      const bookingData = {
+        appointmentId: this.appointmentId,
+        doctorId: this.doctorId,
+        doctorFirstName: this.doctorFirstName,
+        doctorLastName: this.doctorLastName,
+        doctorAccountType: this.doctorAccountType,
+        appointmentTime: this.appointmentTime,
+        appointmentDate: this.appointmentDate,
+        appointmentDay: this.appointmentDay,
+        meetingType: this.meetingType,
+        reportInfo: this.reportInfo,
+        appointmentPrice: this.appointmentPrice,
+        appointmentCoinType: this.appointmentCoinType,
+        appointmentDuration: this.appointmentDuration,
+      };
+
+      localStorage.setItem('bookingData', JSON.stringify(bookingData));
+      this.router.navigate(['payment-iyzico']);
+    } else if (this.paymentMethod === 'manualDekont') {
+      const data = {
+        appointmentId: this.appointmentId,
+        appointmentTime: this.appointmentTime,
+        appointmentDate: this.appointmentDate,
+        appointmentDay: this.appointmentDay,
+        doctorFirstName: this.doctorFirstName,
+        doctorLastName: this.doctorLastName,
+        doctorAccountType: this.doctorAccountType,
+        doctorId: this.doctorId,
+        meetingType: this.meetingType,
+        reportInfo: this.reportInfo,
+        appointmentPrice: this.appointmentPrice,
+        appointmentCoinType: this.appointmentCoinType,
+        appointmentDuration: this.appointmentDuration,
+      };
+      const token = await this.auth.getToken();
+      if (!token) throw new Error('Token not found');
+      this.http
+        .post(this.bookingAddLink, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'ngrok-skip-browser-warning': 'true',
+          },
+        })
+        .subscribe({
+          next: () => {
+            this.toastr.success(this.translate.t('toastr.appointment_booked'));
+          },
+          error: (err) => {
+            this.toastr.error(this.translate.t('toastr.something_went_wrong'));
+          },
+        });
+    } else {
+      return;
+    }
   }
 }

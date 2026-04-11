@@ -5,7 +5,13 @@
 </h2>
 
 <div mat-dialog-content class="dialog-content">
-  <div class="info-box">
+  
+  @if(paymentMethod === "card"){
+    <div class="card-section">
+      <span>تم الدفع بالبطاقة</span>
+    </div>
+  }@else{
+    <div class="info-box">
     <div class="value-wrapper">
       <span class="code-value" [class.empty-value]="!dekontCode()">
         {{ dekontCode() || translate.t('dialog-dekont-details.no_code') }}
@@ -28,6 +34,8 @@
       >{{translate.t('dialog-dekont-details.notes_label')}}</span
     >
   </div>
+  }
+  
 
   @if(paymentStatus()){
   <div class="desc">

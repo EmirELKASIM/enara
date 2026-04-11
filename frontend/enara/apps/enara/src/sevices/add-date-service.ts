@@ -10,7 +10,7 @@ export class AddDateService {
   private http = inject(HttpClient);
   private addDateApi = `${apiUrl}/appointment/info`;
   private auth = inject(AuthService);
-  addTimeToUI(dateStr: string, timeStr: string, dates: WritableSignal<any[]>, price:string, coinType:string) {
+  addTimeToUI(dateStr: string, timeStr: string, dates: WritableSignal<any[]>, price:string, coinType:string, duration:string) {
     dates.update((days) => {
       const dayIndex = days.findIndex((d) => d.date === dateStr);
 
@@ -19,7 +19,8 @@ export class AddDateService {
         time: timeStr,
         status: 'pending',
         price: price,
-        coinType: coinType
+        coinType: coinType,
+        duration: duration
       };
 
       if (dayIndex !== -1) {

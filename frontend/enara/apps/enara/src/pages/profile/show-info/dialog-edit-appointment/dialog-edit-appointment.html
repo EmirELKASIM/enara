@@ -76,14 +76,16 @@
                         : translate.t('dialog-edit-appointment.status_available')
                     }}
                   </span>
+                  <span class="time-duration">Duration: {{time.duration}}</span>
                 </div>
+                
               </div>
 
               <div class="time-actions">
                 <button
                   class="edit-btn fancy-edit-btn"
                   mat-mini-fab
-                  (click)="onEdit(appointment._id, appointment.date, appointment.day, time.time)"
+                  (click)="onEdit(appointment._id, appointment.date, appointment.day, time.time, time.duration)"
                   [attr.aria-label]="translate.t('dialog-edit-appointment.edit_button_label')"
                 >
                   <i class="fas fa-pen"></i>

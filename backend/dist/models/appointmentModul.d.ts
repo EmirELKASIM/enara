@@ -10,6 +10,7 @@ export interface IAppointment extends Document {
         time: string;
         price: string;
         coinType: string;
+        duration: string;
         status: "pending" | "booked" | "attendance" | "canceled";
     }[];
     status: "pending" | "booked" | "attendance" | "canceled";

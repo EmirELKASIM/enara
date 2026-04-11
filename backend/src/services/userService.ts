@@ -2,12 +2,13 @@ import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
 import { verifyJWT, generateJWT } from "../middlewares/helperJWT";
 import jwt from "jsonwebtoken";
-import { sendEmail, sendVerificationEmail } from "../utils/sendEmail";
 import summaryModel from "../models/summaryModel";
 import experienceModel from "../models/experienceModel";
 import requestModel from "../models/requestModel";
 import appointmentModel from "../models/appointmentModul";
 import bookingModel from "../models/bookingModel";
+
+import { sendVerificationEmail,sendEmail } from "../utils/nodeMailer";
 interface RegisterParams {
   firstName: string;
   lastName: string;
@@ -20,8 +21,6 @@ interface RegisterParams {
   consultation: string;
   privacyPolicy: boolean;
   phoneNumber: string;
-  codeNumber: string;
-
 }
 export const register = async ({
   firstName,
@@ -35,8 +34,6 @@ export const register = async ({
   consultation,
   privacyPolicy,
   phoneNumber,
-  codeNumber,
-
 }: RegisterParams) => {
   try {
     const findUser = await userModel.findOne({ email });
@@ -62,7 +59,7 @@ export const register = async ({
       return age < 0 ? 0 : age; // حماية من تاريخ مستقبلي
     };
     const age = calculateAge(birthday);
-
+    const permissible = accountType === "personal" ? true : false;
     const newUser = new userModel({
       firstName,
       lastName,
@@ -76,7 +73,7 @@ export const register = async ({
       consultation,
       privacyPolicy,
       phoneNumber,
-      codeNumber,
+      permissible: permissible,
     });
     await newUser.save();
     setImmediate(async () => {
@@ -104,7 +101,7 @@ export const register = async ({
         consultation,
         privacyPolicy,
         phoneNumber,
-        codeNumber,
+        permissible,
       }),
       statusCode: 200,
     };
@@ -174,7 +171,7 @@ export const getInfo = async ({ token }: any) => {
       maritalStatus: findUser.maritalStatus,
       consultation: findUser.consultation,
       phoneNumber: findUser.phoneNumber,
-      codeNumber: findUser.codeNumber,
+      permissible: findUser.permissible,
     },
     statusCode: 200,
   };
@@ -200,7 +197,6 @@ export const getInfoWithId = async ({ userId }: GetInfoWithId) => {
       maritalStatus: findUser.maritalStatus,
       consultation: findUser.consultation,
       phoneNumber: findUser.phoneNumber,
-      codeNumber: findUser.codeNumber,
     },
     statusCode: 200,
   };
@@ -214,7 +210,6 @@ interface updateInfoParams {
   birthday: string;
   maritalStatus: string;
   phoneNumber: string;
-  codeNumber: string;
 }
 
 export const updateInfo = async ({
@@ -225,7 +220,6 @@ export const updateInfo = async ({
   birthday,
   maritalStatus,
   phoneNumber,
-  codeNumber,
 }: updateInfoParams) => {
   const findUser = await userModel.findById(id);
 
@@ -258,7 +252,6 @@ export const updateInfo = async ({
   findUser.age = age.toString();
   findUser.maritalStatus = maritalStatus;
   findUser.phoneNumber = phoneNumber;
-  findUser.codeNumber = codeNumber;
   await findUser.save();
   return {
     data: {
@@ -271,7 +264,6 @@ export const updateInfo = async ({
       age: age,
       maritalStatus: findUser.maritalStatus,
       phoneNumber: findUser.phoneNumber,
-      codeNumber: findUser.codeNumber,
     },
     statusCode: 200,
   };
@@ -437,4 +429,32 @@ export const getImpersonalUsers = async () => {
     return { data: "users not found", statusCode: 400 };
   }
   return { data: impersonalUsers, statusCode: 200 };
+};
+export const getUnpermissibleDoctors = async () => {
+  const unPermissible = await userModel.find({
+    accountType: { $ne: "personal" },
+    permissible: false,
+  });
+  if (!unPermissible) {
+    return { data: "users not found", statusCode: 400 };
+  }
+  return { data: unPermissible, statusCode: 200 };
+};
+interface onApprovingParams {
+doctorId: string
+}
+export const onApproving = async ({doctorId}: onApprovingParams) => {
+  const findAndUpdate = await userModel.findOneAndUpdate(
+    {
+      _id: doctorId,
+      permissible: false,
+    },
+    {
+      $set: { permissible: true },
+    },
+  );
+  if (!findAndUpdate) {
+    return { data: "user not found", statusCode: 400 };
+  }
+  return { data: findAndUpdate, statusCode: 200 };
 };

@@ -1,9 +1,14 @@
-<div class="update-profile-page" [ngClass]="translate.currentLang() === 'ar' ? 'update-profile-page-rtl' : 'update-profile-page-ltr' ">
+<div class="main-box" [ngClass]="translate.currentLang() === 'ar' ? 'main-box-rtl' : 'main-box-ltr' ">
+<div
+  class="update-profile-page"
+  [ngClass]="translate.currentLang() === 'ar' ? 'update-profile-page-rtl' : 'update-profile-page-ltr' "
+>
   <div class="page-header">
     <div class="header-content">
       <div class="user-avatar">
         <div class="avatar-circle">
-          {{ computedFirstName()?.charAt(0) }}{{ computedLastName()?.charAt(0) }}
+          {{ computedFirstName()?.charAt(0) }}{{ computedLastName()?.charAt(0)
+          }}
         </div>
       </div>
       <div class="header-text">
@@ -14,7 +19,10 @@
     <div class="header-status">
       <div class="status-badge" [class.editing]="enable">
         <i class="fas" [class.fa-edit]="!enable" [class.fa-pen]="enable"></i>
-        <span>{{ enable ? translate.t('edit-info.editing_mode') : translate.t('edit-info.view_mode') }}</span>
+        <span
+          >{{ enable ? translate.t('edit-info.editing_mode') :
+          translate.t('edit-info.view_mode') }}</span
+        >
       </div>
     </div>
   </div>
@@ -116,9 +124,13 @@
                     required
                   />
                   <mat-icon matPrefix>person</mat-icon>
-                  <mat-hint>{{translate.t('edit-info.first_name_hint')}}</mat-hint>
+                  <mat-hint
+                    >{{translate.t('edit-info.first_name_hint')}}</mat-hint
+                  >
                   @if (!firstName && !enable) {
-                  <mat-error>{{translate.t('edit-info.first_name_error')}}</mat-error>
+                  <mat-error
+                    >{{translate.t('edit-info.first_name_error')}}</mat-error
+                  >
                   }
                 </mat-form-field>
 
@@ -135,9 +147,13 @@
                     required
                   />
                   <mat-icon matPrefix>people</mat-icon>
-                  <mat-hint>{{translate.t('edit-info.last_name_hint')}}</mat-hint>
+                  <mat-hint
+                    >{{translate.t('edit-info.last_name_hint')}}</mat-hint
+                  >
                   @if (!lastName && !enable) {
-                  <mat-error>{{translate.t('edit-info.last_name_error')}}</mat-error>
+                  <mat-error
+                    >{{translate.t('edit-info.last_name_error')}}</mat-error
+                  >
                   }
                 </mat-form-field>
 
@@ -160,7 +176,9 @@
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                   <mat-icon matPrefix>cake</mat-icon>
-                  <mat-hint>{{translate.t('edit-info.birthday_hint')}}</mat-hint>
+                  <mat-hint
+                    >{{translate.t('edit-info.birthday_hint')}}</mat-hint
+                  >
                 </mat-form-field>
 
                 <div class="input-field">
@@ -169,46 +187,37 @@
                     <span>{{translate.t('edit-info.phone_number')}}</span>
                   </label>
 
-                  <div class="phone-box">
-                    <input
-                      type="text"
-                      id="phoneNumber"
-                      maxlength="4"
-                      name="codeNumber"
-                      [(ngModel)]="codeNumber"
-                      value="computedCodeNumber()"
-                      placeholder="{{translate.t('edit-info.phone_code_placeholder')}}"
-                      class="call-input"
-                      [disabled]="!enable"
-                    />
-
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      maxlength="10"
-                      name="phoneNumber"
-                      value="computedPhoneNumber()"
-                      [(ngModel)]="phoneNumber"
-                      placeholder="{{translate.t('edit-info.phone_input_placeholder')}}"
-                      class="phone-input"
-                      [disabled]="!enable"
-                    />
-                  </div>
+                  <form [formGroup]="phoneForm">
+                    <ngx-intl-tel-input
+                      [cssClass]="'custom-class'"
+                      [preferredCountries]="['sy','tr','jo']"
+                      [enableAutoCountrySelect]="true"
+                      [enablePlaceholder]="true"
+                      [searchCountryFlag]="true"
+                      [searchCountryField]="[SearchCountryField.All]"
+                      [selectFirstCountry]="false"
+                      [selectedCountryISO]="CountryISO.Syria"
+                      [maxLength]="15"
+                      [phoneValidation]="true"
+                      [separateDialCode]="true"
+                      name="phone"
+                      formControlName="phone"
+                    >
+                    </ngx-intl-tel-input>
+                  </form>
                 </div>
               </div>
-
-              @if (!isMobile) {
-              <div class="desktop-options">
-                <app-toggle-options
-                  (sendToggleOptions)="getToggleOptions($event)"
-                  [isEnabled]="enabledInfoPressed"
-                  class="desktop-toggle"
-                ></app-toggle-options>
-              </div>
-              }
+              @if (!isMobile && !isTablet) {
+            <div class="desktop-options">
+              <app-toggle-options
+                (sendToggleOptions)="getToggleOptions($event)"
+                [isEnabled]="enabledInfoPressed"
+                class="desktop-toggle"
+              ></app-toggle-options>
             </div>
-
-            @if(isMobile){
+            }
+            </div>
+             @if(isMobile || isTablet){
             <div class="mobile-options">
               <app-toggle-options
                 (sendToggleOptions)="getToggleOptions($event)"
@@ -245,4 +254,5 @@
       </form>
     </div>
   </div>
+</div>
 </div>

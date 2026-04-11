@@ -5,11 +5,12 @@
       (sendReportInfo)="onReportInfo($event)"
       [requestId]="requestId"
       [patientId]="patientId"
-      [complaintAndTreatment]="notesRouter.isStatusBackgroundAndDiagnosis()"
+      [statusBackgroundAndDiagnosis]="notesRouter.isStatusBackgroundAndDiagnosis()"
       [examinationHistory]="notesRouter.isExaminationHistory()"
+      [patientSummary]="notesRouter.isPatientSummary()"
     ></app-quick-notes>
 
-    @if(notesRouter.isComplaintAndTreatment()){
+    @if(notesRouter.isComplaintAndTreatment() && !isMobile){
     <div class="complaint-save-bnt-box">
       <button type="text" class="complaint-save" (click)="onComplaintSave()">
         {{translate.t('notes.save_button')}}
@@ -24,41 +25,58 @@
       (mainComplaint)="mainComplaint = $event"
       [patientId]="patientId"
     ></app-main-complaint>
-
+    <div class="need-treatment-btn-box">
+    <button type="button" class="need-treatment-btn" (click)="onNeedTreatment()"><span>{{needTreatment ?"Dont Need Treatment" :  "need Treatment"  }}</span></button>
+    </div>
+    @if(needTreatment){
     <app-treatment-plan
       (sendTreatment)="onTreatmentChange($event)"
     ></app-treatment-plan>
-    } @if(notesRouter.isStatusBackgroundAndDiagnosis()){
-    <app-status-background
-      (backgroundStatus)="backgroundStatus = $event"
-      [patientId]="patientId"
-      [isDisabled]="isDisabled"
-    ></app-status-background>
-
-    <app-diagnosis
-      (diagnosis)="diagnosis = $event"
-      [patientId]="patientId"
-      [isDisabled]="isDisabled"
-    ></app-diagnosis>
-
-    <div class="diagnosis-save-bnt-box">
-      <button
-        type="text"
-        class="diagnosis-cancel"
-        (click)="onDiagnosisCanceled()"
-      >
-        @if(isDisabled){ {{translate.t('notes.edit_button')}} }@else{
-        {{translate.t('notes.cancel_button')}} }
-      </button>
-
-      <button type="text" class="diagnosis-save" (click)="onDiagnosisSave()">
+    } @if(notesRouter.isComplaintAndTreatment() && isMobile){
+    <div class="complaint-save-bnt-box">
+      <button type="text" class="complaint-save" (click)="onComplaintSave()">
         {{translate.t('notes.save_button')}}
       </button>
     </div>
+    } } @if(notesRouter.isStatusBackgroundAndDiagnosis()){
+    <div #scrollSection>
+      <app-status-background
+        (backgroundStatus)="backgroundStatus = $event"
+        [patientId]="patientId"
+        [isDisabled]="isDisabled"
+      ></app-status-background>
+
+      <app-diagnosis
+        (diagnosis)="diagnosis = $event"
+        [patientId]="patientId"
+        [isDisabled]="isDisabled"
+      ></app-diagnosis>
+
+      <div class="diagnosis-save-bnt-box">
+        <button
+          type="text"
+          class="diagnosis-cancel"
+          (click)="onDiagnosisCanceled()"
+        >
+          @if(isDisabled){ {{translate.t('notes.edit_button')}} }@else{
+          {{translate.t('notes.cancel_button')}} }
+        </button>
+
+        <button type="text" class="diagnosis-save" (click)="onDiagnosisSave()">
+          {{translate.t('notes.save_button')}}
+        </button>
+      </div>
+    </div>
     } @if(notesRouter.isPatientSummary()){
-    <app-patient-summary [patientId]="patientId"></app-patient-summary>
+    <div #scrollSection>
+      <app-patient-summary [patientId]="patientId"></app-patient-summary>
+    </div>
     }@if(notesRouter.isExaminationHistory()){
-    <app-examination-history [patientId]="patientId"></app-examination-history>
+    <div #scrollSection>
+      <app-examination-history
+        [patientId]="patientId"
+      ></app-examination-history>
+    </div>
     }
   </div>
 
@@ -93,12 +111,7 @@
           >chevron_right</mat-icon
         >
       </div>
-      <div
-        class="item"
-        role="button"
-        tabindex="0"
-        (click)="onPatientSummary()"
-      >
+      <div class="item" role="button" tabindex="0" (click)="onPatientSummary()">
         <mat-icon>monitor_heart</mat-icon>
         <span>{{translate.t('notes.sidebar_patient_summary')}}</span>
         <mat-icon

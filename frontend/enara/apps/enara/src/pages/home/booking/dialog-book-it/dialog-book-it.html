@@ -5,8 +5,12 @@
         <i class="fas fa-calendar-check"></i>
       </div>
       <div class="header-text">
-        <h2 class="dialog-title">{{translate.t("dialog_book_it.appointment_booking_confirmation")}}</h2>
-        <p class="dialog-subtitle">{{translate.t("dialog_book_it.final_step_to_complete_booking")}}</p>
+        <h2 class="dialog-title">
+          {{translate.t("dialog_book_it.appointment_booking_confirmation")}}
+        </h2>
+        <p class="dialog-subtitle">
+          {{translate.t("dialog_book_it.final_step_to_complete_booking")}}
+        </p>
       </div>
     </div>
     <button
@@ -37,7 +41,9 @@
               </h4>
               <p class="doctor-specialty">
                 <i class="fas fa-stethoscope"></i>
-                {{ data.accountType === 'psychiatrist' ? translate.t("dialog_book_it.psychiatrist") : translate.t("dialog_book_it.psychological_therapist") }}
+                {{ data.accountType === 'psychiatrist' ?
+                translate.t("dialog_book_it.psychiatrist") :
+                translate.t("dialog_book_it.psychological_therapist") }}
               </p>
             </div>
           </div>
@@ -54,21 +60,27 @@
             <div class="date-item">
               <i class="fas fa-calendar-day"></i>
               <div class="item-content">
-                <span class="item-label">{{translate.t("dialog_book_it.date")}}</span>
+                <span class="item-label"
+                  >{{translate.t("dialog_book_it.date")}}</span
+                >
                 <span class="item-value">{{ appointmentDate }}</span>
               </div>
             </div>
             <div class="date-item">
               <i class="fas fa-clock"></i>
               <div class="item-content">
-                <span class="item-label">{{translate.t("dialog_book_it.time")}}</span>
+                <span class="item-label"
+                  >{{translate.t("dialog_book_it.time")}}</span
+                >
                 <span class="item-value">{{ appointmentTime }}</span>
               </div>
             </div>
             <div class="date-item">
               <i class="fas fa-calendar-alt"></i>
               <div class="item-content">
-                <span class="item-label">{{translate.t("dialog_book_it.day")}}</span>
+                <span class="item-label"
+                  >{{translate.t("dialog_book_it.day")}}</span
+                >
                 <span class="item-value">{{ appointmentDay }}</span>
               </div>
             </div>
@@ -102,8 +114,12 @@
                   <i class="fas fa-user"></i>
                 </div>
                 <div class="option-text">
-                  <span class="option-title">{{translate.t("dialog_book_it.individual_session")}}</span>
-                  <span class="option-description">{{translate.t("dialog_book_it.individual_session_description")}}</span>
+                  <span class="option-title"
+                    >{{translate.t("dialog_book_it.individual_session")}}</span
+                  >
+                  <span class="option-description"
+                    >{{translate.t("dialog_book_it.individual_session_description")}}</span
+                  >
                 </div>
               </div>
             </mat-radio-button>
@@ -114,8 +130,12 @@
                   <i class="fas fa-heart"></i>
                 </div>
                 <div class="option-text">
-                  <span class="option-title">{{translate.t("dialog_book_it.couples_therapy")}}</span>
-                  <span class="option-description">{{translate.t("dialog_book_it.couples_therapy_description")}}</span>
+                  <span class="option-title"
+                    >{{translate.t("dialog_book_it.couples_therapy")}}</span
+                  >
+                  <span class="option-description"
+                    >{{translate.t("dialog_book_it.couples_therapy_description")}}</span
+                  >
                 </div>
               </div>
             </mat-radio-button>
@@ -128,8 +148,12 @@
                   <i class="fas fa-child"></i>
                 </div>
                 <div class="option-text">
-                  <span class="option-title">{{translate.t("dialog_book_it.children_sessions")}}</span>
-                  <span class="option-description">{{translate.t("dialog_book_it.children_sessions_description")}}</span>
+                  <span class="option-title"
+                    >{{translate.t("dialog_book_it.children_sessions")}}</span
+                  >
+                  <span class="option-description"
+                    >{{translate.t("dialog_book_it.children_sessions_description")}}</span
+                  >
                 </div>
               </div>
             </mat-radio-button>
@@ -140,8 +164,12 @@
                   <i class="fas fa-user-graduate"></i>
                 </div>
                 <div class="option-text">
-                  <span class="option-title">{{translate.t("dialog_book_it.teenagers_sessions")}}</span>
-                  <span class="option-description">{{translate.t("dialog_book_it.teenagers_sessions_description")}}</span>
+                  <span class="option-title"
+                    >{{translate.t("dialog_book_it.teenagers_sessions")}}</span
+                  >
+                  <span class="option-description"
+                    >{{translate.t("dialog_book_it.teenagers_sessions_description")}}</span
+                  >
                 </div>
               </div>
             </mat-radio-button>
@@ -159,25 +187,61 @@
     </div>
 
     <div class="booking-summary">
+       <div class="radio-group">
+      <p class="radio-title">Payment Method</p>
+
+      <mat-radio-group [(ngModel)]="paymentMethod" class="payment-options">
+        <mat-radio-button value="creditCard" class="payment-card">
+          <div class="card-content">
+            <mat-icon>credit_card</mat-icon>
+            <div>
+              <h4>Credit Card</h4>
+              <p>Pay securely using your card</p>
+            </div>
+          </div>
+        </mat-radio-button>
+
+        <mat-radio-button value="manualDekont" class="payment-card">
+          <div class="card-content">
+            <mat-icon>receipt</mat-icon>
+            <div>
+              <h4>Manual Dekont</h4>
+              <p>Upload payment receipt manually</p>
+            </div>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
       <div class="summary-header">
-        <h3><i class="fas fa-receipt"></i> {{translate.t("dialog_book_it.booking_summary")}}</h3>
+        <h3>
+          <i class="fas fa-receipt"></i>
+          {{translate.t("dialog_book_it.booking_summary")}}
+        </h3>
       </div>
       <div class="summary-content">
         <div class="summary-item">
-          <span class="item-label">{{translate.t("dialog_book_it.session_duration")}}</span>
-          <span class="item-value">{{translate.t("dialog_book_it.session_duration_value")}}</span>
+          <span class="item-label"
+            >{{translate.t("dialog_book_it.session_duration")}}</span
+          >
+          <span class="item-value">{{appointmentDuration}}</span>
         </div>
         <div class="summary-item">
-          <span class="item-label">{{translate.t("dialog_book_it.price")}}</span>
-          <span class="item-value price">{{appointmentPrice}} {{appointmentCoinType}}</span>
+          <span class="item-label"
+            >{{translate.t("dialog_book_it.price")}}</span
+          >
+          <span class="item-value price"
+            >{{appointmentPrice}} {{appointmentCoinType}}</span
+          >
         </div>
       </div>
     </div>
+
+   
   </mat-dialog-content>
 
   <mat-dialog-actions class="dialog-actions">
     <div class="action-buttons">
-      <button class="cancel-btn" mat-button mat-dialog-close>
+      <!-- <button class="cancel-btn" mat-button mat-dialog-close>
         <i class="fas fa-times"></i>
         {{translate.t("dialog_book_it.cancel")}}
       </button>
@@ -188,6 +252,17 @@
         cdkFocusInitial
         (click)="onBookingIt()"
         [disabled]="!meetingType || !isTrue"
+      >
+        <i class="fas fa-check-circle"></i>
+        {{translate.t("dialog_book_it.confirm_booking")}}
+      </button> -->
+      <button
+        class="confirm-btn"
+        mat-raised-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        (click)="onPayment()"
+        [disabled]="!meetingType || !isTrue || !paymentMethod"
       >
         <i class="fas fa-check-circle"></i>
         {{translate.t("dialog_book_it.confirm_booking")}}

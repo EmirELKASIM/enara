@@ -40,7 +40,6 @@ const userSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     phoneNumber: { type: String, required: true },
-    codeNumber: { type: String, required: true },
     accountType: { type: String, required: true },
     gender: { type: String, required: true },
     birthday: { type: String, required: true },
@@ -52,6 +51,7 @@ const userSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    permissible: { type: Boolean, required: true },
 }, { timestamps: true });
 const userModel = mongoose_1.default.model("User", userSchema);
 exports.default = userModel;

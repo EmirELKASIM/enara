@@ -22,7 +22,6 @@ export class RegisterService {
     password: string,
     confirmPassword: string,
     phoneNumber: string,
-    codeNumber: string,
   ) {
     const validName = firstName.length != 0 && lastName.length != 0;
     const validBirthday = birthday.trim().length > 0;
@@ -30,11 +29,8 @@ export class RegisterService {
     const validPassword = password.length > 5;
     const matchPassword = password === confirmPassword;
     const validPhoneNumber =
-      phoneNumber.length != 0 && phoneNumber.length === 10;
-    const validCodeNumber =
-      codeNumber.length != 0 &&
-      codeNumber.length <= 4 &&
-      codeNumber.includes('+');
+      phoneNumber.length != 0 ;
+   
     if (!validName) {
       this.toastr.warning(this.translate.t('toastr.invalid_full_name'));
       return false;
@@ -58,10 +54,7 @@ export class RegisterService {
       );
       return false;
     }
-    if (!validCodeNumber) {
-      this.toastr.warning(this.translate.t('toastr.check_code_number'));
-      return false;
-    } else {
+    else {
       return true;
     }
   }
@@ -77,7 +70,6 @@ export class RegisterService {
     consultation: string,
     privacyPolicy: boolean,
     phoneNumber: string,
-    codeNumber: string,
     captcha:string,
   ) {
     const data = {
@@ -92,7 +84,6 @@ export class RegisterService {
       consultation: consultation,
       privacyPolicy: privacyPolicy,
       phoneNumber: phoneNumber,
-      codeNumber: codeNumber,
       captcha:captcha
     };
     console.log(data);

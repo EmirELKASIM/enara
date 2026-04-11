@@ -9,7 +9,20 @@
       "home": "Home",
       "about_us": "About Us",
       "sessions": "Sessions",
-      "profile": "Profile"
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "logout": "Logout"
+    },
+    "notifications": {
+      "title": "Bildirimler",
+      "no_notifications_yet": "No notifications yet",
+      "read": "read",
+      "unread": "unread",
+      "appointment": "Appointment",
+      "time": "Time",
+      "doctor": "Doctor",
+      "patient": "Patient",
+      "notified_at": "Notified at"
     },
     "about_us_page": {
       "platform": "Platform",
@@ -156,7 +169,8 @@
       "friday": "Friday",
       "saturday": "Saturday",
       "sunday": "Sunday",
-      "notSpecified": "Not specified"
+      "notSpecified": "Not specified",
+      "session_duration" : "Session Duration"
     },
     "dialog_book_it": {
       "appointment_booking_confirmation": "Appointment Booking Confirmation",
@@ -212,7 +226,7 @@
       "send_preview_request": "Send Preview Request",
       "confirm_send_request": "Click to confirm sending the request to the specialist",
       "after_send_hint": "After sending, you can track the request status from the Previews page",
-      "friendship_notice": "There is a friendship between you; you cannot send a preview request currently",
+      "friendship_notice": "There is a friendship between you.",
       "back": "Back",
       "go_profile": "go to profile",
       "all_requests_confidential": "All preview requests are fully confidential"
@@ -619,7 +633,7 @@
       "confirm_delete_checkbox": "I confirm that I understand the consequences of deleting my account and that all my data will be permanently deleted",
 
       "cancel_button": "Cancel",
-      "delete_account_button": "Yes, Delete My Account Permanently"
+      "delete_account_button": "Yes, Delete My Account "
     },
     "dialog-logout": {
       "logout_title": "Logout",
@@ -944,7 +958,8 @@
       "session_minutes_label": "Minutes",
       "session_type_label": "Session Type",
       "session_price_label": "Session Price",
-      "start_session_button": "Start Session",
+      "start_session_button": "Put Session Link",
+      "start_session_button_for_user": "Open Session Link",
       "cancel_appointment_button": "Cancel Appointment",
       "send_edit_request_button": "Send Edit Request",
       "edit_appointment_button": "Edit Appointment",
@@ -959,8 +974,15 @@
       "couplesSession": "Couples Session",
       "childrensSession": "Children's Session",
       "teenagersSession": "Teenagers' Session",
-      "notSpecified": "Not specified"
-
+      "notSpecified": "Not specified",
+      "doctor_account_approved": "Your doctor account has been approved",
+      "doctor_account_not_approved":"Your account has not been approved",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "account_type_psychotherapist_label": "Psychotherapist",
+      "account_type_psychiatrist_label": "Dr. Psychiatrist",
+      "account_type_personal_label": "Personal"
     },
     "profile_page": {
       "account_management_title": "Account Management",
@@ -1024,6 +1046,7 @@
       "passwords_match": "Passwords match",
       "phone_number_label": "Phone Number",
       "login_button": "Log In",
+      "back_button": "Back",
       "next_button": "Next",
       "required_fields_note": "All fields are required to continue",
       "privacy_protection_note": "Your data is protected according to the privacy policy"

@@ -16,7 +16,8 @@
   </div>
 
   <div class="notes-list">
-    @for (item of data(); track item._id) {
+    @for (item of data(); track item._id) { @if(item.medicines.length > 0){
+
     <mat-accordion class="notes-accordion" [multi]="false">
       <mat-expansion-panel>
         <mat-expansion-panel-header class="note-header">
@@ -29,10 +30,13 @@
               </div>
               <div class="note-indicators">
                 @if (item.quickNotes.suicide === 'yes') {
-                <mat-icon class="warning-indicator" color="warn">warning</mat-icon>
-                }
-                @if (item.medicines.length > 0) {
-                <mat-icon class="medication-indicator" color="primary">medication</mat-icon>
+                <mat-icon class="warning-indicator" color="warn"
+                  >warning</mat-icon
+                >
+                } @if (item.medicines.length > 0) {
+                <mat-icon class="medication-indicator" color="primary"
+                  >medication</mat-icon
+                >
                 }
               </div>
               <div class="doctor-info">
@@ -61,7 +65,7 @@
         </mat-expansion-panel-header>
 
         <div class="note-content">
-          <mat-card class="section-card complaint-section">
+          <!-- <mat-card class="section-card complaint-section">
             <mat-card-header class="section-header">
               <mat-card-title class="section-title">
                 <div class="title-icon"><mat-icon>healing</mat-icon></div>
@@ -93,9 +97,9 @@
                 </div>
               </div>
             </mat-card-content>
-          </mat-card>
+          </mat-card> -->
 
-          <mat-card class="section-card">
+          <!-- <mat-card class="section-card">
             <mat-card-title class="section-title">
               <mat-icon class="title-icon">assignment</mat-icon>
               {{ translate.t('patient-file.report_info_section') }}
@@ -190,9 +194,9 @@
               }
 
             </mat-card-content>
-          </mat-card>
+          </mat-card> -->
 
-          <mat-card class="section-card quick-notes-section">
+          <!-- <mat-card class="section-card quick-notes-section">
             <mat-card-header class="section-header">
               <mat-card-title class="section-title">
                 <div class="title-icon"><mat-icon>psychology</mat-icon></div>
@@ -235,18 +239,26 @@
                 </div>
               </div>
             </mat-card-content>
-          </mat-card>
+          </mat-card> -->
 
           <mat-card class="section-card medications-section">
             <mat-card-header class="section-header">
               <mat-card-title class="section-title">
                 <div class="title-icon"><mat-icon>medication</mat-icon></div>
                 <div class="title-text">
-                  <h3>{{ translate.t('patient-file.medications_section_title') }}</h3>
-                  <p class="section-subtitle">{{ translate.t('patient-file.medications_section_subtitle') }}</p>
+                  <h3>
+                    {{ translate.t('patient-file.medications_section_title') }}
+                  </h3>
+                  <p class="section-subtitle">
+                    {{ translate.t('patient-file.medications_section_subtitle')
+                    }}
+                  </p>
                 </div>
                 @if (item.medicines.length > 0) {
-                <span class="medication-count">{{ item.medicines.length }} {{ translate.t('patient-file.medication_label') }}</span>
+                <span class="medication-count"
+                  >{{ item.medicines.length }} {{
+                  translate.t('patient-file.medication_label') }}</span
+                >
                 }
               </mat-card-title>
             </mat-card-header>
@@ -266,22 +278,35 @@
                   <div class="medication-details">
                     <div class="detail-row">
                       <mat-icon class="detail-icon">schedule</mat-icon>
-                      <span class="detail-label">{{ translate.t('patient-file.medication_times') }}:</span>
+                      <span class="detail-label"
+                        >{{ translate.t('patient-file.medication_times')
+                        }}:</span
+                      >
                       <div class="dose-times">
                         @for (t of med.drugTimes; track t) {
-                        <span class="time-chip">{{ getDrugTimesLabel(t) }}</span>
+                        <span class="time-chip"
+                          >{{ getDrugTimesLabel(t) }}</span
+                        >
                         }
                       </div>
                     </div>
                     <div class="detail-row">
                       <mat-icon class="detail-icon">dinner_dining</mat-icon>
-                      <span class="detail-label">{{ translate.t('patient-file.before_or_after') }}:</span>
-                      <span class="detail-value">{{ getDrankMedicinesLabel(med.drankMedicinesBefore) }}</span>
+                      <span class="detail-label"
+                        >{{ translate.t('patient-file.before_or_after')
+                        }}:</span
+                      >
+                      <span class="detail-value"
+                        >{{ getDrankMedicinesLabel(med.drankMedicinesBefore)
+                        }}</span
+                      >
                     </div>
                     @if (med.intakeNotes) {
                     <div class="detail-row">
                       <mat-icon class="detail-icon">notes</mat-icon>
-                      <span class="detail-label">{{ translate.t('patient-file.notes') }}:</span>
+                      <span class="detail-label"
+                        >{{ translate.t('patient-file.notes') }}:</span
+                      >
                       <span class="detail-value">{{ med.intakeNotes }}</span>
                     </div>
                     }
@@ -310,18 +335,21 @@
             </button>
           </div>
           }
-
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-    }
+    } }
   </div>
 
   } @else {
   <div class="empty-state">
     <div class="empty-state-icon"><mat-icon>note_add</mat-icon></div>
-    <h2 class="empty-state-title">{{ translate.t('patient-file.empty_state_title') }}</h2>
-    <p class="empty-state-description">{{ translate.t('patient-file.empty_state_description') }}</p>
+    <h2 class="empty-state-title">
+      {{ translate.t('patient-file.empty_state_title') }}
+    </h2>
+    <p class="empty-state-description">
+      {{ translate.t('patient-file.empty_state_description') }}
+    </p>
     <button
       mat-raised-button
       color="primary"

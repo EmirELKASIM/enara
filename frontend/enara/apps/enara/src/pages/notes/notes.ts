@@ -1,4 +1,14 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NotesRouter } from '../../sevices/notes-router';
 import MainComplaint from './main-complaint/main-complaint';
@@ -13,11 +23,21 @@ import { AuthService } from '../../sevices/auth-db';
 import { ActivatedRoute } from '@angular/router';
 import ExaminationHistory from './examination-history/examination-history';
 import { Translation } from '../../sevices/translation';
-import { BackgroundStatus, diagnosisInfo, DiagnosisParams, MainComplaintParams, Medicine, QuickNotesDetails, ReportInfo, TreatmentParams } from './INotesParams';
+import {
+  BackgroundStatus,
+  diagnosisInfo,
+  DiagnosisParams,
+  MainComplaintParams,
+  Medicine,
+  QuickNotesDetails,
+  ReportInfo,
+  TreatmentParams,
+} from './INotesParams';
 import PatientSummary from './patient-summary/patient-summary';
 
 @Component({
   selector: 'app-notes',
+  standalone: true,
   imports: [
     MatIconModule,
     MainComplaint,
@@ -27,25 +47,30 @@ import PatientSummary from './patient-summary/patient-summary';
     TreatmentPlan,
     HttpClientModule,
     ExaminationHistory,
-    PatientSummary
+    PatientSummary,
   ],
   templateUrl: './notes.html',
   styleUrl: './notes.css',
 })
-export default class Notes {
+export default class Notes implements OnInit,AfterViewChecked {
   fileInfo = signal<RequestInfo[]>([]);
   private addDiagnosisLink = `${apiUrl}/diagnosis/add`;
   private addExaminationLink = `${apiUrl}/examination/add`;
   private updateDiagnosisLink = `${apiUrl}/diagnosis/update`;
   translate = inject(Translation);
-
   private http = inject(HttpClient);
   private toastr = inject(ToastrService);
   private auth = inject(AuthService);
-diagnosisInfo = signal<diagnosisInfo | null>(null)
+  diagnosisInfo = signal<diagnosisInfo | null>(null);
   requestId!: string;
   public patientId!: string;
   isDisabled = true;
+  needTreatment = false;
+  screenWidth: number = window.innerWidth;
+  public isMobile: boolean = this.screenWidth <= 600;
+    public isTablet: boolean = this.screenWidth >= 600  && this.screenWidth <= 1200;
+
+
   backgroundStatus: BackgroundStatus = {
     clinicalHistory: '',
     sawDoctorBefore: '',
@@ -74,9 +99,12 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
     appetite: '',
     suicide: '',
   };
-  reportInfo!:any;
-  meetingType!:string;
-  onReportInfo(values: ReportInfo){
+  reportInfo!: any;
+  meetingType!: string;
+
+  @ViewChild('scrollSection') section!: ElementRef;
+  shouldScroll = false;
+  onReportInfo(values: ReportInfo) {
     this.reportInfo = values.reportInfo;
     this.meetingType = values.meetingType;
   }
@@ -86,11 +114,27 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
     const requestId = this.route.snapshot.paramMap.get('requestId');
     const patientId = this.route.snapshot.paramMap.get('patientId');
     if (!requestId || !patientId) {
-      this.toastr.warning(this.translate.t("toastr.no_id_found"));
+      this.toastr.warning(this.translate.t('toastr.no_id_found'));
       return;
     }
     this.requestId = requestId;
     this.patientId = patientId;
+  }
+
+  ngAfterViewChecked() {
+    if (this.shouldScroll && this.section) {
+      this.shouldScroll = false;
+
+      // حساب موقع العنصر بالنسبة للصفحة
+      const y =
+        this.section.nativeElement.getBoundingClientRect().top + window.scrollY;
+
+      // نحدد المسافة التي نريد إضافتها (مثلاً 100px)
+      window.scrollTo({
+        top: 800, // 100px أعلى من العنصر
+        behavior: 'smooth',
+      });
+    }
   }
   onTreatmentChange(medicines: Medicine[]) {
     this.treatment.medicines = medicines;
@@ -103,14 +147,26 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
   }
   onStatusBackgroundAndDiagnosis() {
     this.notesRouter.router('statusBackgroundAndDiagnosis');
+    if (this.isMobile || this.isTablet) {
+      this.shouldScroll = true;
+    }
   }
   onExaminationHistory() {
     this.notesRouter.router('examinationHistory');
+    if (this.isMobile || this.isTablet) {
+      this.shouldScroll = true;
+    }
   }
-  onPatientSummary(){
+  onPatientSummary() {
     this.notesRouter.router('patientSummary');
+    if (this.isMobile || this.isTablet) {
+      this.shouldScroll = true;
+    }
   }
-  constructor(){
+  onNeedTreatment() {
+    this.needTreatment = !this.needTreatment;
+  }
+  constructor() {
     effect(() => {
       if (!this.patientId) return;
 
@@ -130,14 +186,11 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
             next: (res: any) => {
               this.diagnosisInfo.set(res.token);
             },
-            error: () => {
-              this.toastr.error(this.translate.t("toastr.faild_psychological_background"));
-            },
           });
       });
     });
   }
-  computedId = computed(()=> this.diagnosisInfo()?._id ?? "-");
+  computedId = computed(() => this.diagnosisInfo()?._id ?? '-');
   async onDiagnosisSave() {
     const hasDiagnosis = !!this.diagnosisInfo();
     const token = await this.auth.getToken();
@@ -171,8 +224,6 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
       riskLevel: this.diagnosis.riskLevel,
     };
 
-    
-    
     if (!hasDiagnosis) {
       this.http
         .post(this.addDiagnosisLink, data, {
@@ -183,7 +234,7 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
         })
         .subscribe({
           next: (res) => {
-            this.toastr.success(this.translate.t("toastr.added_successfully"));
+            this.toastr.success(this.translate.t('toastr.added_successfully'));
             this.isDisabled = true;
             window.location.reload();
           },
@@ -197,14 +248,15 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
           headers: {
             Authorization: `Bearer ${token}`,
             'ngrok-skip-browser-warning': 'true',
-            
           },
         })
         .subscribe({
           next: (res) => {
-            this.toastr.success(this.translate.t("toastr.updated_successfully"));
+            this.toastr.success(
+              this.translate.t('toastr.updated_successfully'),
+            );
             this.isDisabled = true;
-             window.location.reload();
+            window.location.reload();
           },
           error: (err) => {
             this.toastr.error(this.translate.t('toastr.something_went_wrong'));
@@ -226,10 +278,9 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
       complaintSeverity: this.mainComplaint.complaintSeverity,
       quickNotes: this.quickNotes,
       reportInfo: this.reportInfo,
-      meetingType:this.meetingType
+      meetingType: this.meetingType,
     };
-   
-    
+
     this.http
       .post(this.addExaminationLink, data, {
         headers: {
@@ -239,7 +290,7 @@ diagnosisInfo = signal<diagnosisInfo | null>(null)
       })
       .subscribe({
         next: (res) => {
-          this.toastr.success(this.translate.t("toastr.saved_successfully"));
+          this.toastr.success(this.translate.t('toastr.saved_successfully'));
           window.location.reload();
         },
         error: (err) => {

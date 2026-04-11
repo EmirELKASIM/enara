@@ -1,4 +1,7 @@
-<div class="profile-page"  [attr.dir]="translate.currentLang() === 'ar' ? 'ltr'  : 'rtl' ">
+<div
+  class="profile-page"
+  [attr.dir]="translate.currentLang() === 'ar' ? 'ltr'  : 'rtl' "
+>
   <div class="profile-layout">
     <div class="card-info">
       <div class="avatar-container">
@@ -13,33 +16,47 @@
         </div>
         <span>{{firstName()}} {{lastName()}}</span>
       </div>
+      <div class="permissible-secion">
+        <span [ngClass]="permissible() === true ? 'approved' : 'not-approved'"
+          >{{permissible() === true ? translate.t('show-info.doctor_account_approved') :
+           translate.t('show-info.doctor_account_not_approved')}}</span
+        >
+      </div>
       <div class="info-grid">
         <div class="info-item">
           <div class="info-icon"><i class="fa-solid fa-cake-candles"></i></div>
           <div class="info-content">
-            <span class="info-label">{{translate.t('show-info.age_label')}}</span>
+            <span class="info-label"
+              >{{translate.t('show-info.age_label')}}</span
+            >
             <span class="info-value">{{age()}}</span>
           </div>
         </div>
         <div class="info-item">
           <div class="info-icon"><i class="fa-solid fa-venus-mars"></i></div>
           <div class="info-content">
-            <span class="info-label">{{translate.t('show-info.gender_label')}}</span>
-            <span class="info-value">{{gender()}}</span>
+            <span class="info-label"
+              >{{translate.t('show-info.gender_label')}}</span
+            >
+            <span class="info-value">{{getGenderLabels(gender())}}</span>
           </div>
         </div>
         <div class="info-item">
           <div class="info-icon"><i class="fa-solid fa-user-tag"></i></div>
           <div class="info-content">
-            <span class="info-label">{{translate.t('show-info.account_type_label')}}</span>
-            <span class="info-value">{{accountType()}}</span>
+            <span class="info-label"
+              >{{translate.t('show-info.account_type_label')}}</span
+            >
+            <span class="info-value">{{getAccountTypeLabels(accountType())}}</span>
           </div>
         </div>
         <div class="info-item">
           <div class="info-icon"><i class="fa-solid fa-heart"></i></div>
           <div class="info-content">
-           <span class="info-label">{{translate.t('show-info.marital_status_label')}}</span>
-            <span class="info-value">{{maritalStatus()}}</span>
+            <span class="info-label"
+              >{{translate.t('show-info.marital_status_label')}}</span
+            >
+            <span class="info-value">{{getMaritalStatusLabels(maritalStatus())}}</span>
           </div>
         </div>
       </div>
@@ -48,17 +65,20 @@
           <i class="fa-brands fa-whatsapp"></i>
         </div>
         <div class="info-content">
-          <span class="info-label">{{translate.t('show-info.phone_label')}}</span>
+          <span class="info-label"
+            >{{translate.t('show-info.phone_label')}}</span
+          >
           <a
             class="info-value phone-link"
-            href="https://wa.me/{{ codeNumber() }}{{ phoneNumber() }}"
+            href="https://wa.me/{{ phoneNumber() }}"
             target="_blank"
             rel="noopener"
           >
-            {{ codeNumber() }}{{ phoneNumber() }}
+            {{ phoneNumber() }}
           </a>
         </div>
       </div>
+
       @if(!isPersonal()){
       <div class="professional-info">
         <div class="section-header">
@@ -98,7 +118,7 @@
         <div class="summary-header">
           @if(!isPersonal()){
           <div class="summary-icon"><i class="fa-solid fa-brain"></i></div>
-         <h3>{{translate.t('show-info.experience_summary_title')}}</h3>
+          <h3>{{translate.t('show-info.experience_summary_title')}}</h3>
           } @if(isPersonal()){
           <div class="summary-icon">
             <i class="fa-solid fa-heart-pulse"></i>
@@ -108,13 +128,13 @@
         </div>
         <div class="summary-content">
           @if(!isPersonal()){
-          <p 
+          <p
             [innerHTML]="experienceSummary()?.replace(/\.\s*/g, '.<br>') || ''"
           >
             {{experienceSummary()}}
           </p>
           } @if(isPersonal()){
-          <p 
+          <p
             [innerHTML]="psychologicalSummary()?.replace(/\.\s*/g, '.<br>') || ''"
           >
             {{psychologicalSummary()}}
@@ -134,7 +154,9 @@
               <span class="count-number"
                 >{{appointmentsInfo()?.length || 0}}</span
               >
-              <span>{{translate.t('show-info.upcoming_appointment_label')}}</span>
+              <span
+                >{{translate.t('show-info.upcoming_appointment_label')}}</span
+              >
             </div>
           </div>
         </div>
@@ -162,7 +184,9 @@
                   <i class="fa-brands fa-whatsapp"></i>
                 </div>
                 <div class="info-content">
-                  <span class="info-label">{{translate.t('show-info.phone_label')}}</span>
+                  <span class="info-label"
+                    >{{translate.t('show-info.phone_label')}}</span
+                  >
                   <a
                     class="info-value phone-link"
                     href="https://wa.me/{{appointment.doctorPhoneNumber }}"
@@ -187,20 +211,29 @@
                   <i class="fa-solid fa-clock"></i>
                   <div>
                     <div class="time">{{appointment.appointmentTime}}</div>
-                    <div class="duration">{{translate.t('show-info.session_minutes_label')}} : 60</div>
+                    <div class="duration">
+                      {{translate.t('show-info.session_minutes_label')}} :
+                      {{appointment.appointmentDuration}}
+                    </div>
                   </div>
                 </div>
                 <div class="type-box">
                   <i class="fa-solid fa-video"></i>
                   <div>
-                    <div class="type-label">{{translate.t('show-info.session_type_label')}}</div>
-                    <div class="type">{{getSessionTypeLabel(appointment.meetingType)}}</div>
+                    <div class="type-label">
+                      {{translate.t('show-info.session_type_label')}}
+                    </div>
+                    <div class="type">
+                      {{getSessionTypeLabel(appointment.meetingType)}}
+                    </div>
                   </div>
                 </div>
                 <div class="type-box">
                   <i class="fa-solid fa-dollar-sign"></i>
                   <div>
-                    <div class="type-label">{{translate.t('show-info.session_price_label')}}</div>
+                    <div class="type-label">
+                      {{translate.t('show-info.session_price_label')}}
+                    </div>
                     <div class="type">
                       {{appointment.appointmentPrice}}
                       {{appointment.appointmentCoinType}}
@@ -215,30 +248,41 @@
                 (click)="onStartMeetingForUser(appointment._id, appointment.doctorFirstName,appointment.doctorLastName)"
                 [disabled]="!appointment.isActive"
               >
-                <i class="fa-solid fa-play"></i> <span>{{translate.t('show-info.start_session_button')}}</span>
+                <i class="fa-solid fa-play"></i>
+                <span>{{translate.t('show-info.start_session_button_for_user')}}</span>
               </button>
               <button
                 class="btn-cancel"
-                [disabled]="appointment.paymentStatus"
+                [disabled]="checkPaymentMethod(appointment.paymentMethod) || appointment.dekontCode !== '' || isSent"
                 (click)="onAppoitmentCanceled(appointment._id, appointment.appointmentDate, appointment.appointmentTime, appointment.doctorId )"
               >
-                <i class="fa-solid fa-xmark"></i> <span>{{translate.t('show-info.cancel_appointment_button')}}</span>
+                <i class="fa-solid fa-xmark"></i>
+                <span
+                  >{{translate.t('show-info.cancel_appointment_button')}}</span
+                >
               </button>
               <button
                 class="btn-edit"
                 (click)="onSendAppointmentEdit(appointment._id)"
               >
                 <i class="fa-solid fa-info-circle"></i>
-               <span>{{translate.t('show-info.send_edit_request_button')}}</span>
+                <span
+                  >{{translate.t('show-info.send_edit_request_button')}}</span
+                >
               </button>
               <button
                 class="btn-pay"
-                [disabled]="appointment.paymentStatus || appointment.dekontCode !== ''"
+                [disabled]=" checkPaymentMethod(appointment.paymentMethod) || appointment.dekontCode !== '' "
                 (click)="onPayment(appointment._id, appointment.appointmentDate, appointment.appointmentTime, appointment.appointmentPrice, appointment.appointmentCoinType)"
               >
                 <i class="fa-solid fa-dollar-sign"></i>
-                @if(appointment.paymentStatus){
-                <span>{{translate.t('show-info.payment_confirmed_button')}}</span> }@else if(appointment.dekontCode !== ""){<span>{{translate.t('show-info.payment_sent_button')}}</span>}@else{ <span>{{translate.t('show-info.payment_received_button')}}</span>}
+                @if(checkPaymentMethod(appointment.paymentMethod)){
+                <span
+                  >{{translate.t('show-info.payment_confirmed_button')}}</span
+                >
+                }@else if(appointment.dekontCode !==
+                ""){<span>{{translate.t('show-info.payment_sent_button')}}</span>}@else{
+                <span>send Dekont</span>}
               </button>
             </div>
           </div>
@@ -274,7 +318,9 @@
                   <i class="fa-brands fa-whatsapp"></i>
                 </div>
                 <div class="info-content">
-                  <span class="info-label">{{translate.t('show-info.phone_label')}}</span>
+                  <span class="info-label"
+                    >{{translate.t('show-info.phone_label')}}</span
+                  >
                   <a
                     class="info-value phone-link"
                     href="https://wa.me/{{appointment.patientPhoneNumber }}"
@@ -299,20 +345,27 @@
                   <i class="fa-solid fa-clock"></i>
                   <div>
                     <div class="time">{{appointment.appointmentTime}}</div>
-                    <div class="duration">{{translate.t('show-info.session_minutes_label')}} : 60</div>
+                    <div class="duration">
+                      {{translate.t('show-info.session_minutes_label')}} :
+                      {{appointment.appointmentDuration}}
+                    </div>
                   </div>
                 </div>
                 <div class="type-box">
                   <i class="fa-solid fa-video"></i>
                   <div>
-                    <div class="type-label">{{translate.t('show-info.session_type_label')}}</div>
+                    <div class="type-label">
+                      {{translate.t('show-info.session_type_label')}}
+                    </div>
                     <div class="type">{{appointment.meetingType}}</div>
                   </div>
                 </div>
                 <div class="type-box">
                   <i class="fa-solid fa-dollar-sign"></i>
                   <div>
-                    <div class="type-label">{{translate.t('show-info.session_price_label')}}</div>
+                    <div class="type-label">
+                      {{translate.t('show-info.session_price_label')}}
+                    </div>
                     <div class="type">
                       {{appointment.appointmentPrice}}
                       {{appointment.appointmentCoinType}}
@@ -324,29 +377,40 @@
             <div class="appointment-footer">
               <button
                 class="btn-start"
-                (click)="onStartMeetingForDoctor(appointment._id,appointment.firstName,appointment.lastName,appointment.appointmentDate,appointment.appointmentTime)"
+                (click)="onStartMeetingForDoctor(appointment._id,appointment.firstName,appointment.lastName,appointment.appointmentDate,appointment.appointmentTime, appointment.appointmentDuration)"
               >
-                <i class="fa-solid fa-play"></i> <span>{{translate.t('show-info.start_session_button')}}</span>
+                <i class="fa-solid fa-play"></i>
+                <span>{{translate.t('show-info.start_session_button')}}</span>
               </button>
               <button
                 class="btn-cancel"
-                [disabled]="appointment.paymentStatus"
+                [disabled]="checkPaymentMethod(appointment.paymentMethod) || isPaid"
                 (click)="onAppoitmentCanceled(appointment._id, appointment.appointmentDate, appointment.appointmentTime, appointment.doctorId)"
               >
-                <i class="fa-solid fa-xmark"></i><span>{{translate.t('show-info.cancel_appointment_button')}}</span>
+                <i class="fa-solid fa-xmark"></i
+                ><span
+                  >{{translate.t('show-info.cancel_appointment_button')}}</span
+                >
               </button>
               <button
                 class="btn-edit"
                 (click)="onEditAppointmentForDoctor(appointment._id)"
               >
                 <i class="fa-solid fa-info-circle"></i>
-               <span>{{translate.t('show-info.edit_appointment_button')}}</span>
+                <span
+                  >{{translate.t('show-info.edit_appointment_button')}}</span
+                >
               </button>
               <button
                 class="btn-pay"
-                (click)="onShowDekontDetails(appointment._id,appointment.userId)"
+                (click)="onShowDekontDetails(appointment._id,appointment.userId, appointment.paymentMethod)"
               >
-                <i class="fa-solid fa-dollar-sign"></i> <span>{{translate.t('show-info.payment_received_button')}}</span>
+                <i class="fa-solid fa-dollar-sign"></i>
+                @if(checkPaymentMethod(appointment.paymentMethod)){
+                <span>money recevid</span>
+                }@else{
+                <span>show Dekont</span>
+                }
               </button>
             </div>
           </div>
@@ -357,7 +421,8 @@
               <h4>{{translate.t('show-info.no_appointments_title')}}</h4>
               <p>{{translate.t('show-info.no_appointments_text')}}</p>
               <button class="btn-schedule" (click)="goBooking()">
-                <i class="fa-solid fa-plus"></i> {{translate.t('show-info.schedule_new_appointment_button')}}
+                <i class="fa-solid fa-plus"></i>
+                {{translate.t('show-info.schedule_new_appointment_button')}}
               </button>
             </div>
           </div>

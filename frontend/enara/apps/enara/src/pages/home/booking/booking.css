@@ -2,6 +2,7 @@
   font-family: 'Segoe UI', 'Cairo', sans-serif;
   background: linear-gradient(180deg, #f9f0fa 0%, #ffffff 100%);
   min-height: 100vh;
+
 }
 
 .page-header {
@@ -153,7 +154,21 @@
   gap: 15px;
   border-right: 4px solid var(--primary-color);
 }
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
+select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+.hour-points{
+  font-size: 24px;
+}
 .info-icon {
   width: 40px;
   height: 40px;
@@ -397,10 +412,14 @@
 
 .name-specialty {
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .name-btn {
   background: none;
+  display: flex;
+  align-items: start;
   border: none;
   color: var(--primary-dark);
   font-size: 1.4rem;
@@ -634,6 +653,9 @@
 }
 
 @media (max-width: 768px) {
+  .booking-page{
+    margin-top: 25px;
+  }
   .page-header {
     padding: 30px 20px;
   }

@@ -13,7 +13,7 @@ export interface HistoryAppointmentsInfo {
   status:string;
   appointmentPrice: string;
   appointmentCoinType: string;
-  paymentStatus:boolean;
+  paymentMethod:string;
 }
 
 export interface UserInfo {

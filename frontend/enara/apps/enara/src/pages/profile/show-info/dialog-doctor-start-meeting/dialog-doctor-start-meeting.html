@@ -54,7 +54,7 @@
               </div>
               <div class="detail-content">
                 <span class="detail-label">{{ translate.t('dialog-doctor-start-meeting.duration_label') }}</span>
-                <span class="detail-value">60 دقيقة</span>
+                <span class="detail-value">{{appointmentDuration}}</span>
               </div>
             </div>
           </div>
@@ -76,6 +76,7 @@
       <div class="url-input-container">
         <mat-form-field appearance="outline" class="url-field">
           <mat-label>{{ translate.t('dialog-doctor-start-meeting.session_url_label') }}</mat-label>
+          <i class="fa fa-arrow-right"></i>
           <input
             matInput
             type="url"

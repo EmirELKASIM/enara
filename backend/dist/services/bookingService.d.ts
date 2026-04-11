@@ -12,28 +12,18 @@ interface addBookingParams {
     reportInfo: string;
     appointmentPrice: string;
     appointmentCoinType: string;
+    appointmentDuration: string;
 }
-export declare const addBooking: ({ appointmentId, appointmentTime, appointmentDate, appointmentDay, doctorFirstName, doctorLastName, doctorAccountType, meetingType, doctorId, token, reportInfo, appointmentPrice, appointmentCoinType, }: addBookingParams) => Promise<{
+export declare const addBooking: ({ appointmentId, appointmentTime, appointmentDate, appointmentDay, doctorFirstName, doctorLastName, doctorAccountType, meetingType, doctorId, token, reportInfo, appointmentPrice, appointmentCoinType, appointmentDuration, }: addBookingParams) => Promise<{
     data: string;
     statusCode: number;
 } | {
-    data: {
-        appointmentId: string;
-        appointmentTime: string;
-        appointmentDay: string;
-        appointmentDate: string;
-        doctorFirstName: string;
-        doctorLastName: string;
-        meetingType: string;
-        firstName: string;
-        lastName: string;
-        doctorAccountType: string;
-        doctorId: string;
-        userId: any;
-        status: string;
-        reportInfo: string;
-        appointmentPrice: string;
-        appointmentCoinType: string;
+    data: import("mongoose").Document<unknown, {}, import("../models/bookingModel").IBooking, {}, import("mongoose").DefaultSchemaOptions> & import("../models/bookingModel").IBooking & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
     };
     statusCode: number;
 }>;
@@ -213,6 +203,22 @@ export declare const getActiveAppointment: ({ token, appointmentId, }: getActive
     };
     statusCode: number;
 }>;
+export declare const getNotifications: ({ token }: any) => Promise<{
+    data: string;
+    statusCode: number;
+} | {
+    data: any[];
+    statusCode: number;
+}>;
+interface ReadNotParams {
+    token: any;
+    bookingId: string;
+    notificationId: string;
+}
+export declare const readNotifications: ({ token, bookingId, notificationId, }: ReadNotParams) => Promise<{
+    data: string;
+    statusCode: number;
+}>;
 interface UpdateBookingParams {
     token: any;
     newAppointmentId: string;
@@ -220,8 +226,9 @@ interface UpdateBookingParams {
     newTime: string;
     newDate: string;
     newDay: string;
+    newDuration: string;
 }
-export declare const updateBooking: ({ token, bookingId, newAppointmentId, newTime, newDate, newDay, }: UpdateBookingParams) => Promise<{
+export declare const updateBooking: ({ token, bookingId, newAppointmentId, newTime, newDate, newDay, newDuration, }: UpdateBookingParams) => Promise<{
     data: string;
     statusCode: number;
 } | {
@@ -277,6 +284,24 @@ interface AcceptedDekontParams {
     token: any;
 }
 export declare const acceptedDekont: ({ appointmentId, patientId, token, }: AcceptedDekontParams) => Promise<{
+    data: string;
+    statusCode: number;
+} | {
+    data: import("mongoose").Document<unknown, {}, import("../models/bookingModel").IBooking, {}, import("mongoose").DefaultSchemaOptions> & import("../models/bookingModel").IBooking & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
+    };
+    statusCode: number;
+}>;
+interface PaidCardParams {
+    appointmentId: string;
+    token: any;
+    doctorId: String;
+}
+export declare const paidByCard: ({ appointmentId, doctorId, token, }: PaidCardParams) => Promise<{
     data: string;
     statusCode: number;
 } | {

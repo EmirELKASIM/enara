@@ -12,7 +12,7 @@ import { Translation } from '../../../../../src/sevices/translation';
 
 @Component({
   selector: 'app-dialog-payment',
-  imports: [FormsModule,MatDialogModule,MatButtonModule,MatFormFieldModule,  // ✅
+  imports: [FormsModule,MatDialogModule,MatButtonModule,MatFormFieldModule,  
     MatInputModule, ],
   templateUrl: './dialog-payment.html',
   styleUrl: './dialog-payment.css',
@@ -39,6 +39,7 @@ export default class DialogPayment {
       dekontCode: this.dekontCode,
       dekontNotes: this.dekontNotes,
     };
+    const isSent = this.dekontCode !== '';
 
     const token = await this.auth.getToken();
     if (!token) throw new Error('Token not found');
@@ -52,7 +53,9 @@ export default class DialogPayment {
       .subscribe({
         next: () => {
           this.toastr.success(this.translate.t("toastr.sent_successfully"));
-          this.dialogRef.close();          
+          this.dialogRef.close({
+            isSent:isSent
+          });          
         },
         error: () => this.toastr.error(this.translate.t('toastr.something_went_wrong')),
       });

@@ -16,6 +16,7 @@ export default class DialogDeleteAppointment {
   private appointmentService = inject(Appointment);
   appointmentTime = this.data.appointmentTime;
   appointmentDate = this.data.appointmentDate;
+  appointmentDuration = this.data.appointmentDuration;
   translate = inject(Translation);
 
   onDelete() {

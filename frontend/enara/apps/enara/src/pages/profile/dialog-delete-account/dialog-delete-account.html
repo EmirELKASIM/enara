@@ -5,29 +5,29 @@
         <i class="fas fa-exclamation-triangle"></i>
       </div>
       <div class="header-text">
-        <h2 class="dialog-title">{{ translate.t('dialog-delete-account.delete_warning_title') || 'حذف الحساب نهائياً' }}</h2>
-        <p class="dialog-subtitle">{{ translate.t('dialog-delete-account.delete_warning_subtitle') || 'عملية خطيرة لا يمكن التراجع عنها' }}</p>
+        <h2 class="dialog-title">{{ translate.t('dialog-delete-account.delete_warning_title')  }}</h2>
+        <p class="dialog-subtitle">{{ translate.t('dialog-delete-account.delete_warning_subtitle')}}</p>
       </div>
     </div>
   </div>
 
   <mat-dialog-content class="dialog-content">
-    <div class="warning-message">
+    <!-- <div class="warning-message">
       <div class="warning-icon">
         <i class="fas fa-shield-exclamation"></i>
       </div>
       <div class="warning-text">
-        <h3 class="warning-title">{{ translate.t('dialog-delete-account.delete_warning_title_main') || 'تنبيه مهم!' }}</h3>
+        <h3 class="warning-title">{{ translate.t('dialog-delete-account.delete_warning_title_main')  }}</h3>
         <p class="warning-description">
           {{ translate.t('dialog-delete-account.delete_warning_message') }}
         </p>
       </div>
-    </div>
+    </div> -->
 
     <div class="consequences-section">
       <div class="section-header">
         <i class="fas fa-list-check"></i>
-        <h3>{{ translate.t('dialog-delete-account.consequences_title') || 'ما الذي سيتم حذفه؟' }}</h3>
+        <h3>{{ translate.t('dialog-delete-account.consequences_title') }}</h3>
       </div>
       
       <div class="consequences-list">
@@ -37,7 +37,7 @@
           </div>
           <div class="consequence-content">
             <h4>{{ translate.t('dialog-delete-account.personal_data_deleted') }}</h4>
-            <p>{{ translate.t('dialog-delete-account.personal_data_deleted_description') || '' }}</p>
+            <p>{{ translate.t('dialog-delete-account.personal_data_deleted_description') }}</p>
           </div>
         </div>
 

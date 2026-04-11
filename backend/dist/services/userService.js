@@ -3,18 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getImpersonalUsers = exports.getPersonalUsers = exports.verifyEmail = exports.deleteAccount = exports.changePasword = exports.resetPasword = exports.forgotPassword = exports.updateInfo = exports.getInfoWithId = exports.getInfo = exports.login = exports.register = void 0;
+exports.onApproving = exports.getUnpermissibleDoctors = exports.getImpersonalUsers = exports.getPersonalUsers = exports.verifyEmail = exports.deleteAccount = exports.changePasword = exports.resetPasword = exports.forgotPassword = exports.updateInfo = exports.getInfoWithId = exports.getInfo = exports.login = exports.register = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const helperJWT_1 = require("../middlewares/helperJWT");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const sendEmail_1 = require("../utils/sendEmail");
 const summaryModel_1 = __importDefault(require("../models/summaryModel"));
 const experienceModel_1 = __importDefault(require("../models/experienceModel"));
 const requestModel_1 = __importDefault(require("../models/requestModel"));
 const appointmentModul_1 = __importDefault(require("../models/appointmentModul"));
 const bookingModel_1 = __importDefault(require("../models/bookingModel"));
-const register = async ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, codeNumber, }) => {
+const nodeMailer_1 = require("../utils/nodeMailer");
+const register = async ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, }) => {
     try {
         const findUser = await userModel_1.default.findOne({ email });
         if (findUser) {
@@ -33,6 +33,7 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             return age < 0 ? 0 : age; // حماية من تاريخ مستقبلي
         };
         const age = calculateAge(birthday);
+        const permissible = accountType === "personal" ? true : false;
         const newUser = new userModel_1.default({
             firstName,
             lastName,
@@ -46,13 +47,13 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
             consultation,
             privacyPolicy,
             phoneNumber,
-            codeNumber,
+            permissible: permissible,
         });
         await newUser.save();
         setImmediate(async () => {
             console.log("2. Starting Email Call...");
             try {
-                await (0, sendEmail_1.sendVerificationEmail)(newUser);
+                await (0, nodeMailer_1.sendVerificationEmail)(newUser);
                 console.log("Email sent successfully");
             }
             catch (err) {
@@ -73,7 +74,7 @@ const register = async ({ firstName, lastName, email, password, accountType, bir
                 consultation,
                 privacyPolicy,
                 phoneNumber,
-                codeNumber,
+                permissible,
             }),
             statusCode: 200,
         };
@@ -138,7 +139,7 @@ const getInfo = async ({ token }) => {
             maritalStatus: findUser.maritalStatus,
             consultation: findUser.consultation,
             phoneNumber: findUser.phoneNumber,
-            codeNumber: findUser.codeNumber,
+            permissible: findUser.permissible,
         },
         statusCode: 200,
     };
@@ -161,13 +162,12 @@ const getInfoWithId = async ({ userId }) => {
             maritalStatus: findUser.maritalStatus,
             consultation: findUser.consultation,
             phoneNumber: findUser.phoneNumber,
-            codeNumber: findUser.codeNumber,
         },
         statusCode: 200,
     };
 };
 exports.getInfoWithId = getInfoWithId;
-const updateInfo = async ({ id, firstName, lastName, gender, birthday, maritalStatus, phoneNumber, codeNumber, }) => {
+const updateInfo = async ({ id, firstName, lastName, gender, birthday, maritalStatus, phoneNumber, }) => {
     const findUser = await userModel_1.default.findById(id);
     if (!findUser) {
         return { data: "User not found", statusCode: 401 };
@@ -191,7 +191,6 @@ const updateInfo = async ({ id, firstName, lastName, gender, birthday, maritalSt
     findUser.age = age.toString();
     findUser.maritalStatus = maritalStatus;
     findUser.phoneNumber = phoneNumber;
-    findUser.codeNumber = codeNumber;
     await findUser.save();
     return {
         data: {
@@ -204,7 +203,6 @@ const updateInfo = async ({ id, firstName, lastName, gender, birthday, maritalSt
             age: age,
             maritalStatus: findUser.maritalStatus,
             phoneNumber: findUser.phoneNumber,
-            codeNumber: findUser.codeNumber,
         },
         statusCode: 200,
     };
@@ -217,7 +215,7 @@ const forgotPassword = async ({ email }) => {
     }
     const resetToken = jsonwebtoken_1.default.sign({ id: findUser._id }, process.env.JWT_SECRET || "", { expiresIn: "15m" });
     const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    await (0, sendEmail_1.sendEmail)(email, "Reset Password", `
+    await (0, nodeMailer_1.sendEmail)(email, "Reset Password", `
     <h3>Password Reset</h3>
     <p>Click the link below to reset your password:</p>
     <a href="${resetLink}">${resetLink}</a>
@@ -331,4 +329,28 @@ const getImpersonalUsers = async () => {
     return { data: impersonalUsers, statusCode: 200 };
 };
 exports.getImpersonalUsers = getImpersonalUsers;
+const getUnpermissibleDoctors = async () => {
+    const unPermissible = await userModel_1.default.find({
+        accountType: { $ne: "personal" },
+        permissible: false,
+    });
+    if (!unPermissible) {
+        return { data: "users not found", statusCode: 400 };
+    }
+    return { data: unPermissible, statusCode: 200 };
+};
+exports.getUnpermissibleDoctors = getUnpermissibleDoctors;
+const onApproving = async ({ doctorId }) => {
+    const findAndUpdate = await userModel_1.default.findOneAndUpdate({
+        _id: doctorId,
+        permissible: false,
+    }, {
+        $set: { permissible: true },
+    });
+    if (!findAndUpdate) {
+        return { data: "user not found", statusCode: 400 };
+    }
+    return { data: findAndUpdate, statusCode: 200 };
+};
+exports.onApproving = onApproving;
 //# sourceMappingURL=userService.js.map

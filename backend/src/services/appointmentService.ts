@@ -9,6 +9,7 @@ interface addAppointmentParams {
   date: string; 
   price: string;
   coinType: string;
+  duration:string;
 }
 
 export const addAppointment = async ({
@@ -16,7 +17,7 @@ export const addAppointment = async ({
   date,
   time,
   price,
-  coinType,
+  coinType,duration
 }: addAppointmentParams) => {
   try {
     const tokenDetails = verifyJWT(token);
@@ -57,6 +58,7 @@ export const addAppointment = async ({
         status: "pending",
         price: price,
         coinType: coinType,
+        duration:duration
       });
 
       appointment.times.sort((a: any, b: any) => a.time.localeCompare(b.time));
@@ -83,6 +85,7 @@ export const addAppointment = async ({
           status: "pending",
           price: price,
           coinType: coinType,
+          duration:duration
         },
       ],
       status: "pending",

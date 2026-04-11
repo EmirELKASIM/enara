@@ -420,7 +420,11 @@
   right: 0;
   top: -2px;
 }
-
+.confirm-button{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
 
 @media (max-width: 992px) {
   .section-header {
@@ -469,6 +473,11 @@
   .preview-section {
     margin: 20px;
   }
+  .confirm-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -486,5 +495,10 @@
   
   .preview-item {
     padding: 15px;
+  }
+  .confirm-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

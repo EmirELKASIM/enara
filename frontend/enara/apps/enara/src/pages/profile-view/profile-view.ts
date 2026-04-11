@@ -16,7 +16,6 @@ interface InfoParams {
   maritalStatus: string;
   consultation: string;
   phoneNumber: string;
-  codeNumber: string;
 }
 interface ExperienceParams {
   experienceSummary: string;
@@ -40,11 +39,7 @@ export default class ProfileView implements OnInit {
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient);
   private router = inject(Router);
-  doctorPhoneNumber = computed(() => {
-    const info = this.doctorInfo();
-    if (!info) return '';
-    return `${info.codeNumber}${info.phoneNumber}`;
-  });
+  doctorPhoneNumber = computed(() => this.doctorInfo()?.phoneNumber);
   ngOnInit() {
     const doctorId = this.route.snapshot.paramMap.get('doctorId');
     if (!doctorId) {
@@ -92,16 +87,16 @@ export default class ProfileView implements OnInit {
   returnBooking() {
     this.router.navigate(['booking']);
   }
-  arabicRegex = /[\u0600-\u06FF]/; // أي حرف عربي
+  arabicRegex = /[\u0600-\u06FF]/; 
 
   getTextDirection(text?: string): 'rtl' | 'ltr' {
-    if (!text) return 'ltr'; // إذا النص undefined أو فارغ
+    if (!text) return 'ltr'; 
     return this.arabicRegex.test(text) ? 'rtl' : 'ltr';
   }
 
   getGenderLabels(value?: string): string {
     const map: Record<string, string> = {
-      male: this.translate.t('profile-view-page.male'), // 'moodSwings' key exists
+      male: this.translate.t('profile-view-page.male'), 
       female: this.translate.t('profile-view-page.female'),
       other: this.translate.t('profile-view-page.other'),
     };
@@ -111,7 +106,7 @@ export default class ProfileView implements OnInit {
   }
   getMaritalStatusLabels(value?: string): string {
     const map: Record<string, string> = {
-      single: this.translate.t('profile-view-page.single'), // 'moodSwings' key exists
+      single: this.translate.t('profile-view-page.single'), 
       married: this.translate.t('profile-view-page.married'),
       divorced: this.translate.t('profile-view-page.divorced'),
       widowed: this.translate.t('profile-view-page.widowed'),

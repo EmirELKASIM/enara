@@ -11,6 +11,7 @@ export interface IAppointment extends Document {
     time: string;
     price: string;
     coinType: string;
+    duration: string;
     status: "pending" | "booked" | "attendance" | "canceled";
   }[];
   status: "pending" | "booked" | "attendance" | "canceled";
@@ -40,6 +41,7 @@ const appointmentSchema = new Schema<IAppointment>(
         },
         price: { type: String, required: true },
         coinType: { type: String, required: true },
+        duration: { type: String, required: true },
       },
     ],
     status: {

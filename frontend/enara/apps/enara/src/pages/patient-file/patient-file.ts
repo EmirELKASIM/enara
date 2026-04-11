@@ -1,4 +1,4 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -30,9 +30,9 @@ import { Translation } from '../../sevices/translation';
     MatExpansionModule,
   ],
   templateUrl: './patient-file.html',
-  styleUrl: './patient-file.css',
+  styleUrls: ['./patient-file.css','./patient-file-2.css'],
 })
-export default class PatientFile {
+export default class PatientFile implements OnInit{
   data = signal<ComplaintPreview[]>([]);
   info = signal<UserInfo | null>(null);
   userId!: string;

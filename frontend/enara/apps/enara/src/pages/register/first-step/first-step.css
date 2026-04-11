@@ -76,7 +76,8 @@
 
 .input-field {
   position: relative;
-  max-width: 250px;
+  max-width: 300px;
+  width: 100%;
 }
 
 .input-label {
@@ -253,7 +254,32 @@
 .phone-input {
   flex: 1;
 }
+::ng-deep .iti__country-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
 
+::ng-deep .iti__flag.iti__sy {
+  
+  background-image: url('/assets/flags.png') !important;
+  
+  
+  background-position: center !important;
+  
+  
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  
+  
+  width: 20px !important;
+  height: 15px !important;
+}
+
+
+::ng-deep .iti__country-list .iti__flag.iti__sy {
+  background-image: url('/assets/flags.png') !important;
+  background-position: center !important;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -278,7 +304,6 @@
 .age-display i {
   font-size: 14px;
 }
-
 
 .password-strength {
   margin-top: 15px;
@@ -502,6 +527,28 @@
   font-size: 16px;
 }
 
+@media (max-width: 1024px) {
+  .input-group {
+    display: flex;
+    flex-direction: row;
+  }
+  .input-field {
+    max-width: 300px;
+    margin-right: 25px;
+    width: 100%;
+  }
+  .secondary-field {
+    margin-left: 150px;
+  }
+  .input-icons {
+    right: 20px;
+  }
+  .form-input {
+    direction: ltr;
+    unicode-bidi: plaintext;
+  }
+}
+
 @media (max-width: 768px) {
   .step-notes {
     flex-direction: column;
@@ -518,18 +565,17 @@
   outline-offset: 2px;
 }
 
-
 :dir(ltr) .form-input {
   direction: ltr;
   text-align: left;
-  padding-left: 100px; 
+  padding-left: 100px;
   padding-right: 10px;
 }
 
 :dir(rtl) .form-input {
   direction: rtl;
   text-align: right;
-  padding-right: 35px; 
+  padding-right: 50px;
   padding-left: 10px;
 }
 

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,11 @@ import { apiUrl } from '../../../constants/constants';
 import DialogDeleteDate from './dialog-delete-date/dialog-delete-date';
 import { MatRadioModule } from '@angular/material/radio';
 import { Translation } from '../../../../src/sevices/translation';
-import { AppointmentDate, AppointmentTime } from './IAppointmentInfo';
+import {
+  AppointmentDate,
+  AppointmentTime,
+  UserInfoParams,
+} from './IAppointmentInfo';
 
 @Component({
   selector: 'app-add-date',
@@ -46,7 +50,7 @@ import { AppointmentDate, AppointmentTime } from './IAppointmentInfo';
 export default class AddDate implements OnInit {
   dateValue!: Date;
   timeValue!: Date;
-
+  userInfo = signal<UserInfoParams | null>(null);
   dates = signal<AppointmentDate[]>([]);
 
   isAdding = false;
@@ -54,8 +58,10 @@ export default class AddDate implements OnInit {
   timeFocused = false;
 
   minDate: Date = new Date();
-  coinType = '';
+  coinType = 'USD';
   price = '';
+  durationAsHours = 0;
+  durationAsMinutes = 0;
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
   private toastr = inject(ToastrService);
@@ -64,8 +70,32 @@ export default class AddDate implements OnInit {
   translate = inject(Translation);
 
   private addDateLink = `${apiUrl}/appointment/add`;
+  private userInfoLink = `${apiUrl}/user/info`;
+  hours: number[] = Array.from({ length: 13 }, (_, i) => i);
+  minutes: number[] = Array.from({ length: 60 }, (_, i) => i);
+  selectedHour = 0;
+  selectedMinute = 0;
+  period = 'AM';
+  computedPermissible = computed(() => this.userInfo()?.permissible ?? false);
   ngOnInit(): void {
     this.loadDates();
+    this.loadUserInfo();
+  }
+
+  formatTimeCustom() {
+    const hour =
+      this.period === 'PM'
+        ? (this.selectedHour % 12) + 12
+        : this.selectedHour % 12;
+
+    const hh = String(hour).padStart(2, '0');
+    const mm = String(this.selectedMinute).padStart(2, '0');
+
+    return `${hh}:${mm}`;
+  }
+
+  formatSessionDuration() {
+    return `${this.durationAsHours}:${this.durationAsMinutes}`;
   }
 
   formatDate(date: string): string {
@@ -96,9 +126,40 @@ export default class AddDate implements OnInit {
   loadDates(): void {
     this.addDateService.loadDates(this.dates);
   }
+  async loadUserInfo() {
+    const token = await this.auth.getToken();
+    if (!token) return;
+    this.http
+      .get(this.userInfoLink, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true',
+        },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.userInfo.set(res);
+          
+
+          
+          
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
 
   async onAddDate(): Promise<void> {
-    if (!this.dateValue || !this.timeValue) return;
+    if (!this.computedPermissible()) {
+      this.toastr.warning(
+        'غير مسموح لك الاضافة. يجب الموافقة على بريدك الإلكتروني الرجاء الانتظار بضع ايام',
+      );
+      console.log(this.computedPermissible());
+      
+      return;
+    }
+    if (!this.dateValue) return;
 
     this.isAdding = true;
 
@@ -106,9 +167,10 @@ export default class AddDate implements OnInit {
     if (!token) return;
     const data = {
       date: this.formatDateFromDate(this.dateValue),
-      time: this.formatTimeFromDate(this.timeValue),
+      time: this.formatTimeCustom(),
       price: this.price,
       coinType: this.coinType,
+      duration: this.formatSessionDuration(),
     };
 
     this.http
@@ -134,19 +196,21 @@ export default class AddDate implements OnInit {
   private addTimeToUI(date: Date, time: Date): void {
     this.addDateService.addTimeToUI(
       this.formatDateFromDate(date),
-      this.formatTimeFromDate(time),
+      this.formatTimeCustom(),
       this.dates,
       this.price,
       this.coinType,
+      this.formatSessionDuration(),
     );
   }
 
-  onDeleteDialog(time: string, date: string): void {
+  onDeleteDialog(time: string, date: string, duration: string): void {
     const dialogRef = this.dialog.open(DialogDeleteAppointment, {
       panelClass: 'delete-appointment-dialog',
       data: {
         appointmentTime: time,
         appointmentDate: date,
+        appointmentDuration: duration,
       },
     });
 

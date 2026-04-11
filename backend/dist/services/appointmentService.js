@@ -7,7 +7,7 @@ exports.getApointments = exports.deleteDate = exports.deleteAppointment = export
 const appointmentModul_1 = __importDefault(require("../models/appointmentModul"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 const helperJWT_1 = require("../middlewares/helperJWT");
-const addAppointment = async ({ token, date, time, price, coinType, }) => {
+const addAppointment = async ({ token, date, time, price, coinType, duration }) => {
     try {
         const tokenDetails = (0, helperJWT_1.verifyJWT)(token);
         if (!tokenDetails) {
@@ -40,6 +40,7 @@ const addAppointment = async ({ token, date, time, price, coinType, }) => {
                 status: "pending",
                 price: price,
                 coinType: coinType,
+                duration: duration
             });
             appointment.times.sort((a, b) => a.time.localeCompare(b.time));
             await appointment.save();
@@ -62,6 +63,7 @@ const addAppointment = async ({ token, date, time, price, coinType, }) => {
                     status: "pending",
                     price: price,
                     coinType: coinType,
+                    duration: duration
                 },
             ],
             status: "pending",

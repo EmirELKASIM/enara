@@ -12,13 +12,14 @@ router.post("/add", async (req, res) => {
         return res.status(401).json({ message: "No token provided" });
     }
     const token = authHeader.split(" ")[1];
-    const { time, date, price, coinType } = req.body;
+    const { time, date, price, coinType, duration } = req.body;
     const { statusCode, data } = await (0, appointmentService_1.addAppointment)({
         time,
         date,
         token,
         price,
         coinType,
+        duration
     });
     return res.status(statusCode).json({
         success: true,

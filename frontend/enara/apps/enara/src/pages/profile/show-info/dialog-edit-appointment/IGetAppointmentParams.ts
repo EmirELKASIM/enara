@@ -1,6 +1,7 @@
 export interface timesParams {
   time: string;
   status: string;
+  duration:string;
 }
 export interface GetAppointmentParams {
   _id: string;

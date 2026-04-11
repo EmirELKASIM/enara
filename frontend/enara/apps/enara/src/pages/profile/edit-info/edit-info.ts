@@ -1,10 +1,10 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { optionsData, UserInfo } from './iUserInfoEdit';
+import { optionsData, PhoneNumber, UserInfo } from './iUserInfoEdit';
 import { HttpClient } from '@angular/common/http';
 import ToggleOptions from './toggle-options/toggle-options';
 import ExperienceInformations from './experience-informations/experience-informations';
@@ -30,7 +30,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Translation } from '../../../../src/sevices/translation';
 import { CommonModule } from '@angular/common';
-
+import {
+  SearchCountryField,
+  CountryISO,
+  PhoneNumberFormat,
+} from 'ngx-intl-tel-input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 @Component({
   selector: 'app-edit-info',
   imports: [
@@ -54,7 +60,9 @@ import { CommonModule } from '@angular/common';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardSubtitle,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    NgxIntlTelInputModule,
   ],
   templateUrl: './edit-info.html',
   styleUrl: './edit-info.css',
@@ -64,6 +72,8 @@ export default class EditInfo {
   public enabledInfoPressed = false;
   screenWidth: number = window.innerWidth;
   public isMobile: boolean = this.screenWidth <= 600;
+  public isTablet: boolean =
+    this.screenWidth >= 600 && this.screenWidth <= 1200;
   private auth = inject(AuthService);
   translate = inject(Translation);
 
@@ -104,7 +114,6 @@ export default class EditInfo {
   consultation = '';
   accountType = '';
   phoneNumber = '';
-  codeNumber = '';
   info = signal<UserInfo | null>(null);
   private profileApi = `${apiUrl}/user/info`;
   private http = inject(HttpClient);
@@ -121,9 +130,14 @@ export default class EditInfo {
   });
   computedConsultation = computed(() => this.info()?.consultation ?? '-');
   computedPhoneNumber = computed(() => this.info()?.phoneNumber ?? '-');
-  computedCodeNumber = computed(() => this.info()?.codeNumber ?? '-');
   isPersonal = computed(() => this.info()?.accountType === 'personal');
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
 
+  phoneForm = new FormGroup({
+    phone: new FormControl<PhoneNumber | null>(null, [Validators.required]),
+  });
   constructor() {
     effect(async () => {
       const token = await this.auth.getToken();
@@ -145,7 +159,6 @@ export default class EditInfo {
             this.birthday = res.birthday;
             this.consultation = res.consultation;
             this.phoneNumber = res.phoneNumber;
-            this.codeNumber = res.codeNumber;
           },
           error: (err) => {
             console.log('error: ', err);
@@ -164,18 +177,8 @@ export default class EditInfo {
   isSubmitting = false;
 
   onUpdateSubmit() {
-    const data = {
-      id: this.computedId(),
-      firstName: this.firstName,
-      lastName: this.lastName,
-      gender: this.gender,
-      maritalStatus: this.maritalStatus,
-      birthday: this.birthday,
-      consultation: this.consultation,
-      enable: this.enable,
-      phoneNumber: this.phoneNumber,
-      codeNumber: this.codeNumber,
-    };
+    const phoneData = this.phoneForm.value.phone;
+  const fullPhoneNumber = phoneData?.e164Number || '';
     const formatedBirthday = this.birthday ? this.birthday.toISOString() : '';
     const dataIsTrue = this.checkData();
     if (!dataIsTrue) {
@@ -191,8 +194,7 @@ export default class EditInfo {
         formatedBirthday,
         this.consultation,
         this.enable,
-        this.phoneNumber,
-        this.codeNumber,
+        fullPhoneNumber,
       );
     }
     this.isSubmitting = false;

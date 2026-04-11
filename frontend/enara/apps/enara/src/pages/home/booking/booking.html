@@ -47,7 +47,7 @@
               <i class="fas fa-clock"></i>
               {{translate.t("booking-page.select_time")}}
             </h3>
-            <mat-form-field appearance="outline" class="full-width">
+            <!-- <mat-form-field appearance="outline" class="full-width">
               <mat-label>{{translate.t("booking-page.time_label")}}</mat-label>
               <input
                 matInput
@@ -60,7 +60,28 @@
               </mat-timepicker-toggle>
               <mat-timepicker #timepicker></mat-timepicker>
               <mat-hint>{{translate.t("booking-page.time_hint")}}</mat-hint>
-            </mat-form-field>
+            </mat-form-field> -->
+            <div class="time-picker">
+           
+            <select [(ngModel)]="selectedHour" (change)="timeSelected = true">
+              @for(hour of hours; track hour){
+              <option [value]="hour">{{ hour }}</option>
+              }
+            </select>
+            <span class="hour-points" > : </span>
+            <select [(ngModel)]="selectedMinute" (change)="timeSelected = true">
+              @for(minute of minutes;track minute){
+              <option [value]="minute">
+                {{ minute < 10 ? '0' + minute : minute }}
+              </option>
+              }
+            </select>
+      
+            <select [(ngModel)]="period" (change)="timeSelected = true">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
           </div>
 
           <div class="filter-group">
@@ -77,10 +98,10 @@
                   [(ngModel)]="searchQuery"
                   (keyup.enter)="onSearch()"
                 />
-                <button class="search-btn" (click)="onSearch()">
+                <!-- <button class="search-btn" (click)="onSearch()">
                   <i class="fas fa-search"></i>
                   {{translate.t("booking-page.search_button")}}
-                </button>
+                </button> -->
               </div>
             </div>
           </div>
@@ -115,7 +136,7 @@
           <h2 class="results-title">
             <i class="fas fa-user-md"></i>
             {{translate.t("booking-page.results_title")}}
-            <span class="results-count">({{ filteredDoctors.length }})</span>
+            <span class="results-count">({{ dates().length }})</span>
           </h2>
           <p class="results-description">
             {{translate.t("booking-page.results_description")}}
@@ -123,7 +144,7 @@
         </div>
       </div>
 
-      @if (filteredDoctors.length === 0) {
+      @if (dates().length === 0) {
       <div class="empty-state">
         <div class="empty-icon">
           <i class="fas fa-user-md"></i>
@@ -136,18 +157,18 @@
       }
 
       <div class="doctors-grid">
-        @for(doctor of filteredDoctors; track doctor._id) {
+        @for(doctor of dates()| bookingSearch : searchQuery : dateValue : selectedHour : selectedMinute : period : timeSelected; track doctor._id) {
         <mat-card class="doctor-card">
           <mat-card-header class="doctor-header">
             <div class="doctor-avatar">
               <div class="avatar-circle">
                 {{ doctor.firstName.charAt(0) }}{{ doctor.lastName.charAt(0) }}
               </div>
-              @if (doctor.verified) {
+              <!-- @if (doctor.verified) {
               <div class="verified-badge">
                 <i class="fas fa-check-circle"></i>
               </div>
-              }
+              } -->
             </div>
 
             <div class="doctor-info">
@@ -159,10 +180,12 @@
                 >
                  {{translate.t("booking-page.dr")}} {{ doctor.firstName }} {{ doctor.lastName }}
                 </button>
+                <div class="accountType">
                 <span class="specialty-badge">
                   <i class="fas fa-stethoscope"></i>
                   {{ doctor.accountType === 'psychiatrist' ? translate.t("booking-page.psychiatrist") : translate.t("booking-page.psychologist") }}
                 </span>
+                </div>
               </div>
 
               <!-- <div class="doctor-meta">
@@ -208,7 +231,7 @@
                   [class.available]="appointment.status === 'available'"
                   [disabled]="appointment.status === 'booked'"
                   (click)="onBookItDialog(
-                        appointment._id,
+                        doctor._id,
                         doctor.firstName,
                         doctor.lastName,
                         appointment.time,
@@ -217,7 +240,8 @@
                         doctor.accountType,
                         doctor.userId,
                         appointment.price,
-                        appointment.coinType
+                        appointment.coinType,
+                        appointment.duration
                       )"
                 >
                   <span class="slot-time">{{ appointment.time }}</span>
@@ -233,6 +257,10 @@
                     {{translate.t("booking-page.slot_available")}}
                   </span>
                   }
+                  <span class="slot-time">
+                    <i class="fas fa-hourglass-half"></i>
+                    {{appointment.duration}}</span>
+
                 </button>
                 }
               </div>

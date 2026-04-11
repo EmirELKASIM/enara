@@ -2,7 +2,7 @@
 
 .main-box {
   display: grid;
-  /* grid-template-columns: minmax(300px, 1fr) 2fr 280px; */
+  
   grid-template-columns: 280px 2fr minmax(300px, 1fr);
    grid-template-areas: "sidebar main-content quick-notes";
   gap: 30px;
@@ -338,6 +338,15 @@
   animation: spin 2s linear infinite;
 }
 
+.need-treatment-btn{
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 12px;
+
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -387,7 +396,9 @@
       "main-content";
     padding: 15px;
     gap: 15px;
+    margin-top: 25px;
   }
+  
   
   .quick-notes,
   .main-content,
@@ -400,8 +411,18 @@
   }
   
   .item {
-    min-width: 100%;
-  }
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 20px;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: 2px solid transparent;
+  background: var(--light-bg);
+  position: relative;
+  overflow: hidden;
+}
   
   .diagnosis-save-bnt-box {
     flex-direction: column;

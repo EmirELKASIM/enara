@@ -1,24 +1,27 @@
 <div class="page">
-  @if(!isMobile){
-  <div class="content">
+  @if(!isMobile && !isTablet){
+  <div class="content" #scrollSection>
     @if(profileRouter.isInfo()){<app-show-info></app-show-info>}
     @if(profileRouter.isEditing()){ <app-edit-info></app-edit-info>}
     @if(profileRouter.isResetPass()){<app-reset-password></app-reset-password>}
     @if(profileRouter.isHistory()){<app-meeting-history></app-meeting-history>}
   </div>
-  }
+  } @if(!isTablet){
 
-  <div class="sidebar" [ngClass]="translate.currentLang() === 'ar' ? 'sidebar-right' : 'sidebar-left'">
+  <div
+    class="sidebar"
+    [ngClass]="translate.currentLang() === 'ar' ? 'sidebar-right' : 'sidebar-left'"
+  >
     <div class="sidebar-section">
       <h4 class="section-title">
         <mat-icon>manage_accounts</mat-icon>
         <span>{{ translate.t('profile_page.account_management_title') }}</span>
       </h4>
       <div class="nav-items">
-        <div 
-          class="nav-item" 
-          role="button" 
-          tabindex="0" 
+        <div
+          class="nav-item"
+          role="button"
+          tabindex="0"
           (click)="showInfo()"
           [class.active]="profileRouter.isInfo()"
         >
@@ -26,18 +29,22 @@
             <mat-icon>visibility</mat-icon>
           </div>
           <div class="item-content">
-            <span class="item-title">{{ translate.t('profile_page.view_info_title') }}</span>
-            <span class="item-subtitle">{{ translate.t('profile_page.view_info_subtitle') }}</span>
+            <span class="item-title"
+              >{{ translate.t('profile_page.view_info_title') }}</span
+            >
+            <span class="item-subtitle"
+              >{{ translate.t('profile_page.view_info_subtitle') }}</span
+            >
           </div>
           <div class="item-indicator">
             <div class="indicator-dot"></div>
           </div>
         </div>
 
-        <div 
-          class="nav-item" 
-          role="button" 
-          tabindex="0" 
+        <div
+          class="nav-item"
+          role="button"
+          tabindex="0"
           (click)="showEdititng()"
           [class.active]="profileRouter.isEditing()"
         >
@@ -45,36 +52,44 @@
             <mat-icon>edit</mat-icon>
           </div>
           <div class="item-content">
-            <span class="item-title">{{ translate.t('profile_page.edit_account_title') }}</span>
-            <span class="item-subtitle">{{ translate.t('profile_page.edit_account_subtitle') }}</span>
+            <span class="item-title"
+              >{{ translate.t('profile_page.edit_account_title') }}</span
+            >
+            <span class="item-subtitle"
+              >{{ translate.t('profile_page.edit_account_subtitle') }}</span
+            >
           </div>
           <div class="item-indicator">
             <div class="indicator-dot"></div>
           </div>
         </div>
 
-        <div 
-          class="nav-item" 
-          role="button" 
-          tabindex="0" 
+        <div
+          class="nav-item"
+          role="button"
+          tabindex="0"
           (click)="showResetPass()"
         >
           <div class="item-icon">
             <mat-icon>lock</mat-icon>
           </div>
           <div class="item-content">
-            <span class="item-title">{{ translate.t('profile_page.change_password_title') }}</span>
-            <span class="item-subtitle">{{ translate.t('profile_page.change_password_subtitle') }}</span>
+            <span class="item-title"
+              >{{ translate.t('profile_page.change_password_title') }}</span
+            >
+            <span class="item-subtitle"
+              >{{ translate.t('profile_page.change_password_subtitle') }}</span
+            >
           </div>
           <div class="item-indicator">
             <div class="indicator-dot"></div>
           </div>
         </div>
 
-        <div 
-          class="nav-item" 
-          role="button" 
-          tabindex="0" 
+        <div
+          class="nav-item"
+          role="button"
+          tabindex="0"
           (click)="showHistory()"
           [class.active]="profileRouter.isHistory()"
         >
@@ -82,8 +97,12 @@
             <mat-icon>history</mat-icon>
           </div>
           <div class="item-content">
-            <span class="item-title">{{ translate.t('profile_page.session_history_title') }}</span>
-            <span class="item-subtitle">{{ translate.t('profile_page.session_history_subtitle') }}</span>
+            <span class="item-title"
+              >{{ translate.t('profile_page.session_history_title') }}</span
+            >
+            <span class="item-subtitle"
+              >{{ translate.t('profile_page.session_history_subtitle') }}</span
+            >
           </div>
           <div class="item-indicator">
             <div class="indicator-dot"></div>
@@ -98,36 +117,44 @@
         <span>{{ translate.t('profile_page.important_actions_title') }}</span>
       </h4>
       <div class="nav-items">
-        <div 
-          class="nav-item danger" 
-          role="button" 
-          tabindex="0" 
+        <div
+          class="nav-item danger"
+          role="button"
+          tabindex="0"
           (click)="onlogoutDialog()"
         >
           <div class="item-icon">
             <mat-icon class="out-icon">logout</mat-icon>
           </div>
           <div class="item-content">
-            <span class="item-title">{{ translate.t('profile_page.logout_title') }}</span>
-            <span class="item-subtitle">{{ translate.t('profile_page.logout_subtitle') }}</span>
+            <span class="item-title"
+              >{{ translate.t('profile_page.logout_title') }}</span
+            >
+            <span class="item-subtitle"
+              >{{ translate.t('profile_page.logout_subtitle') }}</span
+            >
           </div>
           <div class="item-indicator">
             <mat-icon>exit_to_app</mat-icon>
           </div>
         </div>
 
-        <div 
-          class="nav-item danger delete" 
-          role="button" 
-          tabindex="0" 
+        <div
+          class="nav-item danger delete"
+          role="button"
+          tabindex="0"
           (click)="onDeleteDialog()"
         >
           <div class="item-icon">
             <mat-icon class="del-icon">delete</mat-icon>
           </div>
           <div class="item-content">
-            <span class="item-title">{{ translate.t('profile_page.delete_account_title') }}</span>
-            <span class="item-subtitle">{{ translate.t('profile_page.delete_account_subtitle') }}</span>
+            <span class="item-title"
+              >{{ translate.t('profile_page.delete_account_title') }}</span
+            >
+            <span class="item-subtitle"
+              >{{ translate.t('profile_page.delete_account_subtitle') }}</span
+            >
           </div>
           <div class="item-indicator">
             <mat-icon>delete_forever</mat-icon>
@@ -140,8 +167,12 @@
       <div class="footer-info">
         <mat-icon class="footer-icon">shield</mat-icon>
         <div class="footer-content">
-          <span class="footer-title">{{ translate.t('profile_page.secure_account_title') }}</span>
-          <span class="footer-subtitle">{{ translate.t('profile_page.secure_account_subtitle') }}</span>
+          <span class="footer-title"
+            >{{ translate.t('profile_page.secure_account_title') }}</span
+          >
+          <span class="footer-subtitle"
+            >{{ translate.t('profile_page.secure_account_subtitle') }}</span
+          >
         </div>
       </div>
       <div class="footer-version">
@@ -149,4 +180,144 @@
       </div>
     </div>
   </div>
+  }
 </div>
+
+@if(isTablet){
+<div class="cards-container">
+  <div class="cards-section">
+    <h4 class="section-title">
+      <mat-icon>manage_accounts</mat-icon>
+      {{ translate.t('profile_page.account_management_title') }}
+    </h4>
+    <div class="cards-grid">
+      <div
+        class="card"
+        role="button"
+        tabindex="0"
+        (click)="showInfo()"
+        [class.active]="profileRouter.isInfo()"
+      >
+        <mat-icon class="icon-item">visibility</mat-icon>
+        <div class="card-content">
+          <span class="card-title"
+            >{{ translate.t('profile_page.view_info_title') }}</span
+          >
+          <span class="card-subtitle"
+            >{{ translate.t('profile_page.view_info_subtitle') }}</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="card"
+        role="button"
+        tabindex="0"
+        (click)="showEdititng()"
+        [class.active]="profileRouter.isEditing()"
+      >
+        <mat-icon class="icon-item">edit</mat-icon>
+        <div class="card-content">
+          <span class="card-title"
+            >{{ translate.t('profile_page.edit_account_title') }}</span
+          >
+          <span class="card-subtitle"
+            >{{ translate.t('profile_page.edit_account_subtitle') }}</span
+          >
+        </div>
+      </div>
+
+      <div class="card" role="button" tabindex="0" (click)="showResetPass()">
+        <mat-icon class="icon-item">lock</mat-icon>
+        <div class="card-content">
+          <span class="card-title"
+            >{{ translate.t('profile_page.change_password_title') }}</span
+          >
+          <span class="card-subtitle"
+            >{{ translate.t('profile_page.change_password_subtitle') }}</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="card"
+        role="button"
+        tabindex="0"
+        (click)="showHistory()"
+        [class.active]="profileRouter.isHistory()"
+      >
+        <mat-icon class="icon-item">history</mat-icon>
+        <div class="card-content">
+          <span class="card-title"
+            >{{ translate.t('profile_page.session_history_title') }}</span
+          >
+          <span class="card-subtitle"
+            >{{ translate.t('profile_page.session_history_subtitle') }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="cards-section danger-section">
+    <h4 class="section-title">
+      <mat-icon >warning</mat-icon>
+      {{ translate.t('profile_page.important_actions_title') }}
+    </h4>
+    <div class="cards-grid">
+      <div
+        class="card "
+        role="button"
+        tabindex="0"
+        (click)="onlogoutDialog()"
+      >
+        <mat-icon class="icon-item">logout</mat-icon>
+        <div class="card-content">
+          <span class="card-title"
+            >{{ translate.t('profile_page.logout_title') }}</span
+          >
+          <span class="card-subtitle"
+            >{{ translate.t('profile_page.logout_subtitle') }}</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="card danger delete"
+        role="button"
+        tabindex="0"
+        (click)="onDeleteDialog()"
+      >
+        <mat-icon class="del-icon">delete</mat-icon>
+        <div class="card-content">
+          <span class="card-title"
+            >{{ translate.t('profile_page.delete_account_title') }}</span
+          >
+          <span class="card-subtitle"
+            >{{ translate.t('profile_page.delete_account_subtitle') }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="cards-footer">
+    <div class="footer-info">
+      <mat-icon class="footer-icon">shield</mat-icon>
+      <div class="footer-content">
+        <span class="footer-title"
+          >{{ translate.t('profile_page.secure_account_title') }}</span
+        >
+        <span class="footer-subtitle"
+          >{{ translate.t('profile_page.secure_account_subtitle') }}</span
+        >
+      </div>
+    </div>
+    <div class="footer-version">
+      <span>{{ translate.t('profile_page.version_label') }}</span>
+    </div>
+  </div>
+</div>
+}

@@ -7,5 +7,4 @@ export interface RequestDataParams {
 
 export interface UserInfoParams {
   phoneNumber: string;
-  codeNumber: string;
 }

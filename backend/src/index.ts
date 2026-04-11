@@ -12,7 +12,9 @@ import examinationRoute from "./routes/examinationRoute";
 import "./utils/bookingAutoCancel";
 import "./utils/bookingCompleteJob";
 import "./utils/appointmentCleanup";
+import "./utils/sendUpcomingNotifications";
 import path from "path";
+import paymentRoute from "./routes/paymentRoute";
 
 dotenv.config();
 
@@ -37,6 +39,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 mongoose
   .connect(process.env.DATABASE_URL || "")
   .then(() => console.log("Mongo Connected!"))
@@ -50,6 +53,7 @@ app.use("/booking", bookingRoute);
 app.use("/diagnosis", diagnosisRoute);
 app.use("/request", requestRoute);
 app.use("/examination", examinationRoute);
+app.use('/payment', paymentRoute);
 app.use(express.static(path.join(__dirname, "../frontend/enara/dist/enara")));
 app.get(/^(?!\/api).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/enara/dist/enara/index.html"));

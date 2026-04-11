@@ -9,7 +9,6 @@ export interface UserInfo {
   accountType: string;
   consultation:string;
   phoneNumber:string;
-  codeNumber:string;
 }
 
 export interface SummaryInfo{
@@ -30,3 +29,12 @@ export interface optionsData {
   maritalStatus: string;
   consultation: string;
 }
+
+export type PhoneNumber = {
+  number: string;
+  internationalNumber: string;
+  nationalNumber: string;
+  e164Number: string;
+  countryCode: string;
+  dialCode: string;
+};

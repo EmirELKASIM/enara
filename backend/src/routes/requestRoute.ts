@@ -5,7 +5,9 @@ import {
   getAllRequests,
   getInfoWithId,
   getLinkedRequest,
+  getNotifications,
   getRequest,
+  readNotifications,
   sendRequest,
   updateRequest,
 } from "../services/requestService";
@@ -88,6 +90,37 @@ router.get("/info/:requestId", async(req,res)=>{
   });
 })
 
+
+router.get("/notifications", async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+  const token = authHeader.split(" ")[1];
+
+  const { statusCode, data } = await getNotifications({
+    token,
+  });
+  return res.status(statusCode).json({
+    success: true,
+    token: data,
+  });
+});
+
+router.put("/read-notifications/:requestId/:notificationId", async (req, res) => {
+  const requestId = req.params.requestId;
+  const notificationId = req.params.notificationId;
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+  const token = authHeader.split(" ")[1];
+  const { statusCode, data } = await readNotifications({ requestId,notificationId, token });
+  return res.status(statusCode).json({
+    success: true,
+    token: data,
+  });
+});
 router.put("/update", async (req, res) => {
   const { acceptedFromDoctor, requestId } = req.body;
   const { statusCode, data } = await updateRequest({

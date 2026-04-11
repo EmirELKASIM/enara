@@ -1,0 +1,45 @@
+<div class="payment-container">
+  <h2>💳 إتمام الدفع</h2>
+
+  <form (ngSubmit)="submit()">
+    <div class="section">
+      <h3>👤 معلومات المستخدم</h3>
+
+      <input name="name" [(ngModel)]="name" placeholder="الاسم" />
+      <input name="surname" [(ngModel)]="surname" placeholder="اللقب" />
+      <input name="email" [(ngModel)]="email" placeholder="البريد الإلكتروني" />
+      <input
+        name="gsmNumber"
+        [(ngModel)]="gsmNumber"
+        placeholder="رقم الهاتف"
+      />
+    </div>
+
+    <div class="section">
+      <h3>🏠 العنوان</h3>
+
+      <input name="address" [(ngModel)]="address" placeholder="العنوان" />
+      <input name="city" [(ngModel)]="city" placeholder="المدينة" />
+      <input name="country" [(ngModel)]="country" placeholder="الدولة" />
+    </div>
+
+    <button type="submit" [disabled]="loading || !checkData()">
+      @if(!loading){
+      <span>التالي</span>
+
+      }@else{
+      <span>جاري المعالجة...</span>
+
+      }
+    </button>
+    @if(loading){
+<div class="scroll-hint">
+  <span>اكمل عملية الدفع</span>
+  <i class="fa fa-arrow-down"></i>
+</div>
+    }
+    
+  </form>
+    <div id="iyzipay-checkout-form" class="responsive"></div>
+    <div class="iyzi-form" [innerHTML]="checkoutFormContent"></div>
+</div>

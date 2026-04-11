@@ -8,6 +8,7 @@ out-tsc
 # dependencies
 node_modules
 src/constants
+apps/enara/secretPass.ts
 # IDEs and editors
 /.idea
 .project

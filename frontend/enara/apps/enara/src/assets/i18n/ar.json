@@ -9,7 +9,20 @@
       "home": "الرئيسية",
       "about_us": "من نحن",
       "sessions": "الجلسات",
-      "profile": "الصفحة الشخصية"
+      "profile": "الصفحة الشخصية",
+      "notifications": "إشعارات",
+      "logout": "تسجيل الخروج"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "no_notifications_yet": "لا توجد إشعارات بعد",
+      "read": "مقروء",
+      "unread": "غير مقروء",
+      "appointment": "موعد",
+      "time": "الوقت",
+      "doctor": "الطبيب",
+      "patient": "المريض",
+      "notified_at": "تاريخ الإشعار"
     },
     "about_us_page": {
       "platform": "المنصة",
@@ -137,7 +150,8 @@
       "friday": "الجمعة",
       "saturday": "السبت",
       "sunday": "الأحد",
-      "notSpecified": "غير محدد"
+      "notSpecified": "غير محدد",
+      "session_duration" : "مدة الجلسة"
     },
     "dialog_book_it": {
       "appointment_booking_confirmation": "تأكيد حجز الموعد",
@@ -193,7 +207,7 @@
       "send_preview_request": "إرسال طلب المعاينة",
       "confirm_send_request": "انقر لتأكيد إرسال الطلب إلى الأخصائي",
       "after_send_hint": "بعد الإرسال، يمكنك متابعة حالة الطلب من صفحة المعاينات",
-      "friendship_notice": "هناك صداقة بينك وبين الشخص؛ لا يمكنك إرسال طلب معاينة حاليًا",
+      "friendship_notice": "هناك صداقة بينك وبين الطبيب بالفعل.",
       "back": "عودة",
       "go_profile": "عرض الملف الشخصي",
       "all_requests_confidential": "جميع طلبات المعاينة سرية تمامًا"
@@ -315,7 +329,7 @@
     },
     "home-page": {
       "welcome_greeting": "مرحبًا بك في مساحة التعافي",
-      "welcome_highlight": "مرحبًا وسهلاً",
+      "welcome_highlight": "أهلا وسهلا",
       "welcome_description": "منصة متخصصة في العلاج النفسي وإعادة التأهيل، توفر لك بيئة آمنة وخاصة للتعافي والنمو العقلي مع أخصائيين معتمدين",
       "login_button": "تسجيل الدخول",
       "book_session_title": "احجز جلستك",
@@ -493,7 +507,7 @@
       "previous_doctor_visit": "هل سبق للمريض زيارة طبيب؟",
       "yes": "نعم",
       "no": "لا",
-      "psychiatric_hospitalization": "الاستشفاء النفسي",
+      "psychiatric_hospitalization": "هل سبق للمريض النوم بالشمفى؟",
       "previous_psych_medications": "الأدوية النفسية السابقة"
     },
     "treatment-plan": {
@@ -925,7 +939,8 @@
       "session_minutes_label": "المدة",
       "session_type_label": "نوع الجلسة",
       "session_price_label": "سعر الجلسة",
-      "start_session_button": "بدء الجلسة",
+      "start_session_button": "ضع رابط الجلسة",
+      "start_session_button_for_user": "الانتقال الى الجلسة",
       "cancel_appointment_button": "إلغاء الموعد",
       "send_edit_request_button": "إرسال طلب تعديل",
       "edit_appointment_button": "تعديل الموعد",
@@ -940,7 +955,16 @@
       "couplesSession": "جلسة زوجية",
       "childrensSession": "جلسة أطفال",
       "teenagersSession": "جلسة مراهقين",
-      "notSpecified": "غير محدد"
+      "notSpecified": "غير محدد",
+      "doctor_account_approved": "تمت الموافقة على حسابك كطبيب",
+      "doctor_account_not_approved": "لم تتم الموافقة على حسابك",
+      "male": "ذكر",
+      "female": "أنثى",
+      "other": "آخر",
+      "account_type_psychotherapist_label": "معالج نفسي",
+      "account_type_psychiatrist_label": "دكتور نفسي",
+      "account_type_personal_label": "شخصي"
+
     },
     "profile_page": {
       "account_management_title": "إدارة الحساب",
@@ -1004,6 +1028,7 @@
       "passwords_match": "كلمات المرور متطابقة",
       "phone_number_label": "رقم الهاتف",
       "login_button": "تسجيل الدخول",
+      "back_button": "العودة",
       "next_button": "التالي",
       "required_fields_note": "جميع الحقول مطلوبة للمتابعة",
       "privacy_protection_note": "بياناتك محمية وفق سياسة الخصوصية"

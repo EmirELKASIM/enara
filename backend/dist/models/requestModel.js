@@ -56,6 +56,21 @@ const requestSchema = new mongoose_1.Schema({
     patientSummary: { type: String },
     acceptedFromPatient: { type: Boolean, default: false },
     acceptedFromDoctor: { type: Boolean, default: false },
+    notifications: [
+        {
+            type: {
+                type: String,
+                enum: ["sent", "accepted", "canceled"],
+                required: true,
+            },
+            message: { type: String, required: true },
+            sent: { type: Boolean, default: false },
+            sentAt: { type: Date },
+            readByDoctor: { type: Boolean, default: false },
+            readByPatient: { type: Boolean, default: false },
+            createdAt: { type: Date, default: Date.now },
+        },
+    ],
 }, { timestamps: true });
 const requestModel = mongoose_1.default.model("Request", requestSchema);
 exports.default = requestModel;

@@ -29,8 +29,21 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('../pages/home/booking/booking'),
       },
       {
+        path: 'payment-iyzico',
+        loadComponent: () => import('../pages/payment-iyzico/payment-iyzico'),
+      },
+      {
+        path: 'call-back',
+        loadComponent: () =>
+          import('../pages/payment-iyzico/call-back/call-back'),
+      },
+      {
         path: 'add-date',
         loadComponent: () => import('../pages/home/add-date/add-date'),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () => import('../pages/notifications/notifications'),
       },
       {
         path: 'profile-view/:doctorId',
@@ -85,5 +98,9 @@ export const appRoutes: Route[] = [
   {
     path: 'reset-password',
     loadComponent: () => import('../pages/login/reset-password/reset-password'),
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('../src-dashboard/layout/layout'),
   },
 ];

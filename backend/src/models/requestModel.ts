@@ -1,5 +1,13 @@
 import mongoose, { Schema, Document } from "mongoose";
-
+export interface INotification {
+  type: "sent" | "accepted" | "deleted";
+  message: string;
+  sent: boolean;
+  sentAt?: Date;
+  readByDoctor: boolean;
+  readByPatient: boolean;
+  createdAt: Date;
+}
 export interface IRequest extends Document {
   patientId: mongoose.Types.ObjectId;
   doctorId: mongoose.Types.ObjectId;
@@ -9,11 +17,12 @@ export interface IRequest extends Document {
   doctorFirstName: string;
   doctorLastName: string;
   doctorAccountType: string;
-  patientPhoneNumber:string;
-  doctorPhoneNumber:string;
-  patientSummary:string;
-  acceptedFromPatient:boolean;
-  acceptedFromDoctor:boolean;
+  patientPhoneNumber: string;
+  doctorPhoneNumber: string;
+  patientSummary: string;
+  acceptedFromPatient: boolean;
+  acceptedFromDoctor: boolean;
+  notifications: INotification[];
 }
 
 const requestSchema = new Schema<IRequest>(
@@ -37,10 +46,25 @@ const requestSchema = new Schema<IRequest>(
     patientPhoneNumber: { type: String, required: true },
     doctorPhoneNumber: { type: String, required: true },
     patientSummary: { type: String },
-    acceptedFromPatient: {type:Boolean, default:false},
-    acceptedFromDoctor: {type:Boolean, default:false},
+    acceptedFromPatient: { type: Boolean, default: false },
+    acceptedFromDoctor: { type: Boolean, default: false },
+    notifications: [
+      {
+        type: {
+          type: String,
+          enum: ["sent", "accepted", "canceled"],
+          required: true,
+        },
+        message: { type: String, required: true },
+        sent: { type: Boolean, default: false },
+        sentAt: { type: Date },
+        readByDoctor: { type: Boolean, default: false },
+        readByPatient: { type: Boolean, default: false },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const requestModel = mongoose.model<IRequest>("Request", requestSchema);

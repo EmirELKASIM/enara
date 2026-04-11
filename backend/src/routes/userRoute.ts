@@ -7,7 +7,9 @@ import {
   getInfo,
   getInfoWithId,
   getPersonalUsers,
+  getUnpermissibleDoctors,
   login,
+  onApproving,
   register,
   resetPasword,
   updateInfo,
@@ -30,7 +32,6 @@ router.post("/register", async (request, response) => {
     consultation,
     privacyPolicy,
     phoneNumber,
-    codeNumber,
     captcha
   } = request.body;
   const isHuman = await verifyCaptcha(captcha);
@@ -52,7 +53,6 @@ router.post("/register", async (request, response) => {
     consultation,
     privacyPolicy,
     phoneNumber,
-    codeNumber,
   });
   response.status(statusCode).json({
     success: true,
@@ -105,7 +105,6 @@ router.put("/update", async (req, res) => {
     birthday,
     maritalStatus,
     phoneNumber,
-    codeNumber,
   } = req.body;
   const { statusCode, data } = await updateInfo({
     id,
@@ -115,7 +114,6 @@ router.put("/update", async (req, res) => {
     birthday,
     maritalStatus,
     phoneNumber,
-    codeNumber,
   });
   return res.status(statusCode).json({
     success: true,
@@ -184,4 +182,13 @@ router.get("/dashboard/impersonal-users", async (req, res) => {
   return res.status(statusCode).json({ success: true, token: data });
 });
 
+router.get("/dashboard/unpermissible-doctors", async (req, res) => {
+  const { statusCode, data } = await getUnpermissibleDoctors();
+  return res.status(statusCode).json({ success: true, token: data });
+});
+router.put("/dashboard/unpermissible-doctors/approving", async (req, res) => {
+  const {doctorId} = req.body;
+  const { statusCode, data } = await onApproving({doctorId});
+  return res.status(statusCode).json({ success: true, token: data });
+});
 export default router;

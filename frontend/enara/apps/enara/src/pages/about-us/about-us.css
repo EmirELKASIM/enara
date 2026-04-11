@@ -150,6 +150,17 @@
 .contact-item span:first-child {
   font-size: 1.3rem;
 }
+
+.email-icon, .phone-icon{
+  font-size: 1.3em;
+}
+.email-icon{
+  color: var(--primary-color);
+}
+.phone-icon{
+  color: green;
+}
+
 .feature-card {
   display: flex;
   background: var(--white);

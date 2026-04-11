@@ -1,0 +1,127 @@
+
+.payment-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+
+.payment-container h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: var(--primary-color); 
+}
+
+
+.payment-container .section h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.payment-container input {
+  width: 95%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+
+.payment-container input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(75, 108, 183, 0.3);
+  outline: none;
+}
+
+
+.payment-container button {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.2s;
+}
+
+
+.payment-container button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+
+.payment-container button:disabled {
+  background: #a0a0a0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+.iyzi-form {
+  margin-top: 25px;
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f9f9f9;
+}
+
+
+.responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+.payment-container .section {
+  margin-bottom: 25px;
+}
+
+.scroll-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+  animation: bounce 1.5s infinite;
+  cursor: pointer;
+}
+
+.scroll-hint .arrow i {
+  font-size: 16px;
+}
+.scroll-hint i {
+  color: var(--primary-color);
+}
+
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}

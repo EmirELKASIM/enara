@@ -35,6 +35,8 @@ export default class ResetPassword {
   
   screenWidth: number = window.innerWidth;
   public isMobile: boolean = this.screenWidth <= 600;
+  public isTablet: boolean =
+    this.screenWidth >= 600 && this.screenWidth <= 1200;
   private resetPasswordService = inject(ResetPasswordService);
  
   onChangePass() {

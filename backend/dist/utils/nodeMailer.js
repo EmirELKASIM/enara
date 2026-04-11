@@ -1,0 +1,59 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendVerificationEmail = exports.sendEmail = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+/**
+ * إنشاء transporter
+ */
+const transporter = nodemailer_1.default.createTransport({
+    service: "gmail", // يمكن تغييره لأي SMTP آخر
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS, // إذا Gmail، استخدم App Password
+    },
+});
+/**
+ * دالة عامة لإرسال أي بريد
+ */
+const sendEmail = async (to, subject, html) => {
+    try {
+        const info = await transporter.sendMail({
+            from: `"Support" <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
+        });
+        console.log("Email sent:", info.response);
+        return info;
+    }
+    catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};
+exports.sendEmail = sendEmail;
+/**
+ * دالة لإرسال بريد التحقق للمستخدم
+ */
+const sendVerificationEmail = async (user) => {
+    // إنشاء توكن JWT
+    const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+    });
+    const link = `${process.env.FRONTEND_URL}/user/verify-email/${token}`;
+    const html = `
+    <h2>Email Verification</h2>
+    <p>Please click the link below to verify your email:</p>
+    <a href="${link}">Verify Email</a>
+  `;
+    // إرسال البريد باستخدام sendEmail
+    return (0, exports.sendEmail)(user.email, "Verify Your Email", html);
+};
+exports.sendVerificationEmail = sendVerificationEmail;
+//# sourceMappingURL=nodeMailer.js.map

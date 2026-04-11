@@ -38,7 +38,6 @@ export class EditInfoService {
     consultation: string,
     enable: boolean,
     phoneNumber: string,
-    codeNumber: string,
   ) {
     const data = {
       id: id,
@@ -49,7 +48,6 @@ export class EditInfoService {
       birthday: birthday,
       consultation: consultation,
       phoneNumber: phoneNumber,
-      codeNumber: codeNumber,
     };
     this.http
       .put(this.updateInfoLink, data, {

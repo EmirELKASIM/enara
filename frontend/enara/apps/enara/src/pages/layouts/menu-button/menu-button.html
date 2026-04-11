@@ -1,0 +1,51 @@
+<div class="side-menu" [class.open]="sideMenuOpen">
+  <div class="top-section">
+    <button matButton [matMenuTriggerFor]="menu" class="lang-btn">
+      <i class="fas fa-globe"></i>
+      <span>{{translate.t('main_titles.language')}}</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changeLang('en')">English</button>
+      <button mat-menu-item (click)="changeLang('ar')">العربية</button>
+      <button mat-menu-item (click)="changeLang('tr')">Türkçe</button>
+    </mat-menu>
+    <div class="notifications">
+      <button class="notifications-btn" (click)="goNotifications()">
+        <div class="icon-wrapper">
+          <i class="fas fa-bell"></i>
+          @if(notificationsTotal() > 0){
+          <span class="badge"> {{ notificationsTotal() }} </span>
+          }
+        </div>
+        <span>{{translate.t('layout.notifications')}}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="menu-buttons">
+    <button class="menu-btn" (click)="goHome()">
+      <i class="fas fa-home"></i>
+      {{translate.t('layout.home')}}
+    </button>
+    <button class="menu-btn" (click)="goSessions()">
+      <i class="fas fa-calendar-check"></i>
+      {{translate.t('layout.sessions')}}
+    </button>
+    <button class="menu-btn" (click)=" goProfile()">
+      <i class="fas fa-user-circle"></i>
+      {{translate.t('layout.profile')}}
+    </button>
+    <button class="menu-btn" (click)="goAboutUs()">
+      <i class="fas fa-info-circle"></i>
+      {{translate.t('layout.about_us')}}
+    </button>
+    <button class="menu-btn" (click)="onLogout()">
+      <i class="fas fa-sign-out-alt"></i>
+      {{translate.t('layout.logout')}}
+    </button>
+  </div>
+</div>
+
+<button class="open-sidebar-btn" (click)="openSideMenu()">
+  <i class="fa-solid fa-bars"></i>
+</button>

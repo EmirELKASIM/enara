@@ -1,0 +1,88 @@
+
+@if(!isAuth){
+  <div class="login-container">
+  <div class="login-box">
+    <h2>رمز الدخول</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <input type="password" name="accessCode" [(ngModel)]="accessCode" placeholder="********" required />
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="!checkCode()">ادخل</button>
+    </form>
+  </div>
+</div>
+}
+
+
+
+@if(isAuth){
+<div class="side-menu" [class.open]="sideMenuOpen">
+  <div class="menu-buttons">
+    <button class="menu-btn" (click)="showUsers()">
+      <i class="fa-solid fa-users"></i>
+      المستخدمين
+    </button>
+    <button class="menu-btn" (click)="showDoctorsAccounts()">
+      <i class="fas fa-user-md"></i>
+      حسابات الأطباء
+    </button>
+    <button class="menu-btn" (click)="showRequests()">
+      <i class="fa-solid fa-user-clock"></i>
+      طلبات المعاينة
+    </button>
+    <button class="menu-btn" (click)="showExaminations()">
+      <i class="fa-solid fa-stethoscope"></i>
+      المعاينات
+    </button>
+     <button class="menu-btn" (click)="showAppointments()">
+      <i class="fa-solid fa-calendar"></i>
+      المواعيد
+    </button>
+    <button class="menu-btn" (click)="showBookings()">
+      <i class="fa-solid fa-calendar-check"></i>
+      الحجوزات
+    </button>
+    <button class="menu-btn" (click)="showEarnings()">
+      <i class="fa-solid fa-dollar-sign"></i>
+      العائدات
+    </button>
+  </div>
+</div>
+
+
+<button class="open-sidebar-btn" (click)="openSideMenu()">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+
+@if(currentView === 'users'){
+<div class="page-content">
+  <app-users></app-users>
+</div>
+}@if(currentView === 'doctorsAccounts'){
+<div class="page-content">
+  <app-doctors-accounts></app-doctors-accounts>
+</div>
+} @if(currentView === 'requests'){
+<div class="page-content">
+  <app-examination-requests></app-examination-requests>
+</div>
+}@if(currentView === 'examinations'){
+<div class="page-content">
+  <app-examinations></app-examinations>
+</div>
+}@if(currentView === 'appointments'){
+<div class="page-content">
+  <app-appointments></app-appointments>
+</div>
+}@if(currentView === 'bookings'){
+<div class="page-content">
+  <app-bookings></app-bookings>
+</div>
+}@if(currentView === 'earnings'){
+<div class="page-content">
+  <app-earnings></app-earnings>
+</div>
+}
+}

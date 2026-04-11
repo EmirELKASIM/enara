@@ -5,7 +5,6 @@ export interface firstData {
   email: string;
   password: string;
   phoneNumber: string;
-  codeNumber: string;
   next: boolean;
 }
 export interface nextData {

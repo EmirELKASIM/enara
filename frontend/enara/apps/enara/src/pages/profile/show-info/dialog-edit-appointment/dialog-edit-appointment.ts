@@ -72,14 +72,15 @@ export default class DialogEditAppointment {
     });
   }
 
-  async onEdit(newAppointmentId:string, newDate:string, newDay:string,newTime:string) {
+  async onEdit(newAppointmentId:string, newDate:string, newDay:string,newTime:string, newDuration:string) {
     
     const data = {
       newAppointmentId:newAppointmentId,
       bookingId:this.bookingId,
       newDate:newDate,
       newDay:newDay,
-      newTime:newTime
+      newTime:newTime,
+      newDuration:newDuration
     } 
     
  

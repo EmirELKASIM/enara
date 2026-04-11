@@ -1,0 +1,104 @@
+<div class="container">
+  
+  <div class="header">
+    <div class="header-title">
+      <i class="fa-solid fa-users-gear"></i>
+      <h1>لوحة تحكم الموافقات</h1>
+    </div>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="number">{{unpermissibleCount()}}</div>
+        <div class="label">حسابات الأطباء</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accounts-section">
+    <div class="section-card">
+      <!-- <div class="section-header personal">
+        <i class="fas fa-user-circle"></i>
+        <h2>الحسابات الشخصية</h2>
+        <span class="count">{{personalCount()}}</span>
+      </div> -->
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="search"
+          name="unpermissibleSearch"
+          [(ngModel)]="unpermissibleSearch"
+          placeholder="ابحث عن طبيب ..."
+        />
+      </div>
+      <div class="users-grid">
+        @if (unpermissibleUsers().length > 0) { @for (doctor of
+        unpermissibleUsers() | search: unpermissibleSearch ; track doctor._id) {
+
+        <div class="user-item">
+          <div class="user-header">
+            <div class="avatar">
+              {{ doctor.firstName.charAt(0) }}{{ doctor.lastName.charAt(0) }}
+            </div>
+            <div class="user-info">
+              <h3>{{ doctor.firstName }} {{ doctor.lastName }}</h3>
+            </div>
+          </div>
+
+          <div class="user-details">
+            <div class="details-box">
+              <div class="left-side">
+                <p><strong>Email:</strong> {{ doctor.email }}</p>
+                <p><strong>Phone:</strong> {{ doctor.phoneNumber }}</p>
+                <p><strong>Age:</strong> {{ doctor.age }}</p>
+                <p><strong>Birthday:</strong>{{doctor.birthday}}</p>
+              </div>
+
+              <div class="right-side">
+                <p><strong>Gender:</strong> {{doctor.gender}}</p>
+                <p><strong>AccountType:</strong> {{doctor.accountType}}</p>
+
+                <p><strong>Status:</strong> {{ doctor.maritalStatus }}</p>
+                <p><strong>Consultation:</strong> {{doctor.consultation}}</p>
+              </div>
+              <div class="bottom-side">
+                <p>
+                  <strong>Privacy Policy:</strong>
+                  <span [ngClass]="doctor.privacyPolicy ? 'istrue' : 'isfalse'"
+                    >{{ doctor.privacyPolicy ? '✔ Accepted' : ' Not Accepted'
+                    }}</span
+                  >
+                </p>
+
+                <p>
+                  <strong>Email Verified:</strong>
+                  <span
+                    [ngClass]="doctor.isEmailVerified ? 'istrue' : 'isfalse'"
+                    >{{ doctor.isEmailVerified ? '✔ Verified' : ' Not Verified'
+                    }}</span
+                  >
+                </p>
+                <p>
+                  <strong>permissible :</strong>
+                  <span
+                    [ngClass]="doctor.permissible ? 'istrue' : 'isfalse'"
+                    >{{ doctor.permissible ? '✔ approved' : ' Not approved'
+                    }}</span
+                  >
+                </p>
+              </div>
+              <div class="accepted-button">
+                <button type="button" class="approving-btn" (click)="onApproving(doctor._id)">Approving</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        } } @else {
+        <div class="empty-state">
+          <i class="fa-solid fa-users"></i>
+          <p>لا توجد حسابات شخصية</p>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

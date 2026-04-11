@@ -7,6 +7,7 @@ import { AuthService } from '../../sevices/auth-db';
 import { apiUrl } from '../../constants/constants';
 import { HttpClient } from '@angular/common/http';
 import { Translation } from '../../sevices/translation';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-about-us',
   standalone: true,
@@ -20,6 +21,7 @@ export default class AboutUs {
   private auth = inject(AuthService);
   private profileApi = `${apiUrl}/user/info`;
   private http = inject(HttpClient);
+  private toastr = inject(ToastrService);
   translate = inject(Translation);
 
   computedAccountType = computed(() => this.info()?.accountType ?? '-');
@@ -36,6 +38,17 @@ export default class AboutUs {
     } else {
       return true;
     }
+  }
+  copyEmail() {
+    const email = 'enara.support@gmail.com';
+    navigator.clipboard
+      .writeText(email)
+      .then(() => {
+        this.toastr.success("تم نسخ البريد")
+      })
+      .catch((err) => {
+        console.error('فشل النسخ: ', err);
+      });
   }
   constructor() {
     effect(async () => {

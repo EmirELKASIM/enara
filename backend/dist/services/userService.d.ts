@@ -10,9 +10,8 @@ interface RegisterParams {
     consultation: string;
     privacyPolicy: boolean;
     phoneNumber: string;
-    codeNumber: string;
 }
-export declare const register: ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, codeNumber, }: RegisterParams) => Promise<{
+export declare const register: ({ firstName, lastName, email, password, accountType, birthday, gender, maritalStatus, consultation, privacyPolicy, phoneNumber, }: RegisterParams) => Promise<{
     data: any;
     statusCode: number;
 }>;
@@ -39,7 +38,7 @@ export declare const getInfo: ({ token }: any) => Promise<{
         maritalStatus: string;
         consultation: string;
         phoneNumber: string;
-        codeNumber: string;
+        permissible: boolean;
     };
     statusCode: number;
 }>;
@@ -61,7 +60,6 @@ export declare const getInfoWithId: ({ userId }: GetInfoWithId) => Promise<{
         maritalStatus: string;
         consultation: string;
         phoneNumber: string;
-        codeNumber: string;
     };
     statusCode: number;
 }>;
@@ -73,9 +71,8 @@ interface updateInfoParams {
     birthday: string;
     maritalStatus: string;
     phoneNumber: string;
-    codeNumber: string;
 }
-export declare const updateInfo: ({ id, firstName, lastName, gender, birthday, maritalStatus, phoneNumber, codeNumber, }: updateInfoParams) => Promise<{
+export declare const updateInfo: ({ id, firstName, lastName, gender, birthday, maritalStatus, phoneNumber, }: updateInfoParams) => Promise<{
     data: string;
     statusCode: number;
 } | {
@@ -89,7 +86,6 @@ export declare const updateInfo: ({ id, firstName, lastName, gender, birthday, m
         age: number;
         maritalStatus: string;
         phoneNumber: string;
-        codeNumber: string;
     };
     statusCode: number;
 }>;
@@ -159,6 +155,35 @@ export declare const getImpersonalUsers: () => Promise<{
     } & {
         id: string;
     })[];
+    statusCode: number;
+}>;
+export declare const getUnpermissibleDoctors: () => Promise<{
+    data: string;
+    statusCode: number;
+} | {
+    data: (import("mongoose").Document<unknown, {}, import("../models/userModel").IUser, {}, import("mongoose").DefaultSchemaOptions> & import("../models/userModel").IUser & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
+    })[];
+    statusCode: number;
+}>;
+interface onApprovingParams {
+    doctorId: string;
+}
+export declare const onApproving: ({ doctorId }: onApprovingParams) => Promise<{
+    data: string;
+    statusCode: number;
+} | {
+    data: import("mongoose").Document<unknown, {}, import("../models/userModel").IUser, {}, import("mongoose").DefaultSchemaOptions> & import("../models/userModel").IUser & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
+    };
     statusCode: number;
 }>;
 export {};

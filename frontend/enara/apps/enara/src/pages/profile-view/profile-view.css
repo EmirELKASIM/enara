@@ -8,7 +8,7 @@
   border-radius: 12px;
 }
 
-/* Header container */
+
 .profile-header {
   display: flex;
   align-items: center;
@@ -22,7 +22,7 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Avatar */
+
 .avatar {
   width: 80px;
   height: 80px;
@@ -36,7 +36,7 @@
   flex-shrink: 0;
 }
 
-/* Doctor basic info */
+
 .doctor-basic {
   flex: 1;
   min-width: 200px;
@@ -61,7 +61,7 @@
   margin-top: 4px;
 }
 
-/* Phone number styling */
+
 .info-content {
   margin-top: 8px;
   display: flex;
@@ -71,7 +71,7 @@
 }
 
 .phone-link {
-  color: #25d366; /* لون واتساب أخضر */
+  color: #25d366; 
   font-weight: 500;
   text-decoration: none;
 }
@@ -80,7 +80,7 @@
   text-decoration: underline;
 }
 
-/* Back button styling */
+
 .back-button {
   flex-shrink: 0;
 }

@@ -15,32 +15,34 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-meeting-history',
   standalone: true,
-  imports: [HttpClientModule, MatIconModule, MatMenu, MatMenuTrigger, CommonModule],
+  imports: [
+    HttpClientModule,
+    MatIconModule,
+    MatMenu,
+    MatMenuTrigger,
+    CommonModule,
+  ],
   templateUrl: './meeting-history.html',
   styleUrl: './meeting-history.css',
 })
 export default class MeetingHistoryComponent {
-  
   info = signal<UserInfo | null>(null);
   historyAppointments = signal<HistoryAppointmentsInfo[]>([]);
   filteredAppointments = signal<HistoryAppointmentsInfo[]>([]);
 
   currentFilter: 'all' | 'attendece' | 'canceled' | 'completed' = 'all';
 
-  
   accountType = computed(() => this.info()?.accountType ?? '-');
   isDoctor = computed(() => this.accountType() !== 'personal');
 
   isEmpty = computed(() => this.filteredAppointments().length === 0);
 
-  
   private http = inject(HttpClient);
   private toastr = inject(ToastrService);
   private auth = inject(AuthService);
   readonly dialog = inject(MatDialog);
   translate = inject(Translation);
 
-  
   private profileApi = `${apiUrl}/user/info`;
   private userHistoryApi = `${apiUrl}/booking/user-history`;
   private doctorHistoryApi = `${apiUrl}/booking/doctor-history`;
@@ -49,7 +51,6 @@ export default class MeetingHistoryComponent {
     this.init();
   }
 
-  
   async init() {
     const token = await this.auth.getToken();
     if (!token) return;
@@ -66,11 +67,11 @@ export default class MeetingHistoryComponent {
           this.info.set(user);
           this.loadAppointments();
         },
-        error: () => this.toastr.error(this.translate.t("toastr.failed_load_user_data")),
+        error: () =>
+          this.toastr.error(this.translate.t('toastr.failed_load_user_data')),
       });
   }
 
-  
   async loadAppointments() {
     const token = await this.auth.getToken();
     if (!token) return;
@@ -90,11 +91,13 @@ export default class MeetingHistoryComponent {
 
           this.applyFilter();
         },
-        error: (err) => this.toastr.error(this.translate.t(`backend.booking_service.${err.error?.token}`)),
+        error: (err) =>
+          this.toastr.error(
+            this.translate.t(`backend.booking_service.${err.error?.token}`),
+          ),
       });
   }
 
-  
   filterByStatus(status: 'all' | 'attendece' | 'completed' | 'canceled') {
     this.currentFilter = status;
     this.applyFilter();
@@ -112,51 +115,56 @@ export default class MeetingHistoryComponent {
     }
   }
 
-  
-
   onDeleteItem(appointmentId: string) {
-    const dialogRef  = this.dialog.open(DialogDeleteMeeting, {
+    const dialogRef = this.dialog.open(DialogDeleteMeeting, {
       panelClass: 'delete-meeting-dialog',
       data: {
         appointmentId: appointmentId,
         isDoctor: this.isDoctor,
       },
     });
-     dialogRef.afterClosed().subscribe((result) => {
-    if (result === 'confirm') {
-      this.historyAppointments.update((items) =>
-        items.filter((i) => i._id !== appointmentId),
-      );
-    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+        this.historyAppointments.update((items) =>
+          items.filter((i) => i._id !== appointmentId),
+        );
+      }
 
-    this.applyFilter();
-  });
+      this.applyFilter();
+    });
   }
 
-  
   getStatusLabel(status: string) {
     switch (status) {
-      case 'attendece':
-        return this.translate.t("meeting-history-details.status_labels.attendece");
+      case 'attendance':
+        return this.translate.t(
+          'meeting-history-details.status_labels.attendece',
+        );
       case 'completed':
-        return this.translate.t("meeting-history-details.status_labels.completed");
+        return this.translate.t(
+          'meeting-history-details.status_labels.completed',
+        );
       case 'canceled':
-        return this.translate.t("meeting-history-details.status_labels.canceled");
+        return this.translate.t(
+          'meeting-history-details.status_labels.canceled',
+        );
       default:
         return '-';
     }
   }
-
-  getPaymentStatus(status:boolean){
-    switch(status){
-      case false: 
-         return this.translate.t("meeting-history-details.payment_status.false");
-      case true: 
-         return this.translate.t("meeting-history-details.payment_status.true");
-      default: 
-         return "-";
+  getPaymentMethod(method: string) {
+    switch (method) {
+      case 'card':
+        return 'Paid by Card';
+      case 'byDekont':
+        return 'Paid by Dekont';
+      case 'none':
+        return 'not Paid';
+      default:
+        return '-';
     }
   }
+  
 
   getInitials(a: any) {
     const name = this.isDoctor() ? a.firstName : a.doctorFirstName;
@@ -181,6 +189,4 @@ export default class MeetingHistoryComponent {
     return this.historyAppointments().filter((a) => a.status === 'canceled')
       .length;
   }
-
-
 }

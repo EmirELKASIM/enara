@@ -18,6 +18,7 @@ interface addBookingParams {
   reportInfo: string;
   appointmentPrice: string;
   appointmentCoinType: string;
+  appointmentDuration: string;
 }
 
 export const addBooking = async ({
@@ -34,6 +35,7 @@ export const addBooking = async ({
   reportInfo,
   appointmentPrice,
   appointmentCoinType,
+  appointmentDuration,
 }: addBookingParams) => {
   const tokenDetails = verifyJWT(token);
   if (!tokenDetails) {
@@ -66,6 +68,7 @@ export const addBooking = async ({
   if (!findAppointment) {
     return { data: "Appointment not found", statusCode: 400 };
   }
+
   await findAppointment.save();
   const existingBooking = await bookingModel.findOne({
     doctorId,
@@ -84,8 +87,7 @@ export const addBooking = async ({
   if (!findDoctor) {
     return { data: "doctor account not found", statusCode: 400 };
   }
-  const doctorPhoneNumber = findDoctor.codeNumber + findDoctor.phoneNumber;
-  const patientPhoneNumber = findUser.codeNumber + findUser.phoneNumber;
+
   const newBooking = new bookingModel({
     appointmentId: appointmentId,
     appointmentTime: appointmentTime,
@@ -97,8 +99,8 @@ export const addBooking = async ({
     doctorLastName: doctorLastName,
     doctorAccountType: doctorAccountType,
     meetingType: meetingType,
-    doctorPhoneNumber: doctorPhoneNumber,
-    patientPhoneNumber: patientPhoneNumber,
+    doctorPhoneNumber: findDoctor.phoneNumber,
+    patientPhoneNumber: findUser.phoneNumber,
     doctorId: doctorId,
     userId: tokenDetails.id,
     status: "booked",
@@ -106,28 +108,21 @@ export const addBooking = async ({
     reportInfo: reportInfo,
     appointmentPrice: appointmentPrice,
     appointmentCoinType: appointmentCoinType,
+    appointmentDuration: appointmentDuration,
+    notifications: [
+      {
+        type: "booked",
+        message: "موعد جديد",
+        sent: true,
+        sentAt: new Date(),
+        read: false,
+      },
+    ],
   });
   await newBooking.save();
 
   return {
-    data: {
-      appointmentId: appointmentId,
-      appointmentTime: appointmentTime,
-      appointmentDay: appointmentDay,
-      appointmentDate: appointmentDate,
-      doctorFirstName: doctorFirstName,
-      doctorLastName: doctorLastName,
-      meetingType: meetingType,
-      firstName: findUser.firstName,
-      lastName: findUser.lastName,
-      doctorAccountType: doctorAccountType,
-      doctorId: doctorId,
-      userId: tokenDetails.id,
-      status: "booked",
-      reportInfo: reportInfo,
-      appointmentPrice: appointmentPrice,
-      appointmentCoinType: appointmentCoinType,
-    },
+    data: newBooking,
     statusCode: 200,
   };
 };
@@ -296,7 +291,16 @@ export const onCanceled = async ({
     },
     { new: true },
   );
-
+  findBookedAppointment.notifications.push({
+    type: "canceled", // نوع الإشعار
+    message: "موعد ملغي", // الرسالة
+    sent: true,
+    sentAt: new Date(),
+    readByDoctor: false,
+    readByPatient: false,
+    createdAt: new Date(),
+  });
+  await findBookedAppointment.save();
   return {
     data: findBookedAppointment,
     statusCode: 200,
@@ -431,6 +435,104 @@ export const getActiveAppointment = async ({
   }
   return { data: findAppointment, statusCode: 200 };
 };
+export const getNotifications = async ({ token }: any) => {
+  const tokenDetails = verifyJWT(token);
+  if (!tokenDetails) {
+    return { data: "Invalid token", statusCode: 400 };
+  }
+
+  const forDoctor = await userModel.findById(tokenDetails.id);
+
+  let bookings;
+
+  if (forDoctor?.accountType !== "personal") {
+    bookings = await bookingModel
+      .find({
+        doctorId: tokenDetails.id,
+      })
+      .sort({ createdAt: -1 });
+  } else {
+    bookings = await bookingModel
+      .find({
+        userId: tokenDetails.id,
+      })
+      .sort({ createdAt: -1 });
+  }
+
+  const accountType = forDoctor?.accountType;
+
+  const notifications = bookings
+    .flatMap((b: any) => {
+      if (!b.notifications || b.notifications.length === 0) return [];
+      return b.notifications.map((n: any) => ({
+        _id: n._id,
+        type: n.type,
+        message: n.message,
+        sent: n.sent,
+        sentAt: n.sentAt,
+        read: accountType !== "personal" ? n.readByDoctor : n.readByPatient,
+        appointmentDate: b.appointmentDate,
+        appointmentTime: b.appointmentTime,
+        bookingId: b._id,
+      }));
+    })
+    .filter((n: any) => {
+      if (accountType !== "personal") {
+        // للطبيب
+        return ["booked", "canceled", "toChange", "paid", "upcoming"].includes(
+          n.type,
+        );
+      } else {
+        // للمريض
+        return ["canceled", "changed", "acceptedPaid", "upcoming"].includes(
+          n.type,
+        );
+      }
+    })
+    .sort((a, b) => (b.sentAt?.getTime() || 0) - (a.sentAt?.getTime() || 0));
+  return {
+    data: notifications,
+    statusCode: 200,
+  };
+};
+
+interface ReadNotParams {
+  token: any;
+  bookingId: string;
+  notificationId: string;
+}
+export const readNotifications = async ({
+  token,
+  bookingId,
+  notificationId,
+}: ReadNotParams) => {
+  const tokenDetails = verifyJWT(token);
+  if (!tokenDetails) {
+    return { data: "Invalid token", statusCode: 400 };
+  }
+  const user = await userModel.findById(tokenDetails.id);
+  if (!user) {
+    return { data: "User not found", statusCode: 404 };
+  }
+  const fieldToUpdate =
+    user.accountType !== "personal"
+      ? "notifications.$.readByDoctor"
+      : "notifications.$.readByPatient";
+
+  const result = await bookingModel.updateOne(
+    { _id: bookingId, "notifications._id": notificationId },
+    { $set: { [fieldToUpdate]: true } },
+  );
+
+  if (result.matchedCount === 0) {
+    return { data: "Booking or notification not found", statusCode: 404 };
+  }
+
+  return {
+    data: "Notification marked as read",
+    statusCode: 200,
+  };
+};
 
 interface UpdateBookingParams {
   token: any;
@@ -439,6 +541,7 @@ interface UpdateBookingParams {
   newTime: string;
   newDate: string;
   newDay: string;
+  newDuration: string;
 }
 export const updateBooking = async ({
   token,
@@ -447,6 +550,7 @@ export const updateBooking = async ({
   newTime,
   newDate,
   newDay,
+  newDuration,
 }: UpdateBookingParams) => {
   const tokenDetails = verifyJWT(token);
   if (!tokenDetails) {
@@ -502,10 +606,23 @@ export const updateBooking = async ({
       appointmentTime: newTime,
       appointmentDate: newDate,
       appointmentDay: newDay,
+      appointmentDuration: newDuration,
     },
     { new: true },
   );
+  if (updatedBooking) {
+    updatedBooking.notifications.push({
+      type: "changed",
+      message: "تم تغيير الموعد",
+      sent: true,
+      sentAt: new Date(),
+      readByDoctor: false,
+      readByPatient: false,
+      createdAt: new Date(),
+    });
 
+    await updatedBooking.save();
+  }
   return {
     data: updatedBooking,
     statusCode: 200,
@@ -545,6 +662,18 @@ export const changeBooking = async ({
     return { data: "Appointment not found", statusCode: 404 };
   }
 
+  updatedAppointment.notifications.push({
+    type: "toChange",
+    message: "طلب صداقة",
+    sent: true,
+    sentAt: new Date(),
+    readByDoctor: false,
+    readByPatient: false,
+    createdAt: new Date(),
+  });
+
+  await updatedAppointment.save();
+
   return { data: updatedAppointment, statusCode: 200 };
 };
 
@@ -582,6 +711,19 @@ export const sendDekont = async ({
   if (!updatedAppointment) {
     return { data: "Appointment not found", statusCode: 404 };
   }
+
+  updatedAppointment.notifications.push({
+    type: "paid",
+    message: "تم الدفع",
+    sent: true,
+    sentAt: new Date(),
+    readByDoctor: false,
+    readByPatient: false,
+    createdAt: new Date(),
+  });
+
+  await updatedAppointment.save();
+
   return { data: updatedAppointment, statusCode: 200 };
 };
 
@@ -609,7 +751,7 @@ export const acceptedDekont = async ({
     },
     {
       $set: {
-        paymentStatus: true,
+        paymentMethod: "byDekont",
       },
     },
     { new: true },
@@ -618,9 +760,52 @@ export const acceptedDekont = async ({
   if (!updatedAppointment) {
     return { data: "Appointment not found", statusCode: 404 };
   }
+
+  updatedAppointment.notifications.push({
+    type: "acceptedPaid",
+    message: "تمت الموافقة على الدقع",
+    sent: true,
+    sentAt: new Date(),
+    readByDoctor: false,
+    readByPatient: false,
+    createdAt: new Date(),
+  });
+
+  await updatedAppointment.save();
+
   return { data: updatedAppointment, statusCode: 200 };
 };
 
+interface PaidCardParams {
+  appointmentId: string;
+  token: any;
+  doctorId: String;
+}
+export const paidByCard = async ({
+  appointmentId,
+  doctorId,
+  token,
+}: PaidCardParams) => {
+  const tokenDetails = verifyJWT(token);
+  if (!tokenDetails) {
+    return { data: "Invalid token", statusCode: 401 };
+  }
+  const findBooking = await bookingModel.findOneAndUpdate(
+    {
+      userId: tokenDetails.id,
+      doctorId: doctorId,
+      appointmentId: appointmentId,
+      paymentMethod: "none",
+    },
+    {
+      $set: { paymentMethod: "card" },
+    },
+  );
+  if (!findBooking) {
+    return { data: "Booking not found", statusCode: 404 };
+  }
+  return { data: findBooking, statusCode: 200 };
+};
 //--------------------------------------------------------------------------
 
 export const getAllBookings = async () => {

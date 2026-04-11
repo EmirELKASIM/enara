@@ -8,9 +8,11 @@
           <div class="delete-icon">
             <mat-icon role="button" tabindex="0" (click)="onDeletePanel(item._id,item.patientId,item.doctorId)">delete</mat-icon>
           </div>
+          <div class="examination-info">
           <p>{{ formatDay(item.createdAt) }}</p>
           <p>{{ formatDate(item.createdAt) }}</p>
           <p>{{ formatTime(item.createdAt) }}</p>
+          </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
 

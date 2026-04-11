@@ -1,5 +1,5 @@
 <div class="first-step-container">
-  <!-- رأس الخطوة -->
+  
   <div class="step-header">
     <div class="step-icon">
       <i class="fas fa-user-circle"></i>
@@ -34,9 +34,7 @@
           />
           <div class="input-icons">
             <i class="fas fa-user input-icon"></i>
-            @if(firstName && !firstNameError){
-            <i class="fas fa-check-circle valid-icon"></i>
-            } @if(firstNameError){
+            @if(firstNameError){
             <i class="fas fa-exclamation-circle error-icon"></i>
             }
           </div>
@@ -49,7 +47,7 @@
         }
       </div>
 
-      <div class="input-field">
+      <div class="input-field secondary-field">
         <label for="lastName" class="input-label">
           <i class="fas fa-user"></i>
           <span>{{ translate.t('first-step.last_name_label') }}</span>
@@ -69,9 +67,7 @@
           />
           <div class="input-icons">
             <i class="fas fa-user input-icon"></i>
-            @if(lastName && !lastNameError){
-            <i class="fas fa-check-circle valid-icon"></i>
-            } @if(lastNameError){
+            @if(lastNameError){
             <i class="fas fa-exclamation-circle error-icon"></i>
             }
           </div>
@@ -103,12 +99,12 @@
             [class.focused]="focusedField === 'email'"
             [class.invalid]="emailError"
             required
+            dir="ltr"
+            style="text-align: left"
           />
           <div class="input-icons">
             <i class="fas fa-envelope input-icon"></i>
-            @if(email && !emailError){
-            <i class="fas fa-check-circle valid-icon"></i>
-            } @if(emailError){
+            @if(emailError){
             <i class="fas fa-exclamation-circle error-icon"></i>
             }
           </div>
@@ -121,7 +117,7 @@
         }
       </div>
 
-      <div class="input-field">
+      <div class="input-field secondary-field">
         <label for="birthday" class="input-label">
           <i class="fas fa-birthday-cake"></i>
           <span>{{ translate.t('first-step.birthday_label') }}</span>
@@ -158,7 +154,7 @@
     </div>
 
     <div class="input-group">
-      <div class="input-field password-field" >
+      <div class="input-field password-field">
         <label for="password" class="input-label">
           <i class="fas fa-lock"></i>
           <span>{{ translate.t('first-step.password_label') }}</span>
@@ -175,6 +171,8 @@
             [class.focused]="focusedField === 'password'"
             [class.invalid]="passwordError"
             required
+            dir="ltr"
+            style="text-align: left"
           />
           <div class="input-icons">
             <i class="fas fa-lock input-icon"></i>
@@ -190,9 +188,7 @@
               <i class="fas fa-eye"></i>
               }
             </button> -->
-            @if(password && !passwordError){
-            <i class="fas fa-check-circle valid-icon"></i>
-            } @if(passwordError){
+            @if(passwordError){
             <i class="fas fa-exclamation-circle error-icon"></i>
             }
           </div>
@@ -248,7 +244,7 @@
         }
       </div>
 
-      <div class="input-field">
+      <div class="input-field secondary-field">
         <label for="confirmPassword" class="input-label">
           <i class="fas fa-lock"></i>
           <span>{{ translate.t('first-step.confirm_password_label') }}</span>
@@ -265,6 +261,8 @@
             [class.focused]="focusedField === 'confirmPassword'"
             [class.invalid]="confirmPasswordError"
             required
+            dir="ltr"
+            style="text-align: left"
           />
           <div class="input-icons">
             <i class="fas fa-lock input-icon"></i>
@@ -280,9 +278,7 @@
               <i class="fas fa-eye"></i>
               }
             </button> -->
-            @if(confirmPassword && !confirmPasswordError && passwordsMatch){
-            <i class="fas fa-check-circle valid-icon"></i>
-            } @if(confirmPasswordError){
+            @if(confirmPasswordError){
             <i class="fas fa-exclamation-circle error-icon"></i>
             }
           </div>
@@ -301,11 +297,11 @@
       </div>
     </div>
     <div class="input-field">
-      <label for="phoneNumber" class="input-label">
+       <label for="phoneNumber" class="input-label">
         <i class="fa-brands fa-whatsapp"></i>
         <span>{{ translate.t('first-step.phone_number_label') }}</span>
       </label>
-
+<!--
       <div class="phone-box">
         <input
           type="text"
@@ -326,14 +322,56 @@
           placeholder="5xx xxx xx xx"
           class="phone-input"
         />
-      </div>
+      </div> -->
+      <form [formGroup]="phoneForm">
+        <ngx-intl-tel-input
+          [cssClass]="'custom-class'"
+          [preferredCountries]="['sy','tr','jo']"
+          [enableAutoCountrySelect]="true"
+          [enablePlaceholder]="true"
+          [searchCountryFlag]="true"
+          [searchCountryField]="[SearchCountryField.All]"
+          [selectFirstCountry]="false"
+          [selectedCountryISO]="CountryISO.Syria"
+          [maxLength]="15"
+          [phoneValidation]="true"
+          [separateDialCode]="true"
+          name="phone"
+          formControlName="phone"
+        >
+        </ngx-intl-tel-input>
+      </form>
     </div>
   </div>
 
   <div class="step-actions">
+    @if(isMobile || isTablet){
+
+    <button
+      type="button"
+      class="next-btn"
+      (click)="onSendData()"
+      [disabled]="!isFormValid()"
+    >
+      <span>{{ this.translate.t('first-step.next_button') }}</span>
+      <i class="fas fa-arrow-left"></i>
+      <div class="btn-hover-effect"></div>
+      @if(isLoading){
+      <div class="btn-loading">
+        <div class="loading-spinner"></div>
+      </div>
+      }
+    </button>
+
     <button type="button" class="login-btn" (click)="goLogin()">
       <i class="fas fa-sign-in-alt"></i>
-      <span>{{ this.translate.t('first-step.login_button') }}</span>
+      <span>{{ this.translate.t('first-step.back_button') }}</span>
+      <div class="btn-hover-effect"></div>
+    </button>
+    }@else{
+    <button type="button" class="login-btn" (click)="goLogin()">
+      <i class="fas fa-sign-in-alt"></i>
+      <span>{{ this.translate.t('first-step.back_button') }}</span>
       <div class="btn-hover-effect"></div>
     </button>
 
@@ -352,6 +390,7 @@
       </div>
       }
     </button>
+    }
   </div>
 
   <div class="step-notes">

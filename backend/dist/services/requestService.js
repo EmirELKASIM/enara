@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllRequests = exports.deleteRequest = exports.updateRequest = exports.getInfoWithId = exports.getLinkedRequest = exports.getAcceptRequest = exports.getRequest = exports.sendRequest = void 0;
+exports.getAllRequests = exports.deleteRequest = exports.updateRequest = exports.readNotifications = exports.getNotifications = exports.getInfoWithId = exports.getLinkedRequest = exports.getAcceptRequest = exports.getRequest = exports.sendRequest = void 0;
 const helperJWT_1 = require("../middlewares/helperJWT");
 const requestModel_1 = __importDefault(require("../models/requestModel"));
 const userModel_1 = __importDefault(require("../models/userModel"));
@@ -20,20 +20,27 @@ const sendRequest = async ({ token, doctorId }) => {
     if (!findDoctor) {
         return { data: "Doctor Account not found!", statusCode: 400 };
     }
-    const doctorPhoneNumber = findDoctor.codeNumber + findDoctor.phoneNumber;
-    const patientPhoneNumber = findPatient.codeNumber + findPatient.phoneNumber;
     const newRequests = new requestModel_1.default({
         patientId: tokenDetails.id,
         doctorId: doctorId,
         firstName: findPatient.firstName,
         lastName: findPatient.lastName,
         age: findPatient.age,
-        patientPhoneNumber: patientPhoneNumber,
-        doctorPhoneNumber: doctorPhoneNumber,
+        patientPhoneNumber: findPatient.phoneNumber,
+        doctorPhoneNumber: findDoctor.phoneNumber,
         doctorFirstName: findDoctor.firstName,
         doctorLastName: findDoctor.lastName,
         doctorAccountType: findDoctor.accountType,
         acceptedFromPatient: true,
+        notifications: [
+            {
+                type: "sent",
+                message: "طلب صداقة جديد",
+                sent: true,
+                sentAt: new Date(),
+                read: false,
+            },
+        ],
     });
     await newRequests.save();
     return { data: newRequests, statusCode: 200 };
@@ -100,6 +107,84 @@ const getInfoWithId = async ({ requestId }) => {
     return { data: findFile, statusCode: 200 };
 };
 exports.getInfoWithId = getInfoWithId;
+const getNotifications = async ({ token }) => {
+    const tokenDetails = (0, helperJWT_1.verifyJWT)(token);
+    if (!tokenDetails) {
+        return { data: "Invalid token", statusCode: 400 };
+    }
+    const user = await userModel_1.default.findById(tokenDetails.id);
+    if (!user) {
+        return { data: "User not found", statusCode: 404 };
+    }
+    let requests;
+    if (user.accountType !== "personal") {
+        requests = await requestModel_1.default
+            .find({ doctorId: tokenDetails.id })
+            .sort({ createdAt: -1 });
+    }
+    else {
+        requests = await requestModel_1.default
+            .find({ patientId: tokenDetails.id })
+            .sort({ createdAt: -1 });
+    }
+    const accountType = user.accountType;
+    const notifications = requests
+        .flatMap((r) => {
+        if (!r.notifications || r.notifications.length === 0)
+            return [];
+        return r.notifications.map((n) => ({
+            _id: n._id,
+            type: n.type,
+            message: n.message,
+            sent: n.sent,
+            sentAt: n.sentAt,
+            read: accountType !== "personal" ? n.readByDoctor : n.readByPatient,
+            requestId: r._id,
+            doctorFirstName: r.doctorFirstName,
+            doctorLastName: r.doctorLastName,
+            patientFirstName: r.firstName,
+            patientLastName: r.lastName,
+            accountType: accountType,
+            doctorId: r.doctorId
+        }));
+    })
+        .filter((n) => {
+        if (accountType !== "personal") {
+            return ["sent"].includes(n.type);
+        }
+        else {
+            return ["accepted", "canceled"].includes(n.type);
+        }
+    })
+        .sort((a, b) => (b.sentAt?.getTime() || 0) - (a.sentAt?.getTime() || 0));
+    return {
+        data: notifications,
+        statusCode: 200,
+    };
+};
+exports.getNotifications = getNotifications;
+const readNotifications = async ({ token, requestId, notificationId, }) => {
+    const tokenDetails = (0, helperJWT_1.verifyJWT)(token);
+    if (!tokenDetails) {
+        return { data: "Invalid token", statusCode: 400 };
+    }
+    const user = await userModel_1.default.findById(tokenDetails.id);
+    if (!user) {
+        return { data: "User not found", statusCode: 404 };
+    }
+    const fieldToUpdate = user.accountType !== "personal"
+        ? "notifications.$.readByDoctor"
+        : "notifications.$.readByPatient";
+    const result = await requestModel_1.default.updateOne({ _id: requestId, "notifications._id": notificationId }, { $set: { [fieldToUpdate]: true } });
+    if (result.matchedCount === 0) {
+        return { data: "Request not found", statusCode: 404 };
+    }
+    return {
+        data: "All notifications for this request marked as read",
+        statusCode: 200,
+    };
+};
+exports.readNotifications = readNotifications;
 const updateRequest = async ({ acceptedFromDoctor, requestId, }) => {
     if (acceptedFromDoctor === false) {
         const findRequestAndDelete = await requestModel_1.default.findByIdAndDelete(requestId);
@@ -117,6 +202,16 @@ const updateRequest = async ({ acceptedFromDoctor, requestId, }) => {
     if (!findRequest) {
         return { data: "Request not found", statusCode: 400 };
     }
+    findRequest.notifications.push({
+        type: "accepted",
+        message: " تمت الموافقة على الصداقة",
+        sent: true,
+        sentAt: new Date(),
+        readByDoctor: false,
+        readByPatient: false,
+        createdAt: new Date(),
+    });
+    await findRequest.save();
     return { data: findRequest, statusCode: 200 };
 };
 exports.updateRequest = updateRequest;

@@ -45,7 +45,8 @@ export default class ShowInfo {
   readonly dialog = inject(MatDialog);
   private http = inject(HttpClient);
   translate = inject(Translation);
-
+  isPaid = false;
+  isSent = false;
   firstName = computed(() => this.info()?.firstName ?? '');
   lastName = computed(() => this.info()?.lastName ?? '-');
   email = computed(() => this.info()?.email ?? '-');
@@ -54,7 +55,7 @@ export default class ShowInfo {
   maritalStatus = computed(() => this.info()?.maritalStatus ?? '-');
   age = computed(() => this.info()?.age ?? '-');
   phoneNumber = computed(() => this.info()?.phoneNumber ?? '-');
-  codeNumber = computed(() => this.info()?.codeNumber ?? '-');
+  permissible = computed(() => this.info()?.permissible ?? false);
   psychologicalSummary = computed(
     () => this.summaryInfo()?.psychologicalSummary,
   );
@@ -63,6 +64,14 @@ export default class ShowInfo {
   certificates = computed(() => this.experienceInfo()?.certificates);
   language = computed(() => this.experienceInfo()?.language);
   isPersonal = computed(() => this.accountType() === 'personal');
+
+  checkPaymentMethod(method: string) {
+    if (method === 'card' || method === 'byDekont') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   constructor() {
     effect(async () => {
@@ -100,7 +109,6 @@ export default class ShowInfo {
         this.http.get<SummaryInfo>(this.summaryApi, { headers }).subscribe({
           next: (res: any) => this.summaryInfo.set(res.token),
           error: (err) => console.log(err),
-
         });
       } else {
         this.http
@@ -130,7 +138,7 @@ export default class ShowInfo {
               this.appointmentsInfo.set(res.token);
             },
 
-            error: (err) => console.log(err.error?.token ),
+            error: (err) => console.log(err.error?.token),
           });
       } else {
         this.http
@@ -143,8 +151,7 @@ export default class ShowInfo {
           .subscribe({
             next: (res: any) => this.appointmentsInfo.set(res.token),
 
-            error: (err) => console.log(err.error?.token ),
-            
+            error: (err) => console.log(err.error?.token),
           });
       }
     });
@@ -186,6 +193,7 @@ export default class ShowInfo {
     patientLastName: string,
     appointmentDate: string,
     appointmentTime: string,
+    appointmentDuration: string,
   ) {
     this.dialog.open(DialogDoctorStartMeeting, {
       panelClass: 'doctor-start-meeting-dialog',
@@ -195,6 +203,7 @@ export default class ShowInfo {
         patientLastName: patientLastName,
         appointmentDate: appointmentDate,
         appointmentTime: appointmentTime,
+        appointmentDuration: appointmentDuration,
       },
     });
   }
@@ -228,7 +237,7 @@ export default class ShowInfo {
     appointmentPrice: string,
     appointmentCoinType: string,
   ) {
-    this.dialog.open(DialogPayment, {
+    const dialogRef = this.dialog.open(DialogPayment, {
       panelClass: 'payment-dialog',
       data: {
         appointmentId: appointmentId,
@@ -238,14 +247,28 @@ export default class ShowInfo {
         appointmentCoinType: appointmentCoinType,
       },
     });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.isSent = result.isSent;
+      window.location.reload();
+    });
   }
-  onShowDekontDetails(appointmentId: string, patientId: string) {
-    this.dialog.open(DialogDekontDetails, {
+
+  onShowDekontDetails(
+    appointmentId: string,
+    patientId: string,
+    paymentMethod: string,
+  ) {
+    const dialogRef = this.dialog.open(DialogDekontDetails, {
       panelClass: 'dekont-details-dialog',
       data: {
         appointmentId: appointmentId,
         patientId: patientId,
+        paymentMethod: paymentMethod,
       },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.isPaid = result.isPaid;
+      window.location.reload();
     });
   }
 
@@ -275,8 +298,38 @@ export default class ShowInfo {
       couplesSession: this.translate.t('show-info.couplesSession'),
       childrensSession: this.translate.t('show-info.childrensSession'),
       teenagersSession: this.translate.t('show-info.teenagersSession'),
-      
     };
     return map[value || ''] || this.translate.t('show-info.notSpecified');
+  }
+  getGenderLabels(value?: string): string {
+    const map: Record<string, string> = {
+      male: this.translate.t('show-info.male'), // 'moodSwings' key exists
+      female: this.translate.t('show-info.female'),
+      other: this.translate.t('show-info.other'),
+    };
+    return (
+      map[value || ''] || this.translate.t('show-info.notSpecified')
+    );
+  }
+   getAccountTypeLabels(value?: string): string {
+    const map: Record<string, string> = {
+      personal: this.translate.t('show-info.account_type_personal_label'), 
+      psychotherapist: this.translate.t('show-info.account_type_psychotherapist_label'),
+      psychiatrist: this.translate.t('show-info.account_type_psychiatrist_label'),
+    };
+    return (
+      map[value || ''] || this.translate.t('show-info.notSpecified')
+    );
+  }
+   getMaritalStatusLabels(value?: string): string {
+    const map: Record<string, string> = {
+      single: this.translate.t('profile-view-page.single'), 
+      married: this.translate.t('profile-view-page.married'),
+      divorced: this.translate.t('profile-view-page.divorced'),
+      widowed: this.translate.t('profile-view-page.widowed'),
+    };
+    return (
+      map[value || ''] || this.translate.t('profile-view-page.notSpecified')
+    );
   }
 }

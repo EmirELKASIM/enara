@@ -18,13 +18,14 @@ router.post("/add", async (req, res) => {
   }
 
   const token = authHeader.split(" ")[1];
-  const { time, date, price, coinType } = req.body;
+  const { time, date, price, coinType ,duration} = req.body;
   const { statusCode, data } = await addAppointment({
     time,
     date,
     token,
     price,
     coinType,
+    duration
   });
   return res.status(statusCode).json({
     success: true,

@@ -30,6 +30,7 @@ import { Translation } from '../../../../src/sevices/translation';
 
 @Component({
   selector: 'app-quick-notes',
+  standalone: true,
   imports: [
     MatExpansionModule,
     FormsModule,
@@ -49,8 +50,9 @@ export default class QuickNotes implements OnChanges {
   readonly panelOpenState = signal(false);
   appointment = signal<Appointment | null>(null);
   private auth = inject(AuthService);
-  @Input() complaintAndTreatment!: boolean;
+  @Input() statusBackgroundAndDiagnosis!: boolean;
   @Input() examinationHistory!: boolean;
+  @Input() patientSummary!: boolean;
   @Input() requestId!: string;
   @Input() patientId!: string;
   ngOnChanges(changes: SimpleChanges) {
@@ -92,11 +94,11 @@ export default class QuickNotes implements OnChanges {
   appetite = '';
   suicide = '';
   get isQuickNotesDisabled(): boolean {
-    return this.complaintAndTreatment || this.examinationHistory;
+    return this.statusBackgroundAndDiagnosis || this.examinationHistory || this.patientSummary;
   }
 
   get isQuickNotesExpanded(): boolean {
-    return !this.complaintAndTreatment && !this.examinationHistory;
+    return !this.statusBackgroundAndDiagnosis && !this.examinationHistory && !this.patientSummary;
   }
   onModChanged(value: string) {
     this.mod = value;

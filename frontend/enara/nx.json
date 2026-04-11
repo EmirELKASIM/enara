@@ -45,6 +45,9 @@
     },
     "@schematics/angular:directive": {
       "skipTests": true
+    },
+    "@nx/angular:component": {
+      "style": "css"
     }
   }
 }

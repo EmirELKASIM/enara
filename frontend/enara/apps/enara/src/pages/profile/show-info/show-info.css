@@ -265,7 +265,18 @@
   font-weight: 600;
   color: var(--text-dark);
 }
-
+.permissible-secion{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.approved{
+  color: green;
+}
+.not-approved{
+  color: red;
+}
 .professional-info {
   margin-bottom: 40px;
   margin-top: 30px;

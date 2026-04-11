@@ -1,4 +1,4 @@
-import {  Component, ElementRef, inject,  ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import NextStep from './next-step/next-step';
 import FirstStep from './first-step/first-step';
 import { FormsModule } from '@angular/forms';
@@ -38,13 +38,13 @@ export default class Register {
   maritalStatus = '';
   consultation = '';
   phoneNumber = '';
-  codeNumber = '';
   privacyPolicy = false;
   next = false;
   acceptedFromChild = false;
   translate = inject(Translation);
   captchaToken: string | null = null;
-
+  screenWidth: number = window.innerWidth;
+  public isMobile: boolean = this.screenWidth <= 600;
   private toastr = inject(ToastrService);
   private registerService = inject(RegisterService);
   onAcceptedFromChild(value: boolean) {
@@ -58,7 +58,10 @@ export default class Register {
   @ViewChild('mainContainer') mainContainer!: ElementRef;
 
   scrollToTop() {
-    this.mainContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.mainContainer.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 
   onResToFirstData(value: firstData) {
@@ -68,7 +71,6 @@ export default class Register {
     this.birthday = value.birthday;
     this.password = value.password;
     this.phoneNumber = value.phoneNumber;
-    this.codeNumber = value.codeNumber;
     this.next = value.next;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.scrollToTop();
@@ -117,7 +119,6 @@ export default class Register {
         this.consultation,
         this.privacyPolicy,
         this.phoneNumber,
-        this.codeNumber,
         this.captchaToken,
       );
     }

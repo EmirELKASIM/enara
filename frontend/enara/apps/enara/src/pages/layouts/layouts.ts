@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -21,7 +16,8 @@ import { apiUrl } from '../../constants/constants';
 import { MatDivider } from '@angular/material/divider';
 import { Translation } from '../../sevices/translation';
 import { UserInfo } from './IUserInfo';
-
+import MenuButton from './menu-button/menu-button';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-layouts',
@@ -34,13 +30,16 @@ import { UserInfo } from './IUserInfo';
     MatButtonModule,
     MatMenuModule,
     MatDivider,
-    CommonModule
+    CommonModule,
+    MenuButton,
   ],
   templateUrl: './layouts.html',
   styleUrl: './layouts.css',
 })
 export default class Layouts {
   info = signal<UserInfo | null>(null);
+  bookingNot = signal<any[]>([]);
+  friendRequests = signal<any[]>([]);
   translate = inject(Translation);
   private router = inject(Router);
   public auth = inject(AuthService);
@@ -52,9 +51,20 @@ export default class Layouts {
   accountType = computed(() => this.info()?.accountType ?? null);
   screenWidth: number = window.innerWidth;
   public isMobile: boolean = this.screenWidth <= 600;
+  public isTablet: boolean = this.screenWidth >= 600  && this.screenWidth <= 1200;
+
+  private toastr = inject(ToastrService);
+  private GetBookingNot = `${apiUrl}/booking/notifications`;
+  private GetFriendRequests = `${apiUrl}/request/notifications`;
+  notificationsTotal = computed(() => {
+  return (
+    this.bookingNot().filter(n => !n.read).length +
+    this.friendRequests().filter(n => !n.read).length
+  );
+});
   isDoctor = computed(() => {
     const type = this.accountType();
-    if (!type) return false; // لسه ما وصل الداتا
+    if (!type) return false; 
     return type === 'psychologist' || type === 'psychiatrist';
   });
   goBack() {
@@ -84,8 +94,7 @@ export default class Layouts {
       })
       .subscribe({
         next: (res) => this.info.set(res),
-        error: (err) => console.log(err.error?.token || '')
-        
+        error: (err) => console.log(err.error?.token || ''),
       });
   }
   goHome() {
@@ -111,7 +120,17 @@ export default class Layouts {
     this.router.navigate(['/sessions']);
     this.backService.hide();
   }
-
+  goNotifications() {
+    this.router.navigate(['/notifications']);
+    this.backService.hide();
+    this.loadBookingNot();
+  this.loadFrieandRequests();
+  }
+  onLogout() {
+    this.auth.logout();
+    this.toastr.success(this.translate.t('toastr.logged_out_successfully'));
+    this.router.navigate(['/login']);
+  }
   onTabChange(index: number) {
     const routes = this.getTabsRoutes();
     if (routes[index]) {
@@ -149,5 +168,45 @@ export default class Layouts {
 
     return routes;
   }
-  
+
+  ngOnInit(): void {
+    this.loadBookingNot();
+    this.loadFrieandRequests();
+  }
+  async loadBookingNot() {
+    const token = await this.auth.getToken();
+    if (!token) throw new Error('Token not found');
+    this.http
+      .get(this.GetBookingNot, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true',
+        },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.bookingNot.set(res.token);
+          console.log(res.token.read);
+        },
+      });
+  }
+
+  async loadFrieandRequests() {
+    const token = await this.auth.getToken();
+    if (!token) throw new Error('Token not found');
+    this.http
+      .get(this.GetFriendRequests, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true',
+        },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.friendRequests.set(res.token);
+          console.log(this.friendRequests());
+        },
+      });
+  }
+
 }

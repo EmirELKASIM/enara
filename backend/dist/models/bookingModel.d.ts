@@ -1,4 +1,13 @@
 import mongoose, { Document } from "mongoose";
+export interface INotification {
+    type: "booked" | "canceled" | "toChange" | "changed" | "paid" | "acceptedPaid" | "upcoming";
+    message: string;
+    sent: boolean;
+    sentAt?: Date;
+    readByDoctor: boolean;
+    readByPatient: boolean;
+    createdAt: Date;
+}
 export interface IBooking extends Document {
     userId: mongoose.Types.ObjectId;
     doctorId: mongoose.Types.ObjectId;
@@ -25,9 +34,11 @@ export interface IBooking extends Document {
     reportInfo: Record<string, any>;
     appointmentPrice: string;
     appointmentCoinType: string;
-    paymentStatus: boolean;
+    appointmentDuration: string;
     dekontCode: string;
     dekontNotes: string;
+    notifications: INotification[];
+    paymentMethod: "card" | "byDekont" | "none";
 }
 declare const bookingModel: mongoose.Model<IBooking, {}, {}, {}, mongoose.Document<unknown, {}, IBooking, {}, mongoose.DefaultSchemaOptions> & IBooking & Required<{
     _id: mongoose.Types.ObjectId;

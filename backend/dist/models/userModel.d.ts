@@ -5,7 +5,6 @@ export interface IUser extends Document {
     email: string;
     password: string;
     phoneNumber: string;
-    codeNumber: string;
     accountType: string;
     gender: string;
     birthday: string;
@@ -14,6 +13,7 @@ export interface IUser extends Document {
     consultation: string;
     privacyPolicy: boolean;
     isEmailVerified: boolean;
+    permissible: boolean;
 }
 declare const userModel: mongoose.Model<IUser, {}, {}, {}, mongoose.Document<unknown, {}, IUser, {}, mongoose.DefaultSchemaOptions> & IUser & Required<{
     _id: mongoose.Types.ObjectId;
