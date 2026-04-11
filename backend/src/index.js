@@ -40,9 +40,9 @@ app.use("/booking", bookingRoute_1.default);
 app.use("/diagnosis", diagnosisRoute_1.default);
 app.use("/request", requestRoute_1.default);
 app.use("/examination", examinationRoute_1.default);
-app.use(express_1.default.static(path_1.default.join(__dirname, "../frontend/enara/dist/enara")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "../../frontend/enara/dist/enara")));
 app.get("*", (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, "../frontend/enara/dist/enara/index.html"));
+    res.sendFile(path_1.default.join(__dirname, "../../frontend/enara/dist/enara/index.html"));
 });
 app.listen(port, "0.0.0.0", () => {
     console.log(`Server is running at: http://localhost/:${port}`);
